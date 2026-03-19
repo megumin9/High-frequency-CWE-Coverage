@@ -1,0 +1,936 @@
+[
+    {
+        "checker": "CompareIdenticalValues.ql",
+        "description": "Comparison of identical values, the intent of which is unclear.",
+        "source_code": "import python\nimport Expressions.RedundantComparison\n\nfrom RedundantComparison comparison\nwhere not comparison.isConstant() and not comparison.maybeMissingSelf()\nselect comparison, \"Comparison of identical values; use cmath.isnan() if testing for not-a-number.\"",
+        "cwe_id": [
+            "cwe-570",
+            "cwe-571"
+        ]
+    },
+    {
+        "checker": "CompareConstants.ql",
+        "description": "Comparison of constants is always constant, but is harder to read than a simple constant.",
+        "source_code": "import python\n\nfrom Compare comparison, Expr left, Expr right\nwhere\n  comparison.compares(left, _, right) and\n  left.isConstant() and\n  right.isConstant() and\n  not exists(Assert a | a.getTest() = comparison)\nselect comparison, \"Comparison of constants; use 'True' or 'False' instead.\"",
+        "cwe_id": [
+            "cwe-570",
+            "cwe-571"
+        ]
+    },
+    {
+        "checker": "CompareIdenticalValuesMissingSelf.ql",
+        "description": "Comparison of identical values, the intent of which is unclear.",
+        "source_code": "import python\nimport Expressions.RedundantComparison\n\nfrom RedundantComparison comparison\nwhere comparison.maybeMissingSelf()\nselect comparison, \"Comparison of identical values; may be missing 'self'.\"",
+        "cwe_id": [
+            "cwe-570",
+            "cwe-571"
+        ]
+    },
+    {
+        "checker": "WrongNumberArgumentsInCall.ql",
+        "description": "Using too many or too few arguments in a call to a function will result in a TypeError at runtime.",
+        "source_code": "import python\nimport CallArgs\n\nfrom Call call, FunctionValue func, string too, string should, int limit\nwhere\n  (\n    too_many_args(call, func, limit) and too = \"too many arguments\" and should = \"no more than \"\n    or\n    too_few_args(call, func, limit) and too = \"too few arguments\" and should = \"no fewer than \"\n  ) and\n  not isAbstract(func) and\n  not exists(FunctionValue overridden |\n    func.overrides(overridden) and correct_args_if_called_as_method(call, overridden)\n  ) and\n  \n  not func.getName() = \"__new__\"\nselect call, \"Call to $@ with \" + too + \"; should be \" + should + limit.toString() + \".\", func,\n  func.descriptiveString()",
+        "cwe_id": [
+            "cwe-685"
+        ]
+    },
+    {
+        "checker": "CallToSuperWrongClass.ql",
+        "description": "Calling super with something other than the enclosing class may cause incorrect object initialization.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\nfrom DataFlow::CallCfgNode call_to_super, string name\nwhere\n  call_to_super = API::builtin(\"super\").getACall() and\n  name = call_to_super.getScope().getScope().(Class).getName() and\n  exists(DataFlow::Node arg |\n    arg = call_to_super.getArg(0) and\n    arg.getALocalSource().asExpr().(Name).getId() != name\n  )\nselect call_to_super.getNode(), \"First argument to super() should be \" + name + \".\"",
+        "cwe_id": [
+            "cwe-687"
+        ]
+    },
+    {
+        "checker": "UseofInput.ql",
+        "description": "The built-in function 'input' is used which, in Python 2, can allow arbitrary code to be run.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\nfrom DataFlow::CallCfgNode call\nwhere\n  major_version() = 2 and\n  call = API::builtin(\"input\").getACall() and\n  call != API::builtin(\"raw_input\").getACall()\nselect call, \"The unsafe built-in function 'input' is used in Python 2.\"",
+        "cwe_id": [
+            "cwe-094",
+            "cwe-095"
+        ]
+    },
+    {
+        "checker": "WrongNameForArgumentInCall.ql",
+        "description": "Using a named argument whose name does not correspond to a parameter of the called function or method, will result in a TypeError at runtime.",
+        "source_code": "import python\nimport Expressions.CallArgs\n\nfrom Call call, FunctionObject func, string name\nwhere\n  illegally_named_parameter_objectapi(call, func, name) and\n  not func.isAbstract() and\n  not exists(FunctionObject overridden |\n    func.overrides(overridden) and overridden.getFunction().getAnArg().(Name).getId() = name\n  )\nselect call, \"Keyword argument '\" + name + \"' is not a supported parameter name of $@.\", func,\n  func.descriptiveString()",
+        "cwe_id": [
+            "cwe-628"
+        ]
+    },
+    {
+        "checker": "DuplicateKeyInDictionaryLiteral.ql",
+        "description": "Duplicate key in dict literal. All but the last will be lost.",
+        "source_code": "import python\nimport semmle.python.strings\n\npredicate dict_key(Dict d, Expr k, string s) {\n  k = d.getAKey() and\n  (\n    s = k.(Num).getN()\n    or\n    \n    \n    not \"\ufffd\" = s.charAt(_) and\n    exists(StringLiteral c | c = k |\n      s = \"u\\\"\" + c.getText() + \"\\\"\" and c.isUnicode()\n      or\n      s = \"b\\\"\" + c.getText() + \"\\\"\" and not c.isUnicode()\n    )\n  )\n}\n\nfrom Dict d, Expr k1, Expr k2\nwhere\n  exists(string s | dict_key(d, k1, s) and dict_key(d, k2, s) and k1 != k2) and\n  (\n    exists(BasicBlock b, int i1, int i2 |\n      k1.getAFlowNode() = b.getNode(i1) and\n      k2.getAFlowNode() = b.getNode(i2) and\n      i1 < i2\n    )\n    or\n    k1.getAFlowNode().getBasicBlock().strictlyDominates(k2.getAFlowNode().getBasicBlock())\n  )\nselect k1, \"Dictionary key \" + repr(k1) + \" is subsequently $@.\", k2, \"overwritten\"",
+        "cwe_id": [
+            "cwe-561"
+        ]
+    },
+    {
+        "checker": "UnintentionalImplicitStringConcatenation.ql",
+        "description": "Omitting a comma between strings causes implicit concatenation which is confusing in a list.",
+        "source_code": "import python\n\npredicate string_const(Expr s) {\n  s instanceof StringLiteral\n  or\n  string_const(s.(BinaryExpr).getLeft()) and string_const(s.(BinaryExpr).getRight())\n}\n\nfrom StringLiteral s\nwhere\n  \n  exists(List l, Expr other |\n    not s = other and\n    l.getAnElt() = s and\n    l.getAnElt() = other and\n    string_const(other)\n  ) and\n  exists(s.getAnImplicitlyConcatenatedPart()) and\n  not s.isParenthesized()\nselect s, \"Implicit string concatenation. Maybe missing a comma?\"",
+        "cwe_id": [
+            "cwe-665"
+        ]
+    },
+    {
+        "checker": "WrongNumberArgumentsForFormat.ql",
+        "description": "A string formatting operation, such as '\"%s: %s, %s\" % (a,b)', where the number of conversion specifiers in the format string differs from the number of values to be formatted will raise a TypeError.",
+        "source_code": "import python\nimport semmle.python.strings\n\npredicate string_format(BinaryExpr operation, StringLiteral str, Value args, AstNode origin) {\n  operation.getOp() instanceof Mod and\n  exists(Context ctx |\n    operation.getLeft().pointsTo(ctx, _, str) and\n    operation.getRight().pointsTo(ctx, args, origin)\n  )\n}\n\nint sequence_length(Value args) {\n  \n  exists(Tuple seq | seq.pointsTo(args, _) |\n    result = strictcount(seq.getAnElt()) and\n    not seq.getAnElt() instanceof Starred\n  )\n  or\n  exists(ImmutableLiteral i | i.getLiteralValue() = args | result = 1)\n}\n\nfrom\n  BinaryExpr operation, StringLiteral fmt, Value args, int slen, int alen, AstNode origin,\n  string provided\nwhere\n  string_format(operation, fmt, args, origin) and\n  slen = sequence_length(args) and\n  alen = format_items(fmt) and\n  slen != alen and\n  (if slen = 1 then provided = \" is provided.\" else provided = \" are provided.\")\nselect operation,\n  \"Wrong number of $@ for string format. Format $@ takes \" + alen.toString() + \", but \" +\n    slen.toString() + provided, origin, \"arguments\", fmt, fmt.getText()",
+        "cwe_id": [
+            "cwe-685"
+        ]
+    },
+    {
+        "checker": "UselessComparisonTest.ql",
+        "description": "The result of a comparison is implied by a previous comparison.",
+        "source_code": "import python\nimport semmle.python.Comparisons\n\n\n\nprivate predicate is_complex(Expr comp) {\n  exists(comp.(Compare).getOp(1))\n  or\n  is_complex(comp.(UnaryExpr).getOperand())\n}\n\n\nprivate predicate useless_test(Comparison comp, ComparisonControlBlock controls, boolean isTrue) {\n  controls.impliesThat(comp.getBasicBlock(), comp, isTrue) and\n  \n  not is_complex(controls.getTest().getNode())\n}\n\nprivate predicate useless_test_ast(AstNode comp, AstNode previous, boolean isTrue) {\n  forex(Comparison compnode, ConditionBlock block |\n    compnode.getNode() = comp and\n    block.getLastNode().getNode() = previous\n  |\n    useless_test(compnode, block, isTrue)\n  )\n}\n\nfrom Expr test, Expr other, boolean isTrue\nwhere\n  useless_test_ast(test, other, isTrue) and not useless_test_ast(test.getAChildNode+(), other, _)\nselect test, \"Test is always \" + isTrue + \", because of $@.\", other, \"this condition\"",
+        "cwe_id": [
+            "cwe-561",
+            "cwe-570",
+            "cwe-571"
+        ]
+    },
+    {
+        "checker": "WrongNameForArgumentInClassInstantiation.ql",
+        "description": "Using a named argument whose name does not correspond to a parameter of the __init__ method of the class being instantiated, will result in a TypeError at runtime.",
+        "source_code": "import python\nimport Expressions.CallArgs\n\nfrom Call call, ClassValue cls, string name, FunctionValue init\nwhere\n  illegally_named_parameter(call, cls, name) and\n  init = get_function_or_initializer(cls)\nselect call, \"Keyword argument '\" + name + \"' is not a supported parameter name of $@.\", init,\n  init.getQualifiedName()",
+        "cwe_id": [
+            "cwe-628"
+        ]
+    },
+    {
+        "checker": "WrongNumberArgumentsInClassInstantiation.ql",
+        "description": "Using too many or too few arguments in a call to the `__init__` method of a class will result in a TypeError at runtime.",
+        "source_code": "import python\nimport Expressions.CallArgs\n\nfrom Call call, ClassValue cls, string too, string should, int limit, FunctionValue init\nwhere\n  (\n    too_many_args(call, cls, limit) and\n    too = \"too many arguments\" and\n    should = \"no more than \"\n    or\n    too_few_args(call, cls, limit) and\n    too = \"too few arguments\" and\n    should = \"no fewer than \"\n  ) and\n  init = get_function_or_initializer(cls)\nselect call, \"Call to $@ with \" + too + \"; should be \" + should + limit.toString() + \".\", init,\n  init.getQualifiedName()",
+        "cwe_id": [
+            "cwe-685"
+        ]
+    },
+    {
+        "checker": "EqualsOrHash.ql",
+        "description": "Defining a hash operation without defining equality may be a mistake.",
+        "source_code": "import python\n\npredicate missingEquality(Class cls, Function defined) {\n  defined = cls.getMethod(\"__hash__\") and\n  not exists(cls.getMethod(\"__eq__\"))\n  \n  \n}\n\nfrom Class cls, Function defined\nwhere missingEquality(cls, defined)\nselect cls, \"This class implements $@, but does not implement __eq__.\", defined, defined.getName()",
+        "cwe_id": [
+            "cwe-581"
+        ]
+    },
+    {
+        "checker": "MultiplyDefined.ql",
+        "description": "Assignment to a variable occurs multiple times without any intermediate use of that variable",
+        "source_code": "import python\nimport Definition\n\npredicate multiply_defined(AstNode asgn1, AstNode asgn2, Variable v) {\n  \n\n  forex(Definition def, Definition redef |\n    def.getVariable() = v and\n    def = asgn1.getAFlowNode() and\n    redef = asgn2.getAFlowNode()\n  |\n    def.isUnused() and\n    def.getARedef() = redef and\n    def.isRelevant()\n  )\n}\n\npredicate simple_literal(Expr e) {\n  e.(Num).getN() = \"0\"\n  or\n  e instanceof NameConstant\n  or\n  e instanceof List and not exists(e.(List).getAnElt())\n  or\n  e instanceof Tuple and not exists(e.(Tuple).getAnElt())\n  or\n  e instanceof Dict and not exists(e.(Dict).getAKey())\n  or\n  e.(StringLiteral).getText() = \"\"\n}\n\n\npredicate uninteresting_definition(AstNode asgn1) {\n  exists(AssignStmt a | a.getATarget() = asgn1 | simple_literal(a.getValue()))\n}\n\nfrom AstNode asgn1, AstNode asgn2, Variable v\nwhere\n  multiply_defined(asgn1, asgn2, v) and\n  forall(Name el | el = asgn1.getParentNode().(Tuple).getAnElt() | multiply_defined(el, _, _)) and\n  not uninteresting_definition(asgn1)\nselect asgn1,\n  \"This assignment to '\" + v.getId() + \"' is unnecessary as it is $@ before this value is used.\",\n  asgn2, \"redefined\"",
+        "cwe_id": [
+            "cwe-563"
+        ]
+    },
+    {
+        "checker": "UnusedModuleVariable.ql",
+        "description": "Global variable is defined but not used",
+        "source_code": "import python\nimport Definition\n\n\npredicate complex_all(Module m) {\n  exists(Assign a, GlobalVariable all |\n    a.defines(all) and a.getScope() = m and all.getId() = \"__all__\"\n  |\n    not a.getValue() instanceof List\n    or\n    exists(Expr e | e = a.getValue().(List).getAnElt() | not e instanceof StringLiteral)\n  )\n  or\n  exists(Call c, GlobalVariable all |\n    c.getFunc().(Attribute).getObject() = all.getALoad() and\n    c.getScope() = m and\n    all.getId() = \"__all__\"\n  )\n}\n\npredicate used_in_forward_declaration(Name used, Module mod) {\n  exists(StringLiteral s, Annotation annotation |\n    s.getS() = used.getId() and\n    s.getEnclosingModule() = mod and\n    annotation.getASubExpression*() = s\n  )\n}\n\npredicate unused_global(Name unused, GlobalVariable v) {\n  not exists(ImportingStmt is | is.contains(unused)) and\n  forex(DefinitionNode defn | defn.getNode() = unused |\n    not defn.getValue().getNode() instanceof FunctionExpr and\n    not defn.getValue().getNode() instanceof ClassExpr and\n    not exists(Name u |\n      \n      u.uses(v)\n    |\n      \n      defn.strictlyReaches(u.getAFlowNode())\n      or\n      \n      defn.getBasicBlock().reachesExit() and u.getScope() != unused.getScope()\n    ) and\n    not unused.getEnclosingModule().getAnExport() = v.getId() and\n    not exists(unused.getParentNode().(ClassDef).getDefinedClass().getADecorator()) and\n    not exists(unused.getParentNode().(FunctionDef).getDefinedFunction().getADecorator()) and\n    unused.defines(v) and\n    not name_acceptable_for_unused_variable(v) and\n    not complex_all(unused.getEnclosingModule())\n  ) and\n  not used_in_forward_declaration(unused, unused.getEnclosingModule())\n}\n\nfrom Name unused, GlobalVariable v\nwhere\n  unused_global(unused, v) and\n  \n  forall(Name el | el = unused.getParentNode().(Tuple).getAnElt() | unused_global(el, _))\nselect unused, \"The global variable '\" + v.getId() + \"' is not used.\"",
+        "cwe_id": [
+            "cwe-563"
+        ]
+    },
+    {
+        "checker": "UnusedLocalVariable.ql",
+        "description": "Local variable is defined but not used",
+        "source_code": "import python\nimport Definition\n\npredicate unused_local(Name unused, LocalVariable v) {\n  forex(Definition def | def.getNode() = unused |\n    def.getVariable() = v and\n    def.isUnused() and\n    not exists(def.getARedef()) and\n    not exists(annotation_without_assignment(v)) and\n    def.isRelevant() and\n    not v = any(Nonlocal n).getAVariable() and\n    not exists(def.getNode().getParentNode().(FunctionDef).getDefinedFunction().getADecorator()) and\n    not exists(def.getNode().getParentNode().(ClassDef).getDefinedClass().getADecorator())\n  )\n}\n\n\nprivate AnnAssign annotation_without_assignment(LocalVariable v) {\n  result.getTarget() = v.getAStore() and\n  not exists(result.getValue())\n}\n\nfrom Name unused, LocalVariable v\nwhere\n  unused_local(unused, v) and\n  \n  forall(Name el | el = unused.getParentNode().(Tuple).getAnElt() | unused_local(el, _))\nselect unused, \"Variable \" + v.getId() + \" is not used.\"",
+        "cwe_id": [
+            "cwe-563"
+        ]
+    },
+    {
+        "checker": "DeprecatedModule.ql",
+        "description": "Import of a deprecated module",
+        "source_code": "import python\n\n\npredicate deprecated_module(string name, string instead, int major, int minor) {\n  name = \"posixfile\" and instead = \"fcntl\" and major = 1 and minor = 5\n  or\n  name = \"gopherlib\" and instead = \"no replacement\" and major = 2 and minor = 5\n  or\n  name = \"rgbimgmodule\" and instead = \"no replacement\" and major = 2 and minor = 5\n  or\n  name = \"pre\" and instead = \"re\" and major = 1 and minor = 5\n  or\n  name = \"whrandom\" and instead = \"random\" and major = 2 and minor = 1\n  or\n  name = \"rfc822\" and instead = \"email\" and major = 2 and minor = 3\n  or\n  name = \"mimetools\" and instead = \"email\" and major = 2 and minor = 3\n  or\n  name = \"MimeWriter\" and instead = \"email\" and major = 2 and minor = 3\n  or\n  name = \"mimify\" and instead = \"email\" and major = 2 and minor = 3\n  or\n  name = \"rotor\" and instead = \"no replacement\" and major = 2 and minor = 4\n  or\n  name = \"statcache\" and instead = \"no replacement\" and major = 2 and minor = 2\n  or\n  name = \"mpz\" and instead = \"a third party\" and major = 2 and minor = 2\n  or\n  name = \"xreadlines\" and instead = \"no replacement\" and major = 2 and minor = 3\n  or\n  name = \"multifile\" and instead = \"email\" and major = 2 and minor = 5\n  or\n  name = \"sets\" and instead = \"builtins\" and major = 2 and minor = 6\n  or\n  name = \"buildtools\" and instead = \"no replacement\" and major = 2 and minor = 3\n  or\n  name = \"cfmfile\" and instead = \"no replacement\" and major = 2 and minor = 4\n  or\n  name = \"macfs\" and instead = \"no replacement\" and major = 2 and minor = 3\n  or\n  name = \"md5\" and instead = \"hashlib\" and major = 2 and minor = 5\n  or\n  name = \"sha\" and instead = \"hashlib\" and major = 2 and minor = 5\n}\n\nstring deprecation_message(string mod) {\n  exists(int major, int minor | deprecated_module(mod, _, major, minor) |\n    result =\n      \"The \" + mod + \" module was deprecated in version \" + major.toString() + \".\" +\n        minor.toString() + \".\"\n  )\n}\n\nstring replacement_message(string mod) {\n  exists(string instead | deprecated_module(mod, instead, _, _) |\n    result = \" Use \" + instead + \" module instead.\" and not instead = \"no replacement\"\n    or\n    result = \"\" and instead = \"no replacement\"\n  )\n}\n\nfrom ImportExpr imp, string name, string instead\nwhere\n  name = imp.getName() and\n  deprecated_module(name, instead, _, _) and\n  not exists(Try try, ExceptStmt except | except = try.getAHandler() |\n    except.getType().pointsTo(ClassValue::importError()) and\n    except.containsInScope(imp)\n  )\nselect imp, deprecation_message(name) + replacement_message(name)",
+        "cwe_id": [
+            "cwe-477"
+        ]
+    },
+    {
+        "checker": "FileNotAlwaysClosed.ql",
+        "description": "Opening a file without ensuring that it is always closed may lead to data loss or resource leaks.",
+        "source_code": "import python\nimport FileNotAlwaysClosedQuery\n\nfrom FileOpen fo, string msg\nwhere\n  fileNotClosed(fo) and\n  msg = \"File is opened but is not closed.\"\n  or\n  fileMayNotBeClosedOnException(fo, _) and\n  msg = \"File may not be closed if an exception is raised.\"\nselect fo, msg",
+        "cwe_id": [
+            "cwe-772"
+        ]
+    },
+    {
+        "checker": "ReturnValueIgnored.ql",
+        "description": "Ignoring return values may result in discarding errors or loss of information.",
+        "source_code": "import python\nimport semmle.python.objects.Callables\n\npredicate meaningful_return_value(Expr val) {\n  val instanceof Name\n  or\n  val instanceof BooleanLiteral\n  or\n  exists(FunctionValue callee |\n    val = callee.getACall().getNode() and returns_meaningful_value(callee)\n  )\n  or\n  not exists(FunctionValue callee | val = callee.getACall().getNode()) and not val instanceof Name\n}\n\n\npredicate used_value(Expr val) {\n  exists(LocalVariable var, Expr other |\n    var.getAnAccess() = val and other = var.getAnAccess() and not other = val\n  )\n}\n\npredicate returns_meaningful_value(FunctionValue f) {\n  not exists(f.getScope().getFallthroughNode()) and\n  (\n    exists(Return ret, Expr val | ret.getScope() = f.getScope() and val = ret.getValue() |\n      meaningful_return_value(val) and\n      not used_value(val)\n    )\n    or\n    \n\n    f.isBuiltin() and\n    f.getAnInferredReturnType() != ClassValue::nonetype() and\n    not f.getName() = \"__import__\"\n  )\n}\n\n\npredicate wrapped_in_try_except(ExprStmt call) {\n  exists(Try t |\n    exists(t.getAHandler()) and\n    strictcount(Call c | t.getBody().contains(c)) = 1 and\n    call = t.getAStmt()\n  )\n}\n\nfrom ExprStmt call, FunctionValue callee, float percentage_used, int total\nwhere\n  call.getValue() = callee.getACall().getNode() and\n  returns_meaningful_value(callee) and\n  not wrapped_in_try_except(call) and\n  exists(int unused |\n    unused = count(ExprStmt e | e.getValue().getAFlowNode() = callee.getACall()) and\n    total = count(callee.getACall())\n  |\n    percentage_used = (100.0 * (total - unused) / total).floor()\n  ) and\n  \n  percentage_used >= 75 and\n  total >= 5\nselect call,\n  \"Call discards return value of function $@. The result is used in \" + percentage_used.toString() +\n    \"% of calls.\", callee, callee.getName()",
+        "cwe_id": [
+            "cwe-252"
+        ]
+    },
+    {
+        "checker": "WeakBlockMode.ql",
+        "description": "Finds uses of symmetric encryption block modes that are weak, obsolete, or otherwise unaccepted.",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom CryptographicArtifact op, string msg\nwhere\n  \n  \n  \n  not op.asExpr()\n      .getLocation()\n      .getFile()\n      .getAbsolutePath()\n      .toString()\n      .matches(\"%cryptography/hazmat/%\") and\n  (\n    op instanceof BlockMode and\n    \n    (op.(BlockMode).getBlockModeName() = \"ECB\" implies not op instanceof KeyWrapOperation) and\n    exists(string name | name = op.(BlockMode).getBlockModeName() |\n      \n      \n      not name = [\"CBC\", \"CTS\", \"XTS\"] and\n      if name = unknownAlgorithm()\n      then msg = \"Use of unrecognized block mode algorithm.\"\n      else\n        if name in [\"GCM\", \"CCM\"]\n        then\n          msg =\n            \"Use of block mode algorithm \" + name +\n              \" requires special crypto board approval/review.\"\n        else msg = \"Use of unapproved block mode algorithm or API \" + name + \".\"\n    )\n    or\n    op instanceof SymmetricCipher and\n    not op.(SymmetricCipher).hasBlockMode() and\n    msg = \"Cipher has unspecified block mode algorithm.\"\n  )\nselect op, msg",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "WeakAsymmetricKeyGen.ql",
+        "description": "",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom AsymmetricKeyGen op, DataFlow::Node configSrc, int keySize, string algName\nwhere\n  keySize = op.getKeySizeInBits(configSrc) and\n  keySize < 2048 and\n  algName = op.getAlgorithm().getName() and\n  \n  not isEllipticCurveAlgorithm(algName, _)\nselect op,\n  \"Use of weak asymmetric key size (int bits)\" + keySize.toString() + \" for algorithm \" +\n    algName.toString() + \" at config source $@\", configSrc, configSrc.toString()",
+        "cwe_id": [
+            "cwe-326"
+        ]
+    },
+    {
+        "checker": "WeakSymmetricEncryption.ql",
+        "description": "Finds uses of symmetric cryptography algorithms that are weak, obsolete, or otherwise unaccepted.",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom SymmetricEncryptionAlgorithm op, string name, string msg\nwhere\n  name = op.getEncryptionName() and\n  not name = [\"AES\", \"AES128\", \"AES192\", \"AES256\"] and\n  if name = unknownAlgorithm()\n  then msg = \"Use of unrecognized symmetric encryption algorithm.\"\n  else msg = \"Use of unapproved symmetric encryption algorithm or API \" + name + \".\"\nselect op, msg",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "UnknownAsymmetricKeyGen.ql",
+        "description": "",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom AsymmetricKeyGen op, DataFlow::Node configSrc, string algName\nwhere\n  not op.hasKeySize(configSrc) and\n  configSrc = op.getKeyConfigSrc() and\n  algName = op.getAlgorithm().getName()\nselect op,\n  \"Non-statically verifiable key size used for key generation for algorithm \" + algName.toString() +\n    \" at config source $@\", configSrc, configSrc.toString()",
+        "cwe_id": [
+            "cwe-326"
+        ]
+    },
+    {
+        "checker": "WeakEllipticCurve.ql",
+        "description": "Finds uses of cryptography algorithms that are unapproved or otherwise weak.",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom EllipticCurveAlgorithm op, string msg, string name\nwhere\n  (\n    name = op.getCurveName() and\n    name = unknownAlgorithm() and\n    msg = \"Use of unrecognized curve algorithm.\"\n    or\n    name != unknownAlgorithm() and\n    name = op.getCurveName() and\n    not name =\n      [\n        \"SECP256R1\", \"PRIME256V1\", \n        \"SECP384R1\", \n        \"SECP521R1\", \n        \"ED25519\", \"X25519\"\n      ] and\n    msg = \"Use of weak curve algorithm \" + name + \".\"\n  )\nselect op, msg",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "WeakHashes.ql",
+        "description": "Finds uses of cryptography algorithms that are unapproved or otherwise weak.",
+        "source_code": "import python\nimport experimental.cryptography.Concepts\n\nfrom HashAlgorithm op, string name, string msg\nwhere\n  name = op.getHashName() and\n  not name = [\"SHA256\", \"SHA384\", \"SHA512\"] and\n  if name = unknownAlgorithm()\n  then msg = \"Use of unrecognized hash algorithm.\"\n  else msg = \"Use of unapproved hash algorithm or API \" + name + \".\"\nselect op, msg",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "ZipSlip.ql",
+        "description": "Extracting files from a malicious ZIP file, or similar type of archive, without validating that the destination file path is within the destination directory can allow an attacker to unexpectedly gain access to resources.",
+        "source_code": "import python\nimport experimental.semmle.python.security.ZipSlip\nimport ZipSlipFlow::PathGraph\n\nfrom ZipSlipFlow::PathNode source, ZipSlipFlow::PathNode sink\nwhere ZipSlipFlow::flowPath(source, sink)\nselect source.getNode(), source, sink,\n  \"This unsanitized archive entry, which may contain '..', is used in a $@.\", sink.getNode(),\n  \"file system operation\"",
+        "cwe_id": [
+            "cwe-022"
+        ]
+    },
+    {
+        "checker": "CsvInjection.ql",
+        "description": "From user-controlled data saved in CSV files, it is easy to attempt information disclosure or other malicious activities when automated by spreadsheet software",
+        "source_code": "import python\nimport CsvInjectionFlow::PathGraph\nimport semmle.python.dataflow.new.DataFlow\nimport experimental.semmle.python.security.injection.CsvInjection\n\nfrom CsvInjectionFlow::PathNode source, CsvInjectionFlow::PathNode sink\nwhere CsvInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Csv injection might include code from $@.\", source.getNode(),\n  \"this user input\"",
+        "cwe_id": [
+            "cwe-1236"
+        ]
+    },
+    {
+        "checker": "TokenBuiltFromUUID.ql",
+        "description": "Tokens used for sensitive tasks, such as, password recovery, and email confirmation, should not use predictable values.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\nimport semmle.python.dataflow.new.TaintTracking\n\nclass PredictableResultSource extends DataFlow::Node {\n  PredictableResultSource() {\n    exists(API::Node uuidCallRet |\n      uuidCallRet = API::moduleImport(\"uuid\").getMember([\"uuid1\", \"uuid3\", \"uuid5\"]).getReturn()\n    |\n      this = uuidCallRet.asSource()\n      or\n      this = uuidCallRet.getMember([\"hex\", \"bytes\", \"bytes_le\"]).asSource()\n    )\n  }\n}\n\nclass TokenAssignmentValueSink extends DataFlow::Node {\n  TokenAssignmentValueSink() {\n    exists(string name | name.toLowerCase().matches([\"%token\", \"%code\"]) |\n      exists(DefinitionNode n | n.getValue() = this.asCfgNode() | name = n.(NameNode).getId())\n      or\n      exists(DataFlow::AttrWrite aw | aw.getValue() = this | name = aw.getAttributeName())\n    )\n  }\n}\n\nprivate module TokenBuiltFromUuidConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof PredictableResultSource }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof TokenAssignmentValueSink }\n\n  predicate isAdditionalFlowStep(DataFlow::Node nodeFrom, DataFlow::Node nodeTo) {\n    exists(DataFlow::CallCfgNode call |\n      call = API::builtin(\"str\").getACall() and\n      nodeFrom = call.getArg(0) and\n      nodeTo = call\n    )\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\n\nmodule TokenBuiltFromUuidFlow = TaintTracking::Global<TokenBuiltFromUuidConfig>;\n\nimport TokenBuiltFromUuidFlow::PathGraph\n\nfrom TokenBuiltFromUuidFlow::PathNode source, TokenBuiltFromUuidFlow::PathNode sink\nwhere TokenBuiltFromUuidFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Token built from $@.\", source.getNode(), \"predictable value\"",
+        "cwe_id": [
+            "cwe-340"
+        ]
+    },
+    {
+        "checker": "JWTMissingSecretOrPublicKeyVerification.ql",
+        "description": "The application does not verify the JWT payload with a cryptographic secret or public key.",
+        "source_code": "import python\nimport experimental.semmle.python.Concepts\n\nfrom JwtDecoding jwtDecoding\nwhere not jwtDecoding.verifiesSignature()\nselect jwtDecoding.getPayload(), \"is not verified with a cryptographic secret or public key.\"",
+        "cwe_id": [
+            "cwe-347"
+        ]
+    },
+    {
+        "checker": "LdapInsecureAuth.ql",
+        "description": "Python LDAP Insecure LDAP Authentication",
+        "source_code": "import python\nimport experimental.semmle.python.security.LdapInsecureAuth\nimport LdapInsecureAuthFlow::PathGraph\n\nfrom LdapInsecureAuthFlow::PathNode source, LdapInsecureAuthFlow::PathNode sink\nwhere LdapInsecureAuthFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This LDAP host is authenticated insecurely.\"",
+        "cwe_id": [
+            "cwe-522",
+            "cwe-523"
+        ]
+    },
+    {
+        "checker": "CorsMisconfigurationMiddleware.ql",
+        "description": "Disabling or weakening SOP protection may make the application vulnerable to a CORS attack.",
+        "source_code": "import python\nimport semmle.python.Concepts\nprivate import semmle.python.dataflow.new.DataFlow\n\npredicate containsStar(DataFlow::Node array) {\n  array.asExpr() instanceof List and\n  array.asExpr().getASubExpression().(StringLiteral).getText() in [\"*\", \"null\"]\n  or\n  array.asExpr().(StringLiteral).getText() in [\"*\", \"null\"]\n}\n\npredicate isCorsMiddleware(Http::Server::CorsMiddleware middleware) {\n  middleware.getMiddlewareName() = \"CORSMiddleware\"\n}\n\npredicate credentialsAllowed(Http::Server::CorsMiddleware middleware) {\n  middleware.getCredentialsAllowed().asExpr() instanceof True\n}\n\nfrom Http::Server::CorsMiddleware a\nwhere\n  credentialsAllowed(a) and\n  containsStar(a.getOrigins().getALocalSource()) and\n  isCorsMiddleware(a)\nselect a,\n  \"This CORS middleware uses a vulnerable configuration that allows arbitrary websites to make authenticated cross-site requests\"",
+        "cwe_id": [
+            "cwe-942"
+        ]
+    },
+    {
+        "checker": "Js2Py.ql",
+        "description": "Passing user supplied arguments to a Javascript to Python translation engine such as Js2Py can lead to remote code execution.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\nimport semmle.python.dataflow.new.TaintTracking\nimport semmle.python.dataflow.new.RemoteFlowSources\nimport semmle.python.Concepts\n\nmodule Js2PyFlowConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node node) { node instanceof ActiveThreatModelSource }\n\n  predicate isSink(DataFlow::Node node) {\n    API::moduleImport(\"js2py\").getMember([\"eval_js\", \"eval_js6\", \"EvalJs\"]).getACall().getArg(_) =\n      node\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule Js2PyFlow = TaintTracking::Global<Js2PyFlowConfig>;\n\nimport Js2PyFlow::PathGraph\n\nfrom Js2PyFlow::PathNode source, Js2PyFlow::PathNode sink\nwhere\n  Js2PyFlow::flowPath(source, sink) and\n  not exists(API::moduleImport(\"js2py\").getMember(\"disable_pyimport\").getACall())\nselect sink, source, sink, \"This input to Js2Py depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-094"
+        ]
+    },
+    {
+        "checker": "UnicodeBypassValidation.ql",
+        "description": "A Unicode transformation is using a remote user-controlled data. The transformation is a Unicode normalization using the algorithms \"NFC\" or \"NFKC\". In all cases, the security measures implemented or the logical validation performed to escape any injection characters, to validate using regex patterns or to perform string-based checks, before the Unicode transformation are **bypassable** by special Unicode characters.",
+        "source_code": "import python\nimport UnicodeBypassValidationQuery\nimport UnicodeBypassValidationFlow::PathGraph\n\nfrom UnicodeBypassValidationFlow::PathNode source, UnicodeBypassValidationFlow::PathNode sink\nwhere UnicodeBypassValidationFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"This $@ processes unsafely $@ and any logical validation in-between could be bypassed using special Unicode characters.\",\n  sink.getNode(), \"Unicode transformation (Unicode normalization)\", source.getNode(),\n  \"remote user-controlled data\"",
+        "cwe_id": [
+            "cwe-176",
+            "cwe-179",
+            "cwe-180"
+        ]
+    },
+    {
+        "checker": "WebAppConstantSecretKey.ql",
+        "description": "Initializing SECRET_KEY of Flask application with Constant value files can lead to Authentication bypass",
+        "source_code": "import python\nimport experimental.semmle.python.Concepts\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\nimport semmle.python.dataflow.new.TaintTracking\nimport WebAppConstantSecretKeyDjango\nimport WebAppConstantSecretKeyFlask\nimport semmle.python.filters.Tests\n\nnewtype TFrameWork =\n  Flask() or\n  Django()\n\nprivate module WebAppConstantSecretKeyConfig implements DataFlow::StateConfigSig {\n  class FlowState = TFrameWork;\n\n  predicate isSource(DataFlow::Node source, FlowState state) {\n    state = Flask() and FlaskConstantSecretKeyConfig::isSource(source)\n    or\n    state = Django() and DjangoConstantSecretKeyConfig::isSource(source)\n  }\n\n  predicate isBarrier(DataFlow::Node node) {\n    node.getLocation().getFile().inStdlib()\n    or\n    \n    node.getLocation()\n        .getFile()\n        .getRelativePath()\n        .matches([\"%test%\", \"%demo%\", \"%example%\", \"%sample%\"]) and\n    \n    \n    not node.getLocation().getFile().getRelativePath().matches(\"%query-tests/Security/CWE-287%\")\n  }\n\n  predicate isSink(DataFlow::Node sink, FlowState state) {\n    state = Flask() and FlaskConstantSecretKeyConfig::isSink(sink)\n    or\n    state = Django() and DjangoConstantSecretKeyConfig::isSink(sink)\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule WebAppConstantSecretKeyFlow = TaintTracking::GlobalWithState<WebAppConstantSecretKeyConfig>;\n\nimport WebAppConstantSecretKeyFlow::PathGraph\n\nfrom WebAppConstantSecretKeyFlow::PathNode source, WebAppConstantSecretKeyFlow::PathNode sink\nwhere WebAppConstantSecretKeyFlow::flowPath(source, sink)\nselect sink, source, sink, \"The SECRET_KEY config variable is assigned by $@.\", source,\n  \" this constant String\"",
+        "cwe_id": [
+            "cwe-287",
+            "cwe-287"
+        ]
+    },
+    {
+        "checker": "UnicodeDoS.ql",
+        "description": "A remote user-controlled data can reach a costly Unicode normalization with either form NFKC or NFKD. On Windows OS, with an attack such as the One Million Unicode Characters, this could lead to a denial of service. And, with the use of special Unicode characters, like U+2100 (\u2100) or U+2105 (\u2105), the payload size could be tripled.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\nimport semmle.python.Concepts\nimport semmle.python.dataflow.new.TaintTracking\nimport semmle.python.dataflow.new.internal.DataFlowPublic\nimport semmle.python.dataflow.new.RemoteFlowSources\n\n\n\nclass UnicodeCompatibilityNormalize extends API::CallNode {\n  int argIdx;\n\n  UnicodeCompatibilityNormalize() {\n    (\n      this = API::moduleImport(\"unicodedata\").getMember(\"normalize\").getACall() and\n      this.getParameter(0).getAValueReachingSink().asExpr().(StringLiteral).getText() in [\n          \"NFKC\", \"NFKD\"\n        ]\n      or\n      this = API::moduleImport(\"pyunormalize\").getMember(\"normalize\").getACall() and\n      this.getParameter(0).getAValueReachingSink().asExpr().(StringLiteral).getText() in [\n          \"NFKC\", \"NFKD\"\n        ]\n    ) and\n    argIdx = 1\n    or\n    (\n      this = API::moduleImport(\"textnorm\").getMember(\"normalize_unicode\").getACall() and\n      this.getParameter(1).getAValueReachingSink().asExpr().(StringLiteral).getText() in [\n          \"NFKC\", \"NFKD\"\n        ]\n      or\n      this = API::moduleImport(\"unidecode\").getMember(\"unidecode\").getACall()\n      or\n      this = API::moduleImport(\"pyunormalize\").getMember([\"NFKC\", \"NFKD\"]).getACall()\n    ) and\n    argIdx = 0\n  }\n\n  DataFlow::Node getPathArg() { result = this.getArg(argIdx) }\n}\n\npredicate underAValue(DataFlow::GuardNode g, ControlFlowNode node, boolean branch) {\n  exists(CompareNode cn | cn = g |\n    exists(API::CallNode lenCall, Cmpop op, Node n |\n      lenCall = n.getALocalSource() and\n      (\n        \n        (op instanceof LtE or op instanceof Lt) and\n        branch = true and\n        cn.operands(n.asCfgNode(), op, _)\n        or\n        \n        (op instanceof GtE or op instanceof Gt) and\n        branch = true and\n        cn.operands(_, op, n.asCfgNode())\n        or\n        \n        (op instanceof GtE or op instanceof Gt) and\n        branch = false and\n        cn.operands(n.asCfgNode(), op, _)\n        or\n        \n        (op instanceof LtE or op instanceof Lt) and\n        branch = false and\n        cn.operands(_, op, n.asCfgNode())\n      )\n    |\n      lenCall = API::builtin(\"len\").getACall() and\n      node = lenCall.getArg(0).asCfgNode()\n    ) \n    \n  )\n}\n\nprivate module UnicodeDoSConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof RemoteFlowSource }\n\n  predicate isBarrier(DataFlow::Node sanitizer) {\n    \n    sanitizer = DataFlow::BarrierGuard<underAValue/3>::getABarrierNode()\n  }\n\n  predicate isSink(DataFlow::Node sink) {\n    \n    sink = any(UnicodeCompatibilityNormalize ucn).getPathArg()\n    or\n    \n    \n    sink = API::moduleImport(\"werkzeug\").getMember(\"secure_filename\").getACall().getArg(_)\n    or\n    sink =\n      API::moduleImport(\"werkzeug\")\n          .getMember(\"utils\")\n          .getMember(\"secure_filename\")\n          .getACall()\n          .getArg(_)\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule UnicodeDoSFlow = TaintTracking::Global<UnicodeDoSConfig>;\n\nimport UnicodeDoSFlow::PathGraph\n\nfrom UnicodeDoSFlow::PathNode source, UnicodeDoSFlow::PathNode sink\nwhere UnicodeDoSFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This $@ can reach a $@.\", source.getNode(),\n  \"user-provided value\", sink.getNode(), \"costly Unicode normalization operation\"",
+        "cwe_id": [
+            "cwe-770"
+        ]
+    },
+    {
+        "checker": "ClientSuppliedIpUsedInSecurityCheck.ql",
+        "description": "A remote endpoint identifier is read from an HTTP header. Attackers can modify the value of the identifier to forge the client ip.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport semmle.python.ApiGraphs\nimport ClientSuppliedIpUsedInSecurityCheckLib\nimport ClientSuppliedIpUsedInSecurityCheckFlow::PathGraph\n\n\nprivate module ClientSuppliedIpUsedInSecurityCheckConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) {\n    source instanceof ClientSuppliedIpUsedInSecurityCheck\n  }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof PossibleSecurityCheck }\n\n  predicate isAdditionalFlowStep(DataFlow::Node pred, DataFlow::Node succ) {\n    exists(DataFlow::CallCfgNode ccn |\n      ccn = API::moduleImport(\"netaddr\").getMember(\"IPAddress\").getACall() and\n      ccn.getArg(0) = pred and\n      ccn = succ\n    )\n  }\n\n  predicate isBarrier(DataFlow::Node node) {\n    \n    exists(Subscript ss |\n      not ss.getIndex().(IntegerLiteral).getText() = \"0\" and\n      ss.getObject().(Call).getFunc().(Attribute).getName() = \"split\" and\n      ss.getObject().(Call).getAnArg().(StringLiteral).getText() = \",\" and\n      ss = node.asExpr()\n    )\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\n\nmodule ClientSuppliedIpUsedInSecurityCheckFlow =\n  TaintTracking::Global<ClientSuppliedIpUsedInSecurityCheckConfig>;\n\nfrom\n  ClientSuppliedIpUsedInSecurityCheckFlow::PathNode source,\n  ClientSuppliedIpUsedInSecurityCheckFlow::PathNode sink\nwhere ClientSuppliedIpUsedInSecurityCheckFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"IP address spoofing might include code from $@.\",\n  source.getNode(), \"this user input\"",
+        "cwe_id": [
+            "cwe-348"
+        ]
+    },
+    {
+        "checker": "SimpleXmlRpcServer.ql",
+        "description": "SimpleXMLRPCServer is vulnerable to denial of service attacks from untrusted user input",
+        "source_code": "private import python\nprivate import semmle.python.Concepts\nprivate import semmle.python.ApiGraphs\n\nfrom DataFlow::CallCfgNode call\nwhere\n  call = API::moduleImport(\"xmlrpc\").getMember(\"server\").getMember(\"SimpleXMLRPCServer\").getACall()\nselect call, \"SimpleXMLRPCServer is vulnerable to XML bombs.\"",
+        "cwe_id": [
+            "cwe-776"
+        ]
+    },
+    {
+        "checker": "RemoteCommandExecution.ql",
+        "description": "user provided command can lead to execute code on a external server that can be belong to other users or admins",
+        "source_code": "import python\nimport experimental.semmle.python.security.RemoteCommandExecution\nimport RemoteCommandExecutionFlow::PathGraph\n\nfrom RemoteCommandExecutionFlow::PathNode source, RemoteCommandExecutionFlow::PathNode sink\nwhere RemoteCommandExecutionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This code execution depends on a $@.\", source.getNode(),\n  \"a user-provided value\"",
+        "cwe_id": [
+            "cwe-074"
+        ]
+    },
+    {
+        "checker": "XsltInjection.ql",
+        "description": "Building a XSLT query from user-controlled sources is vulnerable to insertion of malicious XSLT code by the user.",
+        "source_code": "import python\nimport XsltInjectionQuery\nimport XsltInjectionFlow::PathGraph\n\nfrom XsltInjectionFlow::PathNode source, XsltInjectionFlow::PathNode sink\nwhere XsltInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This XSLT query depends on $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-643"
+        ]
+    },
+    {
+        "checker": "DecompressionBombs.ql",
+        "description": "Uncontrolled data that flows into decompression library APIs without checking the compression rate is dangerous",
+        "source_code": "import python\nimport experimental.semmle.python.security.DecompressionBomb\nimport BombsFlow::PathGraph\n\nfrom BombsFlow::PathNode source, BombsFlow::PathNode sink\nwhere BombsFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This uncontrolled file extraction is $@.\", source.getNode(),\n  \"depends on this user controlled data\"",
+        "cwe_id": [
+            "cwe-409"
+        ]
+    },
+    {
+        "checker": "UnsafeUsageOfClientSideEncryptionVersion.ql",
+        "description": "Using version v1 of Azure Storage client-side encryption is insecure, and may enable an attacker to decrypt encrypted data",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\nAPI::Node getBlobServiceClient(boolean isSource) {\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"BlobServiceClient\")\n        .getReturn()\n  or\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"BlobServiceClient\")\n        .getMember(\"from_connection_string\")\n        .getReturn()\n}\n\nAPI::CallNode getTransitionToContainerClient() {\n  result = getBlobServiceClient(_).getMember(\"get_container_client\").getACall()\n  or\n  result = getBlobClient(_).getMember(\"_get_container_client\").getACall()\n}\n\nAPI::Node getContainerClient(boolean isSource) {\n  isSource = false and\n  result = getTransitionToContainerClient().getReturn()\n  or\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"ContainerClient\")\n        .getReturn()\n  or\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"ContainerClient\")\n        .getMember([\"from_connection_string\", \"from_container_url\"])\n        .getReturn()\n}\n\nAPI::CallNode getTransitionToBlobClient() {\n  result = [getBlobServiceClient(_), getContainerClient(_)].getMember(\"get_blob_client\").getACall()\n}\n\nAPI::Node getBlobClient(boolean isSource) {\n  isSource = false and\n  result = getTransitionToBlobClient().getReturn()\n  or\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"BlobClient\")\n        .getReturn()\n  or\n  isSource = true and\n  result =\n    API::moduleImport(\"azure\")\n        .getMember(\"storage\")\n        .getMember(\"blob\")\n        .getMember(\"BlobClient\")\n        .getMember([\"from_connection_string\", \"from_blob_url\"])\n        .getReturn()\n}\n\nAPI::Node anyClient(boolean isSource) {\n  result in [getBlobServiceClient(isSource), getContainerClient(isSource), getBlobClient(isSource)]\n}\n\nnewtype TAzureFlowState =\n  MkUsesV1Encryption() or\n  MkUsesNoEncryption()\n\nprivate module AzureBlobClientConfig implements DataFlow::StateConfigSig {\n  class FlowState = TAzureFlowState;\n\n  predicate isSource(DataFlow::Node node, FlowState state) {\n    state = MkUsesNoEncryption() and\n    node = anyClient(true).asSource()\n  }\n\n  predicate isBarrier(DataFlow::Node node, FlowState state) {\n    exists(state) and\n    exists(DataFlow::AttrWrite attr |\n      node = anyClient(_).getAValueReachableFromSource() and\n      attr.accesses(node, \"encryption_version\") and\n      attr.getValue().asExpr().(StringLiteral).getText() in [\"'2.0'\", \"2.0\"]\n    )\n    or\n    \n    \n    isAdditionalFlowStep(_, MkUsesNoEncryption(), node, MkUsesV1Encryption()) and\n    state = MkUsesNoEncryption()\n  }\n\n  predicate isAdditionalFlowStep(DataFlow::Node node1, DataFlow::Node node2) {\n    exists(DataFlow::MethodCallNode call |\n      call in [getTransitionToContainerClient(), getTransitionToBlobClient()] and\n      node1 = call.getObject() and\n      node2 = call\n    )\n  }\n\n  predicate isAdditionalFlowStep(\n    DataFlow::Node node1, FlowState state1, DataFlow::Node node2, FlowState state2\n  ) {\n    node1 = node2.(DataFlow::PostUpdateNode).getPreUpdateNode() and\n    state1 = MkUsesNoEncryption() and\n    state2 = MkUsesV1Encryption() and\n    exists(DataFlow::AttrWrite attr |\n      node1 = anyClient(_).getAValueReachableFromSource() and\n      attr.accesses(node1, [\"key_encryption_key\", \"key_resolver_function\"])\n    )\n  }\n\n  predicate isSink(DataFlow::Node node, FlowState state) {\n    state = MkUsesV1Encryption() and\n    exists(DataFlow::MethodCallNode call |\n      call = getBlobClient(_).getMember(\"upload_blob\").getACall() and\n      node = call.getObject()\n    )\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n\n  Location getASelectedSourceLocation(DataFlow::Node sink) { none() }\n}\n\nmodule AzureBlobClientFlow = DataFlow::GlobalWithState<AzureBlobClientConfig>;\n\nimport AzureBlobClientFlow::PathGraph\n\nfrom AzureBlobClientFlow::PathNode source, AzureBlobClientFlow::PathNode sink\nwhere AzureBlobClientFlow::flowPath(source, sink)\nselect sink, source, sink, \"Unsafe usage of v1 version of Azure Storage client-side encryption\"",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "TimingAttackAgainstHeaderValue.ql",
+        "description": "Use of a non-constant-time verification routine to check the value of an HTTP header, possibly allowing a timing attack to infer the header's expected value.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport experimental.semmle.python.security.TimingAttack\n\n\nprivate module TimingAttackAgainstHeaderValueConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof ClientSuppliedSecret }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof CompareSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule TimingAttackAgainstHeaderValueFlow =\n  TaintTracking::Global<TimingAttackAgainstHeaderValueConfig>;\n\nimport TimingAttackAgainstHeaderValueFlow::PathGraph\n\nfrom\n  TimingAttackAgainstHeaderValueFlow::PathNode source,\n  TimingAttackAgainstHeaderValueFlow::PathNode sink\nwhere\n  TimingAttackAgainstHeaderValueFlow::flowPath(source, sink) and\n  not sink.getNode().(CompareSink).flowtolen()\nselect sink.getNode(), source, sink, \"Timing attack against $@ validation.\", source.getNode(),\n  \"client-supplied token\"",
+        "cwe_id": [
+            "cwe-208"
+        ]
+    },
+    {
+        "checker": "TimingAttackAgainstSensitiveInfo.ql",
+        "description": "Use of a non-constant-time verification routine to check the value of an secret, possibly allowing a timing attack to retrieve sensitive information.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport experimental.semmle.python.security.TimingAttack\nimport TimingAttackAgainstSensitiveInfoFlow::PathGraph\n\n\nprivate module TimingAttackAgainstSensitiveInfoConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof SecretSource }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof NonConstantTimeComparisonSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule TimingAttackAgainstSensitiveInfoFlow =\n  TaintTracking::Global<TimingAttackAgainstSensitiveInfoConfig>;\n\nfrom\n  TimingAttackAgainstSensitiveInfoFlow::PathNode source,\n  TimingAttackAgainstSensitiveInfoFlow::PathNode sink\nwhere\n  TimingAttackAgainstSensitiveInfoFlow::flowPath(source, sink) and\n  (\n    source.getNode().(SecretSource).includesUserInput() or\n    sink.getNode().(NonConstantTimeComparisonSink).includesUserInput()\n  )\nselect sink.getNode(), source, sink, \"Timing attack against $@ validation.\", source.getNode(),\n  \"client-supplied token\"",
+        "cwe_id": [
+            "cwe-208"
+        ]
+    },
+    {
+        "checker": "PossibleTimingAttackAgainstSensitiveInfo.ql",
+        "description": "Use of a non-constant-time verification routine to check the value of an secret, possibly allowing a timing attack to retrieve sensitive information.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport experimental.semmle.python.security.TimingAttack\n\n\nprivate module PossibleTimingAttackAgainstSensitiveInfoConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof SecretSource }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof NonConstantTimeComparisonSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule PossibleTimingAttackAgainstSensitiveInfoFlow =\n  TaintTracking::Global<PossibleTimingAttackAgainstSensitiveInfoConfig>;\n\nimport PossibleTimingAttackAgainstSensitiveInfoFlow::PathGraph\n\nfrom\n  PossibleTimingAttackAgainstSensitiveInfoFlow::PathNode source,\n  PossibleTimingAttackAgainstSensitiveInfoFlow::PathNode sink\nwhere PossibleTimingAttackAgainstSensitiveInfoFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Timing attack against $@ validation.\", source.getNode(),\n  \"client-supplied token\"",
+        "cwe_id": [
+            "cwe-208"
+        ]
+    },
+    {
+        "checker": "PossibleTimingAttackAgainstHash.ql",
+        "description": "When checking a Hash over a message, a constant-time algorithm should be used. Otherwise, an attacker may be able to forge a valid Hash for an arbitrary message by running a timing attack if they can send to the validation procedure. A successful attack can result in authentication bypass.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport experimental.semmle.python.security.TimingAttack\n\n\nprivate module PossibleTimingAttackAgainstHashConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof ProduceCryptoCall }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof NonConstantTimeComparisonSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule PossibleTimingAttackAgainstHashFlow =\n  TaintTracking::Global<PossibleTimingAttackAgainstHashConfig>;\n\nimport PossibleTimingAttackAgainstHashFlow::PathGraph\n\nfrom\n  PossibleTimingAttackAgainstHashFlow::PathNode source,\n  PossibleTimingAttackAgainstHashFlow::PathNode sink\nwhere PossibleTimingAttackAgainstHashFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Possible Timing attack against $@ validation.\",\n  source.getNode(), source.getNode().(ProduceCryptoCall).getResultType() + \" message\"",
+        "cwe_id": [
+            "cwe-208"
+        ]
+    },
+    {
+        "checker": "TimingAttackAgainstHash.ql",
+        "description": "When checking a Hash over a message, a constant-time algorithm should be used. Otherwise, an attacker may be able to forge a valid Hash for an arbitrary message by running a timing attack if they can send to the validation procedure. A successful attack can result in authentication bypass.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport experimental.semmle.python.security.TimingAttack\n\n\nprivate module TimingAttackAgainstHashConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof ProduceCryptoCall }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof NonConstantTimeComparisonSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule TimingAttackAgainstHashFlow = TaintTracking::Global<TimingAttackAgainstHashConfig>;\n\nimport TimingAttackAgainstHashFlow::PathGraph\n\nfrom TimingAttackAgainstHashFlow::PathNode source, TimingAttackAgainstHashFlow::PathNode sink\nwhere\n  TimingAttackAgainstHashFlow::flowPath(source, sink) and\n  sink.getNode().(NonConstantTimeComparisonSink).includesUserInput()\nselect sink.getNode(), source, sink, \"Timing attack against $@ validation.\", source.getNode(),\n  source.getNode().(ProduceCryptoCall).getResultType() + \" message\"",
+        "cwe_id": [
+            "cwe-208"
+        ]
+    },
+    {
+        "checker": "CorsBypass.ql",
+        "description": "Checking user supplied origin headers using weak comparators like 'string.startswith' may lead to CORS policy bypass.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\nimport semmle.python.dataflow.new.TaintTracking\nimport semmle.python.Flow\nimport semmle.python.dataflow.new.RemoteFlowSources\n\n\nprivate predicate maybeInteresting(ControlFlowNode c) {\n  \n  \n  \n  \n  heuristics(c.(CallNode).getFunction().(AttrNode).getObject().(NameNode).getId())\n  or\n  \n  \n  \n  heuristics(c.(CallNode).getArg(0).(NameNode).getId())\n  or\n  \n  \n  \n  exists(Variable v | heuristics(v.getId()) | c.getASuccessor*().getNode() = v.getAStore())\n}\n\nprivate class StringStartswithCall extends ControlFlowNode {\n  StringStartswithCall() { this.(CallNode).getFunction().(AttrNode).getName() = \"startswith\" }\n}\n\nbindingset[s]\npredicate heuristics(string s) { s.matches([\"%origin%\", \"%cors%\"]) }\n\n\nclass CherryPyRequest extends RemoteFlowSource::Range {\n  CherryPyRequest() {\n    this =\n      API::moduleImport(\"cherrypy\")\n          .getMember(\"request\")\n          .getMember([\n              \"charset\", \"content_type\", \"filename\", \"fp\", \"name\", \"params\", \"headers\", \"length\",\n            ])\n          .asSource()\n  }\n\n  override string getSourceType() { result = \"cherrypy.request\" }\n}\n\nmodule CorsBypassConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node node) { node instanceof RemoteFlowSource }\n\n  predicate isSink(DataFlow::Node node) {\n    exists(StringStartswithCall s |\n      node.asCfgNode() = s.(CallNode).getArg(0) or\n      node.asCfgNode() = s.(CallNode).getFunction().(AttrNode).getObject()\n    )\n  }\n\n  predicate isAdditionalFlowStep(DataFlow::Node node1, DataFlow::Node node2) {\n    exists(API::CallNode c, API::Node n |\n      n = API::moduleImport(\"cherrypy\").getMember(\"request\").getMember(\"headers\") and\n      c = n.getMember(\"get\").getACall()\n    |\n      c.getReturn().asSource() = node2 and n.asSource() = node1\n    )\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n\n  Location getASelectedSourceLocation(DataFlow::Node sink) { none() }\n}\n\nmodule CorsFlow = TaintTracking::Global<CorsBypassConfig>;\n\nimport CorsFlow::PathGraph\n\nfrom CorsFlow::PathNode source, CorsFlow::PathNode sink\nwhere\n  CorsFlow::flowPath(source, sink) and\n  (\n    maybeInteresting(source.getNode().asCfgNode())\n    or\n    maybeInteresting(sink.getNode().asCfgNode())\n  )\nselect sink, source, sink,\n  \"Potentially incorrect string comparison which could lead to a CORS bypass.\"",
+        "cwe_id": [
+            "cwe-346"
+        ]
+    },
+    {
+        "checker": "EmailXss.ql",
+        "description": "Writing user input directly to a web page allows for a cross-site scripting vulnerability.",
+        "source_code": "import python\nimport experimental.semmle.python.security.dataflow.EmailXss\nimport EmailXssFlow::PathGraph\n\nfrom EmailXssFlow::PathNode source, EmailXssFlow::PathNode sink\nwhere EmailXssFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Cross-site scripting vulnerability due to $@.\",\n  source.getNode(), \"a user-provided value\"",
+        "cwe_id": [
+            "cwe-079",
+            "cwe-116"
+        ]
+    },
+    {
+        "checker": "InsecureRandomness.ql",
+        "description": "Using a cryptographically weak pseudo-random number generator to generate a security-sensitive value may allow an attacker to predict what value will be generated.",
+        "source_code": "import python\nimport experimental.semmle.python.security.InsecureRandomness\nimport semmle.python.dataflow.new.DataFlow\nimport InsecureRandomness::Flow::PathGraph\n\nfrom InsecureRandomness::Flow::PathNode source, InsecureRandomness::Flow::PathNode sink\nwhere InsecureRandomness::Flow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Cryptographically insecure $@ in a security context.\",\n  source.getNode(), \"random value\"",
+        "cwe_id": [
+            "cwe-338"
+        ]
+    },
+    {
+        "checker": "UnsafeUnpack.ql",
+        "description": "Extracting files from a potentially malicious tarball using `shutil.unpack_archive()` without validating that the destination file path is within the destination directory can cause files outside the destination directory to be overwritten. More precisely, if the tarball comes from a user controlled location either a remote one or cli argument.",
+        "source_code": "import python\nimport experimental.Security.UnsafeUnpackQuery\nimport UnsafeUnpackFlow::PathGraph\n\nfrom UnsafeUnpackFlow::PathNode source, UnsafeUnpackFlow::PathNode sink\nwhere UnsafeUnpackFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"Unsafe extraction from a malicious tarball retrieved from a remote location.\"",
+        "cwe_id": [
+            "cwe-022"
+        ]
+    },
+    {
+        "checker": "TarSlipImprov.ql",
+        "description": "Extracting files from a malicious tar archive without validating that the destination file path is within the destination directory can cause files outside the destination directory to be overwritten.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport TarSlipImprovFlow::PathGraph\nimport semmle.python.ApiGraphs\nimport semmle.python.dataflow.new.internal.Attributes\nimport semmle.python.dataflow.new.BarrierGuards\nimport semmle.python.dataflow.new.RemoteFlowSources\n\n\nAPI::Node tarfileOpen() {\n  result in [\n      API::moduleImport(\"tarfile\").getMember([\"open\", \"TarFile\"]),\n      API::moduleImport(\"tarfile\").getMember(\"TarFile\").getASubclass().getMember(\"open\")\n    ]\n}\n\n\nclass AllTarfileOpens extends API::CallNode {\n  AllTarfileOpens() {\n    this = tarfileOpen().getACall()\n    or\n    exists(API::Node closing, Node arg |\n      closing = API::moduleImport(\"contextlib\").getMember(\"closing\") and\n      this = closing.getACall() and\n      arg = this.getArg(0) and\n      arg = tarfileOpen().getACall()\n    )\n  }\n}\n\n\nprivate module TarSlipImprovConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source = tarfileOpen().getACall() }\n\n  predicate isSink(DataFlow::Node sink) {\n    (\n      \n      \n      exists(MethodCallNode call, AllTarfileOpens atfo |\n        call = atfo.getReturn().getMember(\"extractall\").getACall() and\n        not exists(call.getArgByName(\"members\")) and\n        sink = call.getObject()\n      )\n      or\n      \n      \n      \n      \n      exists(MethodCallNode call, Node arg, AllTarfileOpens atfo |\n        call = atfo.getReturn().getMember(\"extractall\").getACall() and\n        arg = call.getArgByName(\"members\") and\n        if\n          arg.asCfgNode() instanceof NameConstantNode or\n          arg.asCfgNode() instanceof ListNode\n        then sink = call.getObject()\n        else\n          if arg.(MethodCallNode).getMethodName() = \"getmembers\"\n          then sink = arg.(MethodCallNode).getObject()\n          else sink = call.getArgByName(\"members\")\n      )\n      or\n      \n      exists(AllTarfileOpens atfo |\n        sink = atfo.getReturn().getMember(\"extract\").getACall().getArg(0)\n      )\n      or\n      \n      exists(MethodCallNode call, AllTarfileOpens atfo |\n        call = atfo.getReturn().getMember(\"_extract_member\").getACall() and\n        call.getArg(1).(AttrRead).accesses(sink, \"name\")\n      )\n    ) and\n    not sink.getScope().getLocation().getFile().inStdlib()\n  }\n\n  predicate isAdditionalFlowStep(DataFlow::Node nodeFrom, DataFlow::Node nodeTo) {\n    nodeTo.(MethodCallNode).calls(nodeFrom, \"getmembers\") and\n    nodeFrom instanceof AllTarfileOpens\n    or\n    \n    \n    \n    nodeTo = API::moduleImport(\"contextlib\").getMember(\"closing\").getACall() and\n    nodeFrom = nodeTo.(API::CallNode).getArg(0) and\n    nodeFrom = tarfileOpen().getReturn().getAValueReachableFromSource()\n  }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\n\nmodule TarSlipImprovFlow = TaintTracking::Global<TarSlipImprovConfig>;\n\nfrom TarSlipImprovFlow::PathNode source, TarSlipImprovFlow::PathNode sink\nwhere TarSlipImprovFlow::flowPath(source, sink)\nselect sink, source, sink, \"Extraction of tarfile from $@ to a potentially untrusted source $@.\",\n  source.getNode(), source.getNode().toString(), sink.getNode(), sink.getNode().toString()",
+        "cwe_id": [
+            "cwe-022"
+        ]
+    },
+    {
+        "checker": "ImproperLdapAuth.ql",
+        "description": "A user-controlled query carries no authentication",
+        "source_code": "import python\nimport experimental.semmle.python.Concepts\nimport semmle.python.dataflow.new.DataFlow\n\npredicate authenticatesImproperly(LdapBind ldapBind) {\n  (\n    DataFlow::localFlow(DataFlow::exprNode(any(None noneName)), ldapBind.getPassword()) or\n    not exists(ldapBind.getPassword())\n  )\n  or\n  exists(StringLiteral emptyString |\n    emptyString.getText() = \"\" and\n    DataFlow::localFlow(DataFlow::exprNode(emptyString), ldapBind.getPassword())\n  )\n}\n\nfrom LdapBind ldapBind\nwhere authenticatesImproperly(ldapBind)\nselect ldapBind, \"The following LDAP bind operation is executed without authentication.\"",
+        "cwe_id": [
+            "cwe-287"
+        ]
+    },
+    {
+        "checker": "StatementNoEffect.ql",
+        "description": "A statement has no effect",
+        "source_code": "import python\n\npredicate understood_attribute(Attribute attr, ClassValue cls, ClassValue attr_cls) {\n  exists(string name | attr.getName() = name |\n    attr.getObject().pointsTo().getClass() = cls and\n    cls.attr(name).getClass() = attr_cls\n  )\n}\n\n\npredicate side_effecting_attribute(Attribute attr) {\n  exists(ClassValue attr_cls |\n    understood_attribute(attr, _, attr_cls) and\n    side_effecting_descriptor_type(attr_cls)\n  )\n}\n\npredicate maybe_side_effecting_attribute(Attribute attr) {\n  not understood_attribute(attr, _, _) and not attr.pointsTo(_)\n  or\n  side_effecting_attribute(attr)\n}\n\npredicate side_effecting_descriptor_type(ClassValue descriptor) {\n  descriptor.isDescriptorType() and\n  \n  \n  \n  not descriptor = ClassValue::functionType() and\n  not descriptor = ClassValue::staticmethod() and\n  not descriptor = ClassValue::classmethod()\n}\n\n\npredicate side_effecting_binary(Expr b) {\n  exists(Expr sub, ClassValue cls, string method_name |\n    binary_operator_special_method(b, sub, cls, method_name)\n    or\n    comparison_special_method(b, sub, cls, method_name)\n  |\n    method_name = special_method() and\n    cls.hasAttribute(method_name) and\n    not exists(ClassValue declaring |\n      declaring.declaresAttribute(method_name) and\n      declaring = cls.getASuperType() and\n      declaring.isBuiltin() and\n      not declaring = ClassValue::object()\n    )\n  )\n}\n\npragma[nomagic]\nprivate predicate binary_operator_special_method(\n  BinaryExpr b, Expr sub, ClassValue cls, string method_name\n) {\n  method_name = special_method() and\n  sub = b.getLeft() and\n  method_name = b.getOp().getSpecialMethodName() and\n  sub.pointsTo().getClass() = cls\n}\n\npragma[nomagic]\nprivate predicate comparison_special_method(Compare b, Expr sub, ClassValue cls, string method_name) {\n  exists(Cmpop op |\n    b.compares(sub, op, _) and\n    method_name = op.getSpecialMethodName()\n  ) and\n  sub.pointsTo().getClass() = cls\n}\n\nprivate string special_method() {\n  result = any(Cmpop c).getSpecialMethodName()\n  or\n  result = any(BinaryExpr b).getOp().getSpecialMethodName()\n}\n\npredicate is_notebook(File f) {\n  exists(Comment c | c.getLocation().getFile() = f |\n    c.getText().regexpMatch(\"#\\\\s*<nbformat>.+</nbformat>\\\\s*\")\n  )\n}\n\n\npredicate in_notebook(Expr e) { is_notebook(e.getScope().(Module).getFile()) }\n\nFunctionValue assertRaises() {\n  result = Value::named(\"unittest.TestCase\").(ClassValue).lookup(\"assertRaises\")\n}\n\n\npredicate in_raises_test(Expr e) {\n  exists(With w |\n    w.contains(e) and\n    w.getContextExpr() = assertRaises().getACall().getNode()\n  )\n}\n\n\npredicate python2_print(Expr e) {\n  e.(BinaryExpr).getLeft().(Name).getId() = \"print\" and\n  e.(BinaryExpr).getOp() instanceof RShift\n  or\n  python2_print(e.(Tuple).getElt(0))\n}\n\npredicate no_effect(Expr e) {\n  \n  not e instanceof StringLiteral and\n  not e.hasSideEffects() and\n  forall(Expr sub | sub = e.getASubExpression*() |\n    not side_effecting_binary(sub) and\n    not maybe_side_effecting_attribute(sub)\n  ) and\n  not in_notebook(e) and\n  not in_raises_test(e) and\n  not python2_print(e)\n}\n\nfrom ExprStmt stmt\nwhere no_effect(stmt.getValue())\nselect stmt, \"This statement has no effect.\"",
+        "cwe_id": [
+            "cwe-561"
+        ]
+    },
+    {
+        "checker": "UnreachableCode.ql",
+        "description": "Code is unreachable",
+        "source_code": "import python\n\npredicate typing_import(ImportingStmt is) {\n  exists(Module m |\n    is.getScope() = m and\n    exists(TypeHintComment tc | tc.getLocation().getFile() = m.getFile())\n  )\n}\n\n\npredicate unique_yield(Stmt s) {\n  exists(Yield y | s.contains(y)) and\n  exists(Function f |\n    f = s.getScope() and\n    strictcount(Yield y | f.containsInScope(y)) = 1\n  )\n}\n\n\npredicate suppression_in_scope(Stmt s) {\n  exists(With w |\n    w.getContextExpr().(Call).getFunc().pointsTo(Value::named(\"contextlib.suppress\")) and\n    w.getScope() = s.getScope()\n  )\n}\n\n\npredicate marks_an_impossible_else_branch(Stmt s) {\n  exists(If i | i.getOrelse().getItem(0) = s |\n    s.(Assert).getTest() instanceof False\n    or\n    s instanceof Raise\n  )\n}\n\npredicate reportable_unreachable(Stmt s) {\n  s.isUnreachable() and\n  not typing_import(s) and\n  not suppression_in_scope(s) and\n  not exists(Stmt other | other.isUnreachable() |\n    other.contains(s)\n    or\n    exists(StmtList l, int i, int j | l.getItem(i) = other and l.getItem(j) = s and i < j)\n  ) and\n  not unique_yield(s) and\n  not marks_an_impossible_else_branch(s)\n}\n\nfrom Stmt s\nwhere reportable_unreachable(s)\nselect s, \"This statement is unreachable.\"",
+        "cwe_id": [
+            "cwe-561"
+        ]
+    },
+    {
+        "checker": "BreakOrReturnInFinally.ql",
+        "description": "Using a Break or Return statement in a finally block causes the Try-finally block to exit, discarding the exception.",
+        "source_code": "import python\n\nfrom Stmt s, string kind\nwhere\n  s instanceof Return and kind = \"return\" and exists(Try t | t.getFinalbody().contains(s))\n  or\n  s instanceof Break and\n  kind = \"break\" and\n  exists(Try t | t.getFinalbody().contains(s) |\n    not exists(For loop | loop.contains(s) and t.getFinalbody().contains(loop)) and\n    not exists(While loop | loop.contains(s) and t.getFinalbody().contains(loop))\n  )\nselect s, \"'\" + kind + \"' in a finally block will swallow any exceptions raised.\"",
+        "cwe_id": [
+            "cwe-584"
+        ]
+    },
+    {
+        "checker": "ConstantInConditional.ql",
+        "description": "The conditional is always true or always false",
+        "source_code": "import python\n\npredicate is_condition(Expr cond) {\n  exists(If i | i.getTest() = cond) or\n  exists(IfExp ie | ie.getTest() = cond)\n}\n\n\npredicate effective_constant(Name cond) {\n  exists(GlobalVariable var | var = cond.getVariable() and not exists(NameNode f | f.defines(var)) |\n    var.getId() = \"True\" or var.getId() = \"False\" or var.getId() = \"NotImplemented\"\n  )\n}\n\npredicate test_makes_code_unreachable(Expr cond) {\n  exists(If i | i.getTest() = cond | i.getStmt(0).isUnreachable() or i.getOrelse(0).isUnreachable())\n  or\n  exists(While w | w.getTest() = cond and w.getStmt(0).isUnreachable())\n}\n\nfrom Expr cond\nwhere\n  is_condition(cond) and\n  (cond.isConstant() or effective_constant(cond)) and\n  \n  not test_makes_code_unreachable(cond)\nselect cond, \"Testing a constant will always give the same result.\"",
+        "cwe_id": [
+            "cwe-561",
+            "cwe-570",
+            "cwe-571"
+        ]
+    },
+    {
+        "checker": "RedundantAssignment.ql",
+        "description": "Assigning a variable to itself is useless and very likely indicates an error in the code.",
+        "source_code": "import python\n\npredicate assignment(AssignStmt a, Expr left, Expr right) {\n  a.getATarget() = left and a.getValue() = right\n}\n\npredicate corresponding(Expr left, Expr right) {\n  assignment(_, left, right)\n  or\n  exists(Attribute la, Attribute ra |\n    corresponding(la, ra) and\n    left = la.getObject() and\n    right = ra.getObject()\n  )\n}\n\npredicate same_value(Expr left, Expr right) {\n  same_name(left, right)\n  or\n  same_attribute(left, right)\n}\n\npredicate maybe_defined_in_outer_scope(Name n) {\n  exists(SsaVariable v | v.getAUse().getNode() = n | v.maybeUndefined())\n}\n\n\n\npredicate isBuiltin(string name) { exists(Value v | v = Value::named(name) and v.isBuiltin()) }\n\npredicate same_name(Name n1, Name n2) {\n  corresponding(n1, n2) and\n  n1.getVariable() = n2.getVariable() and\n  not isBuiltin(n1.getId()) and\n  not maybe_defined_in_outer_scope(n2)\n}\n\nClassValue value_type(Attribute a) { a.getObject().pointsTo().getClass() = result }\n\npredicate is_property_access(Attribute a) {\n  value_type(a).lookup(a.getName()) instanceof PropertyValue\n}\n\npredicate same_attribute(Attribute a1, Attribute a2) {\n  corresponding(a1, a2) and\n  a1.getName() = a2.getName() and\n  same_value(a1.getObject(), a2.getObject()) and\n  exists(value_type(a1)) and\n  not is_property_access(a1)\n}\n\npragma[nomagic]\nComment pyflakes_comment() { result.getText().toLowerCase().matches(\"%pyflakes%\") }\n\nint pyflakes_commented_line(File file) {\n  pyflakes_comment().getLocation().hasLocationInfo(file.getAbsolutePath(), result, _, _, _)\n}\n\npredicate pyflakes_commented(AssignStmt assignment) {\n  exists(Location loc |\n    assignment.getLocation() = loc and\n    loc.getStartLine() = pyflakes_commented_line(loc.getFile())\n  )\n}\n\npredicate side_effecting_lhs(Attribute lhs) {\n  exists(ClassValue cls, ClassValue decl |\n    lhs.getObject().pointsTo().getClass() = cls and\n    decl = cls.getASuperType() and\n    not decl.isBuiltin()\n  |\n    decl.declaresAttribute(\"__setattr__\")\n  )\n}\n\nfrom AssignStmt a, Expr left, Expr right\nwhere\n  assignment(a, left, right) and\n  same_value(left, right) and\n  \n  not pyflakes_commented(a) and\n  not side_effecting_lhs(left)\nselect a, \"This assignment assigns a variable to itself.\"",
+        "cwe_id": [
+            "cwe-563"
+        ]
+    },
+    {
+        "checker": "AssertOnTuple.ql",
+        "description": "Using an assert statement to test a tuple provides no validity checking.",
+        "source_code": "import python\n\nfrom Assert a, string b, string non\nwhere\n  a.getTest() instanceof Tuple and\n  (\n    if exists(a.getTest().(Tuple).getAnElt())\n    then (\n      b = \"True\" and non = \"non-\"\n    ) else (\n      b = \"False\" and non = \"\"\n    )\n  )\nselect a, \"Assertion of \" + non + \"empty tuple is always \" + b + \".\"",
+        "cwe_id": [
+            "cwe-670"
+        ]
+    },
+    {
+        "checker": "UrlRedirect.ql",
+        "description": "URL redirection based on unvalidated user input may cause redirection to malicious web sites.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.UrlRedirectQuery\nimport UrlRedirectFlow::PathGraph\n\nfrom UrlRedirectFlow::PathNode source, UrlRedirectFlow::PathNode sink\nwhere UrlRedirectFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Untrusted URL redirection depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-601"
+        ]
+    },
+    {
+        "checker": "InsecureTemporaryFile.ql",
+        "description": "Creating a temporary file using this method may be insecure.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\n\nAPI::Node temporary_name_function(string mod, string function) {\n  (\n    mod = \"tempfile\" and function = \"mktemp\"\n    or\n    mod = \"os\" and\n    (\n      function = \"tmpnam\"\n      or\n      function = \"tempnam\"\n    )\n  ) and\n  result = API::moduleImport(mod).getMember(function)\n}\n\nfrom Call c, string mod, string function\nwhere temporary_name_function(mod, function).getACall().asExpr() = c\nselect c, \"Call to deprecated function \" + mod + \".\" + function + \" may be insecure.\"",
+        "cwe_id": [
+            "cwe-377"
+        ]
+    },
+    {
+        "checker": "WeakFilePermissions.ql",
+        "description": "Allowing files to be readable or writable by users other than the owner may allow sensitive information to be accessed.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\n\nbindingset[p]\nint world_permission(int p) { result = p % 8 }\n\nbindingset[p]\nint group_permission(int p) { result = (p / 8) % 8 }\n\nbindingset[p]\nstring access(int p) {\n  p % 4 >= 2 and result = \"writable\"\n  or\n  p % 4 < 2 and p != 0 and result = \"readable\"\n}\n\nbindingset[p]\nstring permissive_permission(int p) {\n  result = \"world \" + access(world_permission(p))\n  or\n  world_permission(p) = 0 and result = \"group \" + access(group_permission(p))\n}\n\npredicate chmod_call(API::CallNode call, string name, int mode) {\n  call = API::moduleImport(\"os\").getMember(\"chmod\").getACall() and\n  mode = call.getParameter(1, \"mode\").getAValueReachingSink().asExpr().(IntegerLiteral).getValue() and\n  name = \"chmod\"\n}\n\npredicate open_call(API::CallNode call, string name, int mode) {\n  call = API::moduleImport(\"os\").getMember(\"open\").getACall() and\n  mode = call.getParameter(2, \"mode\").getAValueReachingSink().asExpr().(IntegerLiteral).getValue() and\n  name = \"open\"\n}\n\nfrom API::CallNode call, string name, int mode, string permission\nwhere\n  (chmod_call(call, name, mode) or open_call(call, name, mode)) and\n  permission = permissive_permission(mode)\nselect call, \"Overly permissive mask in \" + name + \" sets file to \" + permission + \".\"",
+        "cwe_id": [
+            "cwe-732"
+        ]
+    },
+    {
+        "checker": "RegexInjection.ql",
+        "description": "User input should not be used in regular expressions without first being escaped, otherwise a malicious user may be able to inject an expression that could require exponential time on certain inputs.",
+        "source_code": "import python\nprivate import semmle.python.Concepts\nimport semmle.python.security.dataflow.RegexInjectionQuery\nimport RegexInjectionFlow::PathGraph\n\nfrom\n  RegexInjectionFlow::PathNode source, RegexInjectionFlow::PathNode sink,\n  RegexExecution regexExecution\nwhere\n  RegexInjectionFlow::flowPath(source, sink) and\n  regexExecution = sink.getNode().(Sink).getRegexExecution()\nselect sink.getNode(), source, sink,\n  \"This regular expression depends on a $@ and is executed by $@.\", source.getNode(),\n  \"user-provided value\", regexExecution, regexExecution.getName()",
+        "cwe_id": [
+            "cwe-730",
+            "cwe-400"
+        ]
+    },
+    {
+        "checker": "ReDoS.ql",
+        "description": "A regular expression that requires exponential time to match certain inputs can be a performance bottleneck, and may be vulnerable to denial-of-service attacks.",
+        "source_code": "private import semmle.python.regexp.RegexTreeView::RegexTreeView as TreeView\nimport codeql.regex.nfa.ExponentialBackTracking::Make<TreeView>\n\nfrom TreeView::RegExpTerm t, string pump, State s, string prefixMsg\nwhere\n  hasReDoSResult(t, pump, s, prefixMsg) and\n  \n  not t.getRegex().getAMode() = \"VERBOSE\"\nselect t,\n  \"This part of the regular expression may cause exponential backtracking on strings \" + prefixMsg +\n    \"containing many repetitions of '\" + pump + \"'.\"",
+        "cwe_id": [
+            "cwe-1333",
+            "cwe-730",
+            "cwe-400"
+        ]
+    },
+    {
+        "checker": "PolynomialReDoS.ql",
+        "description": "A regular expression that can require polynomial time to match may be vulnerable to denial-of-service attacks.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.PolynomialReDoSQuery\nimport PolynomialReDoSFlow::PathGraph\n\nfrom\n  PolynomialReDoSFlow::PathNode source, PolynomialReDoSFlow::PathNode sink, Sink sinkNode,\n  PolynomialBackTrackingTerm regexp\nwhere\n  PolynomialReDoSFlow::flowPath(source, sink) and\n  sinkNode = sink.getNode() and\n  regexp = sinkNode.getABacktrackingTerm()\n\n\n\n\nselect sinkNode.getHighlight(), source, sink,\n  \"This $@ that depends on a $@ may run slow on strings \" + regexp.getPrefixMessage() +\n    \"with many repetitions of '\" + regexp.getPumpString() + \"'.\", regexp, \"regular expression\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-1333",
+            "cwe-730",
+            "cwe-400"
+        ]
+    },
+    {
+        "checker": "MissingHostKeyValidation.ql",
+        "description": "Accepting unknown host keys can allow man-in-the-middle attacks.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\nprivate API::Node unsafe_paramiko_policy(string name) {\n  name in [\"AutoAddPolicy\", \"WarningPolicy\"] and\n  (\n    result = API::moduleImport(\"paramiko\").getMember(\"client\").getMember(name)\n    or\n    result = API::moduleImport(\"paramiko\").getMember(name)\n  )\n}\n\nprivate API::Node paramikoSshClientInstance() {\n  result = API::moduleImport(\"paramiko\").getMember(\"client\").getMember(\"SSHClient\").getReturn()\n  or\n  result = API::moduleImport(\"paramiko\").getMember(\"SSHClient\").getReturn()\n}\n\nfrom DataFlow::CallCfgNode call, DataFlow::Node arg, string name\nwhere\n  \n  call = paramikoSshClientInstance().getMember(\"set_missing_host_key_policy\").getACall() and\n  arg in [call.getArg(0), call.getArgByName(\"policy\")] and\n  (\n    arg = unsafe_paramiko_policy(name).getAValueReachableFromSource() or\n    arg = unsafe_paramiko_policy(name).getReturn().getAValueReachableFromSource()\n  )\nselect call, \"Setting missing host key policy to \" + name + \" may be unsafe.\"",
+        "cwe_id": [
+            "cwe-295"
+        ]
+    },
+    {
+        "checker": "RequestWithoutValidation.ql",
+        "description": "Making a request without certificate validation can allow man-in-the-middle attacks.",
+        "source_code": "import python\nprivate import semmle.python.dataflow.new.DataFlow\nprivate import semmle.python.Concepts\n\nfrom\n  Http::Client::Request request, DataFlow::Node disablingNode, DataFlow::Node origin, string ending\nwhere\n  request.disablesCertificateValidation(disablingNode, origin) and\n  \n  \n  \n  \n  if disablingNode = origin then ending = \".\" else ending = \" by $@.\"\nselect request, \"This request may run without certificate validation because $@\" + ending,\n  disablingNode, \"it is disabled\", origin, \"this value\"",
+        "cwe_id": [
+            "cwe-295"
+        ]
+    },
+    {
+        "checker": "UnsafeDeserialization.ql",
+        "description": "Deserializing user-controlled data may allow attackers to execute arbitrary code.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.UnsafeDeserializationQuery\nimport UnsafeDeserializationFlow::PathGraph\n\nfrom UnsafeDeserializationFlow::PathNode source, UnsafeDeserializationFlow::PathNode sink\nwhere UnsafeDeserializationFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Unsafe deserialization depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-502"
+        ]
+    },
+    {
+        "checker": "TarSlip.ql",
+        "description": "Extracting files from a malicious tar archive without validating that the destination file path is within the destination directory can cause files outside the destination directory to be overwritten.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.TarSlipQuery\nimport TarSlipFlow::PathGraph\n\nfrom TarSlipFlow::PathNode source, TarSlipFlow::PathNode sink\nwhere TarSlipFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This file extraction depends on a $@.\", source.getNode(),\n  \"potentially untrusted source\"",
+        "cwe_id": [
+            "cwe-022"
+        ]
+    },
+    {
+        "checker": "PathInjection.ql",
+        "description": "Accessing paths influenced by users can allow an attacker to access unexpected resources.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.PathInjectionQuery\nimport PathInjectionFlow::PathGraph\n\nfrom PathInjectionFlow::PathNode source, PathInjectionFlow::PathNode sink\nwhere PathInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This path depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-022",
+            "cwe-023",
+            "cwe-036",
+            "cwe-073",
+            "cwe-099"
+        ]
+    },
+    {
+        "checker": "InsecureCookie.ql",
+        "description": "Insecure cookies may be sent in cleartext, which makes them vulnerable to interception.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.Concepts\n\npredicate hasProblem(Http::Server::CookieWrite cookie, string alert, int idx) {\n  cookie.hasSecureFlag(false) and\n  alert = \"Secure\" and\n  idx = 0\n  or\n  cookie.hasHttpOnlyFlag(false) and\n  alert = \"HttpOnly\" and\n  idx = 1\n  or\n  cookie.hasSameSiteAttribute(any(Http::Server::CookieWrite::SameSiteNone v)) and\n  alert = \"SameSite\" and\n  idx = 2\n}\n\npredicate hasAlert(Http::Server::CookieWrite cookie, string alert) {\n  exists(int numProblems | numProblems = strictcount(string p | hasProblem(cookie, p, _)) |\n    numProblems = 1 and\n    alert = any(string prob | hasProblem(cookie, prob, _)) + \" attribute\"\n    or\n    numProblems = 2 and\n    alert =\n      strictconcat(string prob, int idx | hasProblem(cookie, prob, idx) | prob, \" and \" order by idx)\n        + \" attributes\"\n    or\n    numProblems = 3 and\n    alert = \"Secure, HttpOnly, and SameSite attributes\"\n  )\n}\n\nfrom Http::Server::CookieWrite cookie, string alert\nwhere hasAlert(cookie, alert)\nselect cookie, \"Cookie is added without the \" + alert + \" properly set.\"",
+        "cwe_id": [
+            "cwe-614",
+            "cwe-1004",
+            "cwe-1275"
+        ]
+    },
+    {
+        "checker": "HardcodedCredentials.ql",
+        "description": "Credentials are hard coded in the source code of the application.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport semmle.python.filters.Tests\nprivate import semmle.python.dataflow.new.internal.DataFlowDispatch as DataFlowDispatch\nprivate import semmle.python.dataflow.new.internal.Builtins::Builtins as Builtins\nprivate import semmle.python.frameworks.data.ModelsAsData\n\nbindingset[char, fraction]\npredicate fewer_characters_than(StringLiteral str, string char, float fraction) {\n  exists(string text, int chars |\n    text = str.getText() and\n    chars = count(int i | text.charAt(i) = char)\n  |\n    \n    chars = 1 or\n    chars < text.length() * fraction\n  )\n}\n\npredicate possible_reflective_name(string name) {\n  any(Function f).getName() = name\n  or\n  any(Class c).getName() = name\n  or\n  any(Module m).getName() = name\n  or\n  exists(Builtins::likelyBuiltin(name))\n}\n\nint char_count(StringLiteral str) { result = count(string c | c = str.getText().charAt(_)) }\n\npredicate capitalized_word(StringLiteral str) { str.getText().regexpMatch(\"[A-Z][a-z]+\") }\n\npredicate format_string(StringLiteral str) { str.getText().matches(\"%{%}%\") }\n\npredicate maybeCredential(ControlFlowNode f) {\n  \n  exists(StringLiteral str | str = f.getNode() |\n    \n    str.getText().length() > 9 and\n    \n    fewer_characters_than(str, \" \", 0.05) and\n    \n    fewer_characters_than(str, \"_\", 0.2) and\n    \n    exists(int chars | chars = char_count(str) |\n      chars > 15 or\n      chars * 3 > str.getText().length() * 2\n    ) and\n    not possible_reflective_name(str.getText()) and\n    not capitalized_word(str) and\n    not format_string(str)\n  )\n  or\n  \n  exists(IntegerLiteral lit | f.getNode() = lit |\n    not exists(lit.getValue()) and\n    \n    not lit.getN().matches(\"%00%\")\n  )\n}\n\nclass HardcodedValueSource extends DataFlow::Node {\n  HardcodedValueSource() { maybeCredential(this.asCfgNode()) }\n}\n\nclass CredentialSink extends DataFlow::Node {\n  CredentialSink() {\n    exists(string s | s.matches(\"credentials-%\") |\n      \n      this = ModelOutput::getASinkNode(s).asSink()\n    )\n    or\n    exists(string name |\n      name.regexpMatch(getACredentialRegex()) and\n      not name.matches(\"%file\")\n    |\n      exists(DataFlowDispatch::ArgumentPosition pos | pos.isKeyword(name) |\n        this.(DataFlow::ArgumentNode).argumentOf(_, pos)\n      )\n      or\n      exists(Keyword k | k.getArg() = name and k.getValue().getAFlowNode() = this.asCfgNode())\n      or\n      exists(CompareNode cmp, NameNode n | n.getId() = name |\n        cmp.operands(this.asCfgNode(), any(Eq eq), n)\n        or\n        cmp.operands(n, any(Eq eq), this.asCfgNode())\n      )\n    )\n  }\n}\n\n\nprivate string getACredentialRegex() {\n  result = \"(?i).*pass(wd|word|code|phrase)(?!.*question).*\" or\n  result = \"(?i).*(puid|username|userid).*\" or\n  result = \"(?i).*(cert)(?!.*(format|name)).*\"\n}\n\nprivate module HardcodedCredentialsConfig implements DataFlow::ConfigSig {\n  predicate isSource(DataFlow::Node source) { source instanceof HardcodedValueSource }\n\n  predicate isSink(DataFlow::Node sink) { sink instanceof CredentialSink }\n\n  predicate observeDiffInformedIncrementalMode() { any() }\n}\n\nmodule HardcodedCredentialsFlow = TaintTracking::Global<HardcodedCredentialsConfig>;\n\nimport HardcodedCredentialsFlow::PathGraph\n\nfrom HardcodedCredentialsFlow::PathNode src, HardcodedCredentialsFlow::PathNode sink\nwhere\n  HardcodedCredentialsFlow::flowPath(src, sink) and\n  not any(TestScope test).contains(src.getNode().asCfgNode().getNode())\nselect src.getNode(), src, sink, \"This hardcoded value is $@.\", sink.getNode(),\n  \"used as credentials\"",
+        "cwe_id": [
+            "cwe-259",
+            "cwe-321",
+            "cwe-798"
+        ]
+    },
+    {
+        "checker": "CodeInjection.ql",
+        "description": "Interpreting unsanitized user input as code allows a malicious user to perform arbitrary code execution.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.CodeInjectionQuery\nimport CodeInjectionFlow::PathGraph\n\nfrom CodeInjectionFlow::PathNode source, CodeInjectionFlow::PathNode sink\nwhere CodeInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This code execution depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-094",
+            "cwe-095",
+            "cwe-116"
+        ]
+    },
+    {
+        "checker": "CleartextLogging.ql",
+        "description": "Logging sensitive information without encryption or hashing can expose it to an attacker.",
+        "source_code": "import python\nprivate import semmle.python.dataflow.new.DataFlow\nimport CleartextLoggingFlow::PathGraph\nimport semmle.python.security.dataflow.CleartextLoggingQuery\n\nfrom\n  CleartextLoggingFlow::PathNode source, CleartextLoggingFlow::PathNode sink, string classification\nwhere\n  CleartextLoggingFlow::flowPath(source, sink) and\n  classification = source.getNode().(Source).getClassification()\nselect sink.getNode(), source, sink, \"This expression logs $@ as clear text.\", source.getNode(),\n  \"sensitive data (\" + classification + \")\"",
+        "cwe_id": [
+            "cwe-312",
+            "cwe-359",
+            "cwe-532"
+        ]
+    },
+    {
+        "checker": "CleartextStorage.ql",
+        "description": "Sensitive information stored without encryption or hashing can expose it to an attacker.",
+        "source_code": "import python\nprivate import semmle.python.dataflow.new.DataFlow\nimport CleartextStorageFlow::PathGraph\nimport semmle.python.security.dataflow.CleartextStorageQuery\n\nfrom\n  CleartextStorageFlow::PathNode source, CleartextStorageFlow::PathNode sink, string classification\nwhere\n  CleartextStorageFlow::flowPath(source, sink) and\n  classification = source.getNode().(Source).getClassification()\nselect sink.getNode(), source, sink, \"This expression stores $@ as clear text.\", source.getNode(),\n  \"sensitive data (\" + classification + \")\"",
+        "cwe_id": [
+            "cwe-312",
+            "cwe-315",
+            "cwe-359"
+        ]
+    },
+    {
+        "checker": "HeaderInjection.ql",
+        "description": "Writing user input directly to an HTTP header makes code vulnerable to attack by header splitting.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.HttpHeaderInjectionQuery\nimport HeaderInjectionFlow::PathGraph\n\nfrom HeaderInjectionFlow::PathNode source, HeaderInjectionFlow::PathNode sink\nwhere HeaderInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This HTTP header is constructed from a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-113",
+            "cwe-079"
+        ]
+    },
+    {
+        "checker": "CommandInjection.ql",
+        "description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.CommandInjectionQuery\nimport CommandInjectionFlow::PathGraph\n\nfrom CommandInjectionFlow::PathNode source, CommandInjectionFlow::PathNode sink\nwhere CommandInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This command line depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-078",
+            "cwe-088"
+        ]
+    },
+    {
+        "checker": "UnsafeShellCommandConstruction.ql",
+        "description": "Using externally controlled strings in a command line may allow a malicious user to change the meaning of the command.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.UnsafeShellCommandConstructionQuery\nimport UnsafeShellCommandConstructionFlow::PathGraph\n\nfrom\n  UnsafeShellCommandConstructionFlow::PathNode source,\n  UnsafeShellCommandConstructionFlow::PathNode sink, Sink sinkNode\nwhere\n  UnsafeShellCommandConstructionFlow::flowPath(source, sink) and\n  sinkNode = sink.getNode()\nselect sinkNode.getStringConstruction(), source, sink,\n  \"This \" + sinkNode.describe() + \" which depends on $@ is later used in a $@.\", source.getNode(),\n  \"library input\", sinkNode.getCommandExecution(), \"shell command\"",
+        "cwe_id": [
+            "cwe-078",
+            "cwe-088",
+            "cwe-073"
+        ]
+    },
+    {
+        "checker": "UntrustedDataToExternalAPI.ql",
+        "description": "Data provided remotely is used in this external API without sanitization, which could be a security risk.",
+        "source_code": "import python\nimport ExternalAPIs\nimport UntrustedDataToExternalApiFlow::PathGraph\n\nfrom\n  UntrustedDataToExternalApiFlow::PathNode source, UntrustedDataToExternalApiFlow::PathNode sink,\n  ExternalApiUsedWithUntrustedData externalApi\nwhere\n  sink.getNode() = externalApi.getUntrustedDataNode() and\n  UntrustedDataToExternalApiFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"Call to \" + externalApi.toString() + \" with untrusted data from $@.\", source.getNode(),\n  source.toString()",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "ExternalAPIsUsedWithUntrustedData.ql",
+        "description": "This reports the external APIs that are used with untrusted data, along with how frequently the API is called, and how many unique sources of untrusted data flow to it.",
+        "source_code": "import python\nimport ExternalAPIs\n\nfrom ExternalApiUsedWithUntrustedData externalApi\nselect externalApi, count(externalApi.getUntrustedDataNode()) as numberOfUses,\n  externalApi.getNumberOfUntrustedSources() as numberOfUntrustedSources order by\n    numberOfUntrustedSources desc",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "StackTraceExposure.ql",
+        "description": "Leaking information about an exception, such as messages and stack traces, to an external user can expose implementation details that are useful to an attacker for developing a subsequent exploit.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.StackTraceExposureQuery\nimport StackTraceExposureFlow::PathGraph\n\nfrom StackTraceExposureFlow::PathNode source, StackTraceExposureFlow::PathNode sink\nwhere StackTraceExposureFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"$@ flows to this location and may be exposed to an external user.\", source.getNode(),\n  \"Stack trace information\"",
+        "cwe_id": [
+            "cwe-209",
+            "cwe-497"
+        ]
+    },
+    {
+        "checker": "IncompleteUrlSubstringSanitization.ql",
+        "description": "Security checks on the substrings of an unparsed URL are often vulnerable to bypassing.",
+        "source_code": "import python\nimport semmle.python.regex\n\nprivate string commonTopLevelDomainRegex() { result = \"com|org|edu|gov|uk|net|io\" }\n\npredicate looksLikeUrl(StringLiteral s) {\n  exists(string text | text = s.getText() |\n    text.regexpMatch(\"(?i)([a-z]*:?\n        \")(:[0-9]+)?/?\")\n    or\n    \n    text.regexpMatch(\"(?i)https?:\n  )\n}\n\npredicate incomplete_sanitization(Expr sanitizer, StringLiteral url) {\n  looksLikeUrl(url) and\n  (\n    sanitizer.(Compare).compares(url, any(In i), _)\n    or\n    unsafe_call_to_startswith(sanitizer, url)\n    or\n    unsafe_call_to_endswith(sanitizer, url)\n  )\n}\n\npredicate unsafe_call_to_startswith(Call sanitizer, StringLiteral url) {\n  sanitizer.getFunc().(Attribute).getName() = \"startswith\" and\n  sanitizer.getArg(0) = url and\n  not url.getText().regexpMatch(\"(?i)https?:\n}\n\npredicate unsafe_call_to_endswith(Call sanitizer, StringLiteral url) {\n  sanitizer.getFunc().(Attribute).getName() = \"endswith\" and\n  sanitizer.getArg(0) = url and\n  not url.getText().regexpMatch(\"(?i)\\\\.([a-z0-9-]+)(\\\\.[a-z0-9-]+)+\")\n}\n\nfrom Expr sanitizer, StringLiteral url\nwhere incomplete_sanitization(sanitizer, url)\nselect sanitizer, \"The string $@ may be at an arbitrary position in the sanitized URL.\", url,\n  url.getText()",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "CookieInjection.ql",
+        "description": "Constructing cookies from user input may allow an attacker to perform a Cookie Poisoning attack.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.CookieInjectionQuery\nimport CookieInjectionFlow::PathGraph\n\nfrom CookieInjectionFlow::PathNode source, CookieInjectionFlow::PathNode sink\nwhere CookieInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Cookie is constructed from a $@.\", source.getNode(),\n  \"user-supplied input\"",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "IncompleteHostnameRegExp.ql",
+        "description": "Matching a URL or hostname against a regular expression that contains an unescaped dot as part of the hostname might match more hostnames than expected.",
+        "source_code": "private import semmle.python.security.regexp.HostnameRegex as HostnameRegex\n\nquery predicate problems = HostnameRegex::incompleteHostnameRegExp/4;",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "OverlyLargeRange.ql",
+        "description": "Overly permissive regular expression ranges match a wider range of characters than intended. This may allow an attacker to bypass a filter or sanitizer.",
+        "source_code": "private import semmle.python.regexp.RegexTreeView::RegexTreeView as TreeView\nimport codeql.regex.OverlyLargeRangeQuery::Make<TreeView>\n\nfrom TreeView::RegExpCharacterRange range, string reason\nwhere problem(range, reason)\nselect range, \"Suspicious character range that \" + reason + \".\"",
+        "cwe_id": [
+            "cwe-020"
+        ]
+    },
+    {
+        "checker": "NoSqlInjection.ql",
+        "description": "Building a NoSQL query from user-controlled sources is vulnerable to insertion of malicious NoSQL code by the user.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.NoSqlInjectionQuery\nimport NoSqlInjectionFlow::PathGraph\n\nfrom NoSqlInjectionFlow::PathNode source, NoSqlInjectionFlow::PathNode sink\nwhere NoSqlInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This NoSQL query contains an unsanitized $@.\", source,\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-943"
+        ]
+    },
+    {
+        "checker": "XpathInjection.ql",
+        "description": "Building a XPath query from user-controlled sources is vulnerable to insertion of malicious Xpath code by the user.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.XpathInjectionQuery\nimport XpathInjectionFlow::PathGraph\n\nfrom XpathInjectionFlow::PathNode source, XpathInjectionFlow::PathNode sink\nwhere XpathInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"XPath expression depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-643"
+        ]
+    },
+    {
+        "checker": "LogInjection.ql",
+        "description": "Building log entries from user-controlled data is vulnerable to insertion of forged log entries by a malicious user.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.LogInjectionQuery\nimport LogInjectionFlow::PathGraph\n\nfrom LogInjectionFlow::PathNode source, LogInjectionFlow::PathNode sink\nwhere LogInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This log entry depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-117"
+        ]
+    },
+    {
+        "checker": "BindToAllInterfaces.ql",
+        "description": "Binding a socket to all interfaces opens it up to traffic from any IPv4 address and is therefore associated with security risks.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\n\nprivate string vulnerableHostname() {\n  result in [\n      \n      \"0.0.0.0\", \"\",\n      \n      \"::\", \"::0\"\n    ]\n}\n\n\nprivate DataFlow::TypeTrackingNode vulnerableHostnameRef(DataFlow::TypeTracker t, string hostname) {\n  t.start() and\n  exists(StringLiteral allInterfacesStringLiteral | hostname = vulnerableHostname() |\n    allInterfacesStringLiteral.getText() = hostname and\n    result.asExpr() = allInterfacesStringLiteral\n  )\n  or\n  exists(DataFlow::TypeTracker t2 | result = vulnerableHostnameRef(t2, hostname).track(t2, t))\n}\n\n\nDataFlow::Node vulnerableHostnameRef(string hostname) {\n  vulnerableHostnameRef(DataFlow::TypeTracker::end(), hostname).flowsTo(result)\n}\n\n\nprivate DataFlow::TypeTrackingNode vulnerableAddressTuple(DataFlow::TypeTracker t, string hostname) {\n  t.start() and\n  result.asExpr() = any(Tuple tup | tup.getElt(0) = vulnerableHostnameRef(hostname).asExpr())\n  or\n  exists(DataFlow::TypeTracker t2 | result = vulnerableAddressTuple(t2, hostname).track(t2, t))\n}\n\n\nDataFlow::Node vulnerableAddressTuple(string hostname) {\n  vulnerableAddressTuple(DataFlow::TypeTracker::end(), hostname).flowsTo(result)\n}\n\n\nAPI::Node socketInstance() { result = API::moduleImport(\"socket\").getMember(\"socket\").getReturn() }\n\nfrom DataFlow::CallCfgNode bindCall, DataFlow::Node addressArg, string hostname\nwhere\n  bindCall = socketInstance().getMember(\"bind\").getACall() and\n  addressArg = bindCall.getArg(0) and\n  addressArg = vulnerableAddressTuple(hostname)\nselect bindCall.asExpr(), \"'\" + hostname + \"' binds a socket to all interfaces.\"",
+        "cwe_id": [
+            "cwe-200"
+        ]
+    },
+    {
+        "checker": "Xxe.ql",
+        "description": "Parsing user input as an XML document with external entity expansion is vulnerable to XXE attacks.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.XxeQuery\nimport XxeFlow::PathGraph\n\nfrom XxeFlow::PathNode source, XxeFlow::PathNode sink\nwhere XxeFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"XML parsing depends on a $@ without guarding against external entity expansion.\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-611",
+            "cwe-827"
+        ]
+    },
+    {
+        "checker": "SqlInjection.ql",
+        "description": "Building a SQL query from user-controlled sources is vulnerable to insertion of malicious SQL code by the user.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.SqlInjectionQuery\nimport SqlInjectionFlow::PathGraph\n\nfrom SqlInjectionFlow::PathNode source, SqlInjectionFlow::PathNode sink\nwhere SqlInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This SQL query depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-089"
+        ]
+    },
+    {
+        "checker": "TemplateInjection.ql",
+        "description": "Using user-controlled data to create a template can lead to remote code execution or cross site scripting.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.TemplateInjectionQuery\nimport TemplateInjectionFlow::PathGraph\n\nfrom TemplateInjectionFlow::PathNode source, TemplateInjectionFlow::PathNode sink\nwhere TemplateInjectionFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"This template construction depends on a $@.\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-074"
+        ]
+    },
+    {
+        "checker": "InsecureDefaultProtocol.ql",
+        "description": "Leaving the SSL/TLS version unspecified may result in an insecure default protocol being used.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\n\nfrom DataFlow::CallCfgNode call\nwhere\n  call = API::moduleImport(\"ssl\").getMember(\"wrap_socket\").getACall() and\n  not exists(call.getArgByName(\"ssl_version\"))\nselect call,\n  \"Call to deprecated method ssl.wrap_socket does not specify a protocol, which may result in an insecure default being used.\"",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "WeakSensitiveDataHashing.ql",
+        "description": "Using broken or weak cryptographic hashing algorithms can compromise security.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.WeakSensitiveDataHashingQuery\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.dataflow.new.TaintTracking\nimport WeakSensitiveDataHashingFlow::PathGraph\n\nfrom\n  WeakSensitiveDataHashingFlow::PathNode source, WeakSensitiveDataHashingFlow::PathNode sink,\n  string ending, string algorithmName, string classification\nwhere\n  normalHashFunctionFlowPath(source, sink) and\n  algorithmName = sink.getNode().(NormalHashFunction::Sink).getAlgorithmName() and\n  classification = source.getNode().(NormalHashFunction::Source).getClassification() and\n  ending = \".\"\n  or\n  computationallyExpensiveHashFunctionFlowPath(source, sink) and\n  algorithmName = sink.getNode().(ComputationallyExpensiveHashFunction::Sink).getAlgorithmName() and\n  classification =\n    source.getNode().(ComputationallyExpensiveHashFunction::Source).getClassification() and\n  (\n    sink.getNode().(ComputationallyExpensiveHashFunction::Sink).isComputationallyExpensive() and\n    ending = \".\"\n    or\n    not sink.getNode().(ComputationallyExpensiveHashFunction::Sink).isComputationallyExpensive() and\n    ending =\n      \" for \" + classification +\n        \" hashing, since it is not a computationally expensive hash function.\"\n  )\nselect sink.getNode(), source, sink,\n  \"$@ is used in a hashing algorithm (\" + algorithmName + \") that is insecure\" + ending,\n  source.getNode(), \"Sensitive data (\" + classification + \")\"",
+        "cwe_id": [
+            "cwe-327",
+            "cwe-328",
+            "cwe-916"
+        ]
+    },
+    {
+        "checker": "InsecureProtocol.ql",
+        "description": "Using an insecure SSL/TLS version may leave the connection vulnerable to attacks.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport FluentApiModel\n\n\n\n\n\nclass ProtocolConfiguration extends DataFlow::Node {\n  ProtocolConfiguration() {\n    unsafe_connection_creation_with_context(_, _, this, _)\n    or\n    unsafe_connection_creation_without_context(this, _)\n    or\n    unsafe_context_creation(this, _)\n  }\n\n  DataFlow::Node getNode() { result = this.(DataFlow::CallCfgNode).getFunction() }\n}\n\n\n\n\n\nclass Nameable extends DataFlow::Node {\n  Nameable() {\n    this = any(ProtocolConfiguration pc).getNode()\n    or\n    this = any(Nameable attr).(DataFlow::AttrRef).getObject()\n  }\n}\n\nstring callName(Nameable call) {\n  result = call.asExpr().(Name).getId()\n  or\n  exists(DataFlow::AttrRef a | a = call |\n    result = callName(a.getObject()) + \".\" + a.getAttributeName()\n  )\n}\n\nstring configName(ProtocolConfiguration protocolConfiguration) {\n  result = \"call to \" + callName(protocolConfiguration.(DataFlow::CallCfgNode).getFunction())\n  or\n  not protocolConfiguration instanceof DataFlow::CallCfgNode and\n  not protocolConfiguration instanceof ContextCreation and\n  result = \"context modification\"\n}\n\nstring verb(boolean specific) {\n  specific = true and result = \"specified\"\n  or\n  specific = false and result = \"allowed\"\n}\n\nfrom\n  DataFlow::Node connectionCreation, string insecure_version, DataFlow::Node protocolConfiguration,\n  boolean specific\nwhere\n  unsafe_connection_creation_with_context(connectionCreation, insecure_version,\n    protocolConfiguration, specific)\n  or\n  unsafe_connection_creation_without_context(connectionCreation, insecure_version) and\n  protocolConfiguration = connectionCreation and\n  specific = true\n  or\n  unsafe_context_creation(protocolConfiguration, insecure_version) and\n  connectionCreation = protocolConfiguration and\n  specific = true\nselect connectionCreation,\n  \"Insecure SSL/TLS protocol version \" + insecure_version + \" \" + verb(specific) + \" by $@.\",\n  protocolConfiguration, configName(protocolConfiguration)",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "BrokenCryptoAlgorithm.ql",
+        "description": "Using broken or weak cryptographic algorithms can compromise security.",
+        "source_code": "import python\nimport semmle.python.Concepts\n\nfrom Cryptography::CryptographicOperation operation, string msgPrefix\nwhere\n  \n  \n  exists(Cryptography::EncryptionAlgorithm algorithm | algorithm = operation.getAlgorithm() |\n    algorithm.isWeak() and\n    msgPrefix = \"The cryptographic algorithm \" + algorithm.getName()\n  )\n  or\n  operation.getBlockMode().isWeak() and msgPrefix = \"The block mode \" + operation.getBlockMode()\nselect operation, \"$@ is broken or weak, and should not be used.\", operation.getInitialization(),\n  msgPrefix",
+        "cwe_id": [
+            "cwe-327"
+        ]
+    },
+    {
+        "checker": "BadTagFilter.ql",
+        "description": "Matching HTML tags using regular expressions is hard to do right, and can easily lead to security issues.",
+        "source_code": "private import semmle.python.regexp.RegexTreeView::RegexTreeView as TreeView\nimport codeql.regex.nfa.BadTagFilterQuery::Make<TreeView>\n\nfrom HtmlMatchingRegExp regexp, string msg\nwhere msg = min(string m | isBadRegexpFilter(regexp, m) | m order by m.length(), m) \nselect regexp, msg",
+        "cwe_id": [
+            "cwe-116",
+            "cwe-020",
+            "cwe-185",
+            "cwe-186"
+        ]
+    },
+    {
+        "checker": "LdapInjection.ql",
+        "description": "Building an LDAP query from user-controlled sources is vulnerable to insertion of malicious LDAP code by the user.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.LdapInjectionQuery\nimport LdapInjectionFlow::PathGraph\n\nfrom LdapInjectionFlow::PathNode source, LdapInjectionFlow::PathNode sink, string parameterName\nwhere\n  LdapInjectionDnFlow::flowPath(source.asPathNode1(), sink.asPathNode1()) and\n  parameterName = \"DN\"\n  or\n  LdapInjectionFilterFlow::flowPath(source.asPathNode2(), sink.asPathNode2()) and\n  parameterName = \"filter\"\nselect sink.getNode(), source, sink,\n  \"LDAP query parameter (\" + parameterName + \") depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-090"
+        ]
+    },
+    {
+        "checker": "CSRFProtectionDisabled.ql",
+        "description": "Disabling or weakening CSRF protection may make the application vulnerable to a Cross-Site Request Forgery (CSRF) attack.",
+        "source_code": "import python\nimport semmle.python.Concepts\n\npredicate relevantSetting(Http::Server::CsrfProtectionSetting s) {\n  \n  \n  \n  not s.getLocation().getFile().getAbsolutePath().matches(\"%test%\")\n}\n\npredicate vulnerableSetting(Http::Server::CsrfProtectionSetting s) {\n  s.getVerificationSetting() = false and\n  not exists(Http::Server::CsrfLocalProtectionSetting p | p.csrfEnabled()) and\n  relevantSetting(s)\n}\n\nfrom Http::Server::CsrfProtectionSetting setting\nwhere\n  vulnerableSetting(setting) and\n  \n  \n  \n  forall(Http::Server::CsrfProtectionSetting s | relevantSetting(s) | vulnerableSetting(s))\nselect setting, \"Potential CSRF vulnerability due to forgery protection being disabled or weakened.\"",
+        "cwe_id": [
+            "cwe-352"
+        ]
+    },
+    {
+        "checker": "Jinja2WithoutEscaping.ql",
+        "description": "Using jinja2 templates with 'autoescape=False' can cause a cross-site scripting vulnerability.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\n\n\n\nprivate API::Node jinja2EnvironmentOrTemplate() {\n  result = API::moduleImport(\"jinja2\").getMember(\"Environment\")\n  or\n  result = API::moduleImport(\"jinja2\").getMember(\"Template\")\n}\n\nfrom API::CallNode call\nwhere\n  call = jinja2EnvironmentOrTemplate().getACall() and\n  not exists(call.asCfgNode().(CallNode).getNode().getStarargs()) and\n  not exists(call.asCfgNode().(CallNode).getNode().getKwargs()) and\n  (\n    not exists(call.getArgByName(\"autoescape\"))\n    or\n    call.getKeywordParameter(\"autoescape\")\n        .getAValueReachingSink()\n        .asExpr()\n        .(ImmutableLiteral)\n        .booleanValue() = false\n  )\nselect call, \"Using jinja2 templates with autoescape=False can potentially allow XSS attacks.\"",
+        "cwe_id": [
+            "cwe-079"
+        ]
+    },
+    {
+        "checker": "ReflectedXss.ql",
+        "description": "Writing user input directly to a web page allows for a cross-site scripting vulnerability.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.ReflectedXssQuery\nimport ReflectedXssFlow::PathGraph\n\nfrom ReflectedXssFlow::PathNode source, ReflectedXssFlow::PathNode sink\nwhere ReflectedXssFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink, \"Cross-site scripting vulnerability due to a $@.\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-079",
+            "cwe-116"
+        ]
+    },
+    {
+        "checker": "FlaskDebug.ql",
+        "description": "Running a Flask app in debug mode may allow an attacker to run arbitrary code through the Werkzeug debugger.",
+        "source_code": "import python\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.ApiGraphs\nimport semmle.python.frameworks.Flask\n\nfrom API::CallNode call\nwhere\n  call = Flask::FlaskApp::instance().getMember(\"run\").getACall() and\n  call.getParameter(2, \"debug\").getAValueReachingSink().asExpr().(ImmutableLiteral).booleanValue() =\n    true\nselect call,\n  \"A Flask app appears to be run in debug mode. This may allow an attacker to run arbitrary code through the debugger.\"",
+        "cwe_id": [
+            "cwe-215",
+            "cwe-489"
+        ]
+    },
+    {
+        "checker": "PartialServerSideRequestForgery.ql",
+        "description": "Making a network request to a URL that is partially user-controlled allows for request forgery attacks.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.ServerSideRequestForgeryQuery\nimport PartialServerSideRequestForgeryFlow::PathGraph\n\nfrom\n  PartialServerSideRequestForgeryFlow::PathNode source,\n  PartialServerSideRequestForgeryFlow::PathNode sink, Http::Client::Request request\nwhere\n  request = sink.getNode().(Sink).getRequest() and\n  PartialServerSideRequestForgeryFlow::flowPath(source, sink) and\n  not fullyControlledRequest(request)\nselect request, source, sink, \"Part of the URL of this request depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-918"
+        ]
+    },
+    {
+        "checker": "FullServerSideRequestForgery.ql",
+        "description": "Making a network request to a URL that is fully user-controlled allows for request forgery attacks.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.ServerSideRequestForgeryQuery\nimport FullServerSideRequestForgeryFlow::PathGraph\n\nfrom\n  FullServerSideRequestForgeryFlow::PathNode source,\n  FullServerSideRequestForgeryFlow::PathNode sink, Http::Client::Request request\nwhere\n  request = sink.getNode().(Sink).getRequest() and\n  FullServerSideRequestForgeryFlow::flowPath(source, sink) and\n  fullyControlledRequest(request)\nselect request, source, sink, \"The full URL of this request depends on a $@.\", source.getNode(),\n  \"user-provided value\"",
+        "cwe_id": [
+            "cwe-918"
+        ]
+    },
+    {
+        "checker": "XmlBomb.ql",
+        "description": "Parsing user input as an XML document with arbitrary internal entity expansion is vulnerable to denial-of-service attacks.",
+        "source_code": "import python\nimport semmle.python.security.dataflow.XmlBombQuery\nimport XmlBombFlow::PathGraph\n\nfrom XmlBombFlow::PathNode source, XmlBombFlow::PathNode sink\nwhere XmlBombFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"XML parsing depends on a $@ without guarding against uncontrolled entity expansion.\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-776",
+            "cwe-400"
+        ]
+    },
+    {
+        "checker": "WeakCryptoKey.ql",
+        "description": "Use of a cryptographic key that is too small may allow the encryption to be broken.",
+        "source_code": "import python\nimport semmle.python.Concepts\nimport semmle.python.dataflow.new.DataFlow\nimport semmle.python.filters.Tests\n\nfrom Cryptography::PublicKey::KeyGeneration keyGen, int keySize, DataFlow::Node origin\nwhere\n  keySize = keyGen.getKeySizeWithOrigin(origin) and\n  keySize < keyGen.minimumSecureKeySize() and\n  not origin.getScope().getScope*() instanceof TestScope\nselect keyGen,\n  \"Creation of an \" + keyGen.getName() + \" key uses $@ bits, which is below \" +\n    keyGen.minimumSecureKeySize() + \" and considered breakable.\", origin, keySize.toString()",
+        "cwe_id": [
+            "cwe-326"
+        ]
+    },
+    {
+        "checker": "PamAuthorization.ql",
+        "description": "Not using `pam_acct_mgmt` after `pam_authenticate` to check the validity of a login can lead to authorization bypass.",
+        "source_code": "import python\nimport PamAuthorizationFlow::PathGraph\nimport semmle.python.ApiGraphs\nimport semmle.python.security.dataflow.PamAuthorizationQuery\n\nfrom PamAuthorizationFlow::PathNode source, PamAuthorizationFlow::PathNode sink\nwhere PamAuthorizationFlow::flowPath(source, sink)\nselect sink.getNode(), source, sink,\n  \"This PAM authentication depends on a $@, and 'pam_acct_mgmt' is not called afterwards.\",\n  source.getNode(), \"user-provided value\"",
+        "cwe_id": [
+            "cwe-285"
+        ]
+    },
+    {
+        "checker": "IncorrectExceptOrder.ql",
+        "description": "Handling general exceptions before specific exceptions means that the specific handlers are never executed.",
+        "source_code": "import python\n\npredicate incorrect_except_order(ExceptStmt ex1, ClassValue cls1, ExceptStmt ex2, ClassValue cls2) {\n  exists(int i, int j, Try t |\n    ex1 = t.getHandler(i) and\n    ex2 = t.getHandler(j) and\n    i < j and\n    cls1 = except_class(ex1) and\n    cls2 = except_class(ex2) and\n    cls1 = cls2.getASuperType()\n  )\n}\n\nClassValue except_class(ExceptStmt ex) { ex.getType().pointsTo(result) }\n\nfrom ExceptStmt ex1, ClassValue cls1, ExceptStmt ex2, ClassValue cls2\nwhere incorrect_except_order(ex1, cls1, ex2, cls2)\nselect ex2,\n  \"Except block for $@ is unreachable; the more general $@ for $@ will always be executed in preference.\",\n  cls2, cls2.getName(), ex1, \"except block\", cls1, cls1.getName()",
+        "cwe_id": [
+            "cwe-561"
+        ]
+    },
+    {
+        "checker": "EmptyExcept.ql",
+        "description": "Except doesn't do anything and has no comment",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\n\npredicate empty_except(ExceptStmt ex) {\n  not exists(Stmt s | s = ex.getAStmt() and not s instanceof Pass)\n}\n\npredicate no_else(ExceptStmt ex) { not exists(ex.getTry().getOrelse()) }\n\npredicate no_comment(ExceptStmt ex) {\n  not exists(Comment c |\n    c.getLocation().getFile() = ex.getLocation().getFile() and\n    c.getLocation().getStartLine() >= ex.getLocation().getStartLine() and\n    c.getLocation().getEndLine() <= ex.getBody().getLastItem().getLocation().getEndLine()\n  )\n}\n\npredicate non_local_control_flow(ExceptStmt ex) {\n  ex.getType() = API::builtin(\"StopIteration\").getAValueReachableFromSource().asExpr()\n}\n\npredicate try_has_normal_exit(Try try) {\n  exists(ControlFlowNode pred, ControlFlowNode succ |\n    \n    pred.getASuccessor() = succ and\n    not pred.getAnExceptionalSuccessor() = succ\n  |\n    \n    not exists(Scope s | s.getReturnNode() = succ) and\n    \n    pred.getNode().getParentNode*() = try.getAStmt() and\n    not succ.getNode().getParentNode*() = try.getAStmt()\n  )\n}\n\npredicate attribute_access(Stmt s) {\n  s.(ExprStmt).getValue() instanceof Attribute\n  or\n  exists(string name | s.(ExprStmt).getValue().(Call).getFunc().(Name).getId() = name |\n    name = \"getattr\" or name = \"setattr\" or name = \"delattr\"\n  )\n  or\n  s.(Delete).getATarget() instanceof Attribute\n}\n\npredicate subscript(Stmt s) {\n  s.(ExprStmt).getValue() instanceof Subscript\n  or\n  s.(Delete).getATarget() instanceof Subscript\n}\n\npredicate encode_decode(Call ex, Expr type) {\n  exists(string name | ex.getFunc().(Attribute).getName() = name |\n    name = \"encode\" and\n    type = API::builtin(\"UnicodeEncodeError\").getAValueReachableFromSource().asExpr()\n    or\n    name = \"decode\" and\n    type = API::builtin(\"UnicodeDecodeError\").getAValueReachableFromSource().asExpr()\n  )\n}\n\npredicate small_handler(ExceptStmt ex, Stmt s, Expr type) {\n  not exists(ex.getTry().getStmt(1)) and\n  s = ex.getTry().getStmt(0) and\n  ex.getType() = type\n}\n\npredicate focussed_handler(ExceptStmt ex) {\n  exists(Stmt s, Expr type | small_handler(ex, s, type) |\n    subscript(s) and\n    type = API::builtin(\"IndexError\").getASubclass*().getAValueReachableFromSource().asExpr()\n    or\n    attribute_access(s) and\n    type = API::builtin(\"AttributeError\").getAValueReachableFromSource().asExpr()\n    or\n    s.(ExprStmt).getValue() instanceof Name and\n    type = API::builtin(\"NameError\").getAValueReachableFromSource().asExpr()\n    or\n    encode_decode(s.(ExprStmt).getValue(), type)\n  )\n}\n\nTry try_return() { not exists(result.getStmt(1)) and result.getStmt(0) instanceof Return }\n\nfrom ExceptStmt ex\nwhere\n  empty_except(ex) and\n  no_else(ex) and\n  no_comment(ex) and\n  not non_local_control_flow(ex) and\n  not ex.getTry() = try_return() and\n  try_has_normal_exit(ex.getTry()) and\n  not focussed_handler(ex)\nselect ex, \"'except' clause does nothing but pass and there is no explanatory comment.\"",
+        "cwe_id": [
+            "cwe-390"
+        ]
+    },
+    {
+        "checker": "CatchingBaseException.ql",
+        "description": "Handling 'BaseException' means that system exits and keyboard interrupts may be mis-handled.",
+        "source_code": "import python\nimport semmle.python.ApiGraphs\n\npredicate doesnt_reraise(ExceptStmt ex) { ex.getAFlowNode().getBasicBlock().reachesExit() }\n\npredicate catches_base_exception(ExceptStmt ex) {\n  ex.getType() = API::builtin(\"BaseException\").getAValueReachableFromSource().asExpr()\n  or\n  not exists(ex.getType())\n}\n\nfrom ExceptStmt ex\nwhere\n  catches_base_exception(ex) and\n  doesnt_reraise(ex)\nselect ex, \"Except block directly handles BaseException.\"",
+        "cwe_id": [
+            "cwe-396"
+        ]
+    },
+    {
+        "checker": "ToDoComment.ql",
+        "description": "Writing comments that include 'TODO' tends to lead to a build up of partially implemented features.",
+        "source_code": "import python\n\nfrom Comment c\nwhere c.getText().matches(\"%TODO%\") or c.getText().matches(\"%TO DO%\")\nselect c, c.getText()",
+        "cwe_id": [
+            "cwe-546"
+        ]
+    }
+]

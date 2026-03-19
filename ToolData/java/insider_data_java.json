@@ -1,0 +1,499 @@
+[
+  {
+    "description": "Credentials must not be stored in the code, an attacker could decompile the application and obtain the credential.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`\\d{2,3}\\.\\d{2,3}\\.\\d{2,3}\\.\\d{2,3}`),",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)aws(.{0,20})?(?-i)['\"][0-9a-zA-Z/+]{40}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(chave\\s*=\\s*['|\"]\\w+['|\"])|(\\w*[tT]oken\\s*=\\s*['|\"]\\w+['|\"])|(\\w*[aA][uU][tT][hH]\\w*\\s*=\\s*['|\"]\\w+['|\"])|(username\\s*=\\s*['|\"]\\w+['|\"])|(secret\\s*=\\s*['|\"]\\w+['|\"])|(chave\\s*=\\s*['|\"]\\w+['|\"])`),\n\t\tNotOr:         []*regexp.Regexp{regexp.MustCompile(`(?mi)public.*[tT]oken`), regexp.MustCompile(`(?mi)public.*[kK]ey`)},",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`-----BEGIN PRIVATE KEY-----`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`AAAA(?:[0-9A-Za-z+/])+={0,3}(?:.+@.+)`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`-----BEGIN OPENSSH PRIVATE KEY-----`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`-----BEGIN PGP PRIVATE KEY BLOCK-----`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Facebook Secret Key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(facebook|fb)(.{0,20})?(?-i)['\"][0-9a-f]{32}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Facebook Client ID. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(facebook|fb)(.{0,20})?['\"][0-9]{13,17}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Facebook Access Token. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`EAACEdEose0cBA[0-9A-Za-z]+`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Twitter Secret Key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)twitter(.{0,20})?['\"][0-9a-z]{35,44}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Twitter Client ID. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)twitter(.{0,20})?['\"][0-9a-z]{18,25}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "GitHub URL. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)github(.{0,20})?(?-i)['\"][0-9a-zA-Z]{35,40}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "LinkedIn Client ID. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)linkedin(.{0,20})?(?-i)['\"][0-9a-z]{12}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "LinkedIn Secret Key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)linkedin(.{0,20})?['\"][0-9a-z]{16}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Slack API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`xox[baprs]-([0-9a-zA-Z]{10,48})?`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "EC key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`-----BEGIN EC PRIVATE KEY-----`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Generic API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)api_key(.{0,20})?['\"][0-9a-zA-Z]{32,45}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Google API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`AIza[0-9A-Za-z\\-_]{35}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Google Cloud Platform API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(google|gcp|youtube|drive|yt)(.{0,20})?['\"][AIza[0-9a-z\\-_]{35}]['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Google OAuth. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(google|gcp|auth)(.{0,20})?['\"][0-9]+-[0-9a-z_]{32}\\.apps\\.googleusercontent\\.com['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Google OAuth Access Token. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`ya29\\.[0-9A-Za-z\\-_]+`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Heroku API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)heroku(.{0,20})?['\"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "MailChimp API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(mailchimp|mc)(.{0,20})?['\"][0-9a-f]{32}-us[0-9]{1,2}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Mailgun API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)(mailgun|mg)(.{0,20})?['\"][0-9a-z]{32}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Password in URL. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`[a-zA-Z]{3,10}://[^/\\s:@]{3,20}:[^/\\s:@]{3,20}@.{1,100}/?.?`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "PayPal Braintree Access Token. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`access_token\\$production\\$[0-9a-z]{16}\\$[0-9a-f]{32}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Picatic API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`sk_live_[0-9a-z]{32}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Stripe API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)stripe(.{0,20})?['\"][sk|rk]_live_[0-9a-zA-Z]{24}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Square access token. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`sq0atp-[0-9A-Za-z\\-_]{22}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Square OAuth secret. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`sq0csp-[0-9A-Za-z\\-_]{43}`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Twilio API key. File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(?i)twilio(.{0,20})?['\"][0-9a-f]{32}['\"]`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "Incoming Webhooks from  Slack application",
+    "source_code": "ExactMatch:    regexp.MustCompile(`https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}`),",
+    "cwe_id": [
+      "cwe-918"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`(password\\s*=\\s*['|\"](.*)+['|\"])|(pass\\s*=\\s*['|\"](.*)+['|\"]\\s)|(pwd\\s*=\\s*['|\"](.*)+['|\"]\\s)|(passwd\\s*=\\s*['|\"](.*)+['|\"]\\s)|(senha\\s*=\\s*['|\"](.*)+['|\"])`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "File contains sensitive information written directly, such as usernames, passwords, keys, etc.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`-----BEGIN CERTIFICATE-----`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "This application uses RSA encryption without OAEP (Optimal Asymmetric Encryption Padding), OAEP has been standardized as PKCS # 1 v2 and RFC 2437. The padding scheme makes the operation 'semantically secure' and prevents some types of attacks, which would use the lack of padding as an attack vector.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`), regexp.MustCompile(`Cipher\\.getInstance\\(\\s*\"RSA/.+/NoPadding`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`)},",
+    "cwe_id": [
+      "cwe-780"
+    ]
+  },
+  {
+    "description": "DES (Data Encryption Standard) is a symmetric key cryptographic algorithm. Its 56-bit key makes it insecure for modern applications, it was developed in 1970, approved as a standard in 1976 and in 1977 the first vulnerability was discovered. Today it can be broken in about 2 days with a modern graphics card.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`), regexp.MustCompile(`Cipher\\.getInstance\\(`), regexp.MustCompile(`\"DES\"`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`)},",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "description": "The file is 'World Readable'. Any application can read the file.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`MODE_WORLD_WRITABLE|Context\\.MODE_WORLD_WRITABLE`), regexp.MustCompile(`openFileOutput\\(\\s*\".+\"\\s*,\\s*2\\s*\\)`)},",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "description": "The file is 'World Readable' and 'World Writable'. Any application can read the file.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`openFileOutput\\(\\s*\".+\"\\s*,\\s*3\\s*\\)`),",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "description": "MD5 is a hash algorithm considered weak and can return the same result for two different contents, which can cause collisions and in extreme cases it can cause a security breach. https://en.wikipedia.org/wiki/Collision_resistance",
+    "source_code": "ExactMatch:    regexp.MustCompile(`MessageDigest\\.getInstance\\(\"*MD5\"*\\)|MessageDigest\\.getInstance\\(\"*md5\"*\\)|DigestUtils\\.md5\\(`),",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "description": "MD4 is a hash algorithm considered weak and can return the same result for two different contents, which can cause collisions and in extreme cases it can cause a security breach. https://en.wikipedia.org/wiki/Collision_resistance",
+    "source_code": "ExactMatch:    regexp.MustCompile(`getInstance(\"md4\")|getInstance(\"rc2\")|getInstance(\"rc4\")|getInstance(\"RC4\")|getInstance(\"RC2\")|getInstance(\"MD4\")`),",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "description": "The application can read / write to external storage. External storage files can be modified by any application.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`.getExternalStorage`), regexp.MustCompile(`.getExternalFilesDir\\(`)},",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "description": "The application creates a temporary file. Sensitive information should not be stored in temporary files.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`\\.createTempFile\\(`),",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "description": "The Application uses weak Initialization Vectors (weak IVs in encryption), such as '0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 ' or '0x01,0x02,0x03,0x04,0x05,0x06 , 0x07 '. Failure to use random IVs makes the application vulnerable to dictionary attacks.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00`), regexp.MustCompile(`0x01,0x02,0x03,0x04,0x05,0x06,0x07`)},",
+    "cwe_id": [
+      "cwe-329"
+    ]
+  },
+  {
+    "description": "Insecure WebView implementation. WebView ignores SSL Certificate errors and accepts SSL. This application is vulnerable to MITM attacks.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`onReceivedSslError\\(WebView`), regexp.MustCompile(`\\.proceed\\(\\);`), regexp.MustCompile(`webkit\\.WebView`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`webkit\\.WebView`)},",
+    "cwe_id": [
+      "cwe-295"
+    ]
+  },
+  {
+    "description": "User input without validation can cause SQL Injection. All user input must be sanitized before performing the operation on the database.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`android\\.database\\.sqlite`), regexp.MustCompile(`execSQL\\(|rawQuery\\(`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`android\\.database\\.sqlite`)},",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "description": "The application uses SQL Cipher, but the key may be contained in the source code (hardcoded).",
+    "source_code": "ExactMatch:    regexp.MustCompile(`SQLiteOpenHelper\\.getWritableDatabase\\(`),",
+    "cwe_id": [
+      "cwe-312"
+    ]
+  },
+  {
+    "description": "The application downloads files using the Android Download Manager.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`android\\.app\\.DownloadManager`), regexp.MustCompile(`getSystemService\\(DOWNLOAD_SERVICE\\)`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`android\\.app\\.DownloadManager`)},",
+    "cwe_id": [
+      "cwe-494"
+    ]
+  },
+  {
+    "description": "Remote WebView debugging is enabled.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.setWebContentsDebuggingEnabled\\(true\\)`), regexp.MustCompile(`webkit\\.WebView`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`webkit\\.WebView`)},",
+    "cwe_id": [
+      "cwe-215"
+    ]
+  },
+  {
+    "description": "Insecure WebView implementation. User-controlled code execution is a security hole.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`webkit\\.WebView`), regexp.MustCompile(`(setJavaScriptEnabled\\(true\\))|(.addJavascriptInterface\\()`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`webkit\\.WebView`)},",
+    "cwe_id": [
+      "cwe-749"
+    ]
+  },
+  {
+    "description": "The classes in this file write or read data on the Clipboard. The transfer area is shared between all apps so attention is needed to data that is placed in this resource.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`content\\.ClipboardManager`), regexp.MustCompile(`CLIPBOARD_SERVICE`), regexp.MustCompile(`ClipboardManager`)},",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "description": "This code uses jar url, this functionality could generate an XML vulnerability External Entities (XXE), XXE is listed as fourth place (A4) in the Top 10 OWASP 2017",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`net\\.JarURLConnection`), regexp.MustCompile(`JarURLConnection`), regexp.MustCompile(`jar:((?:http|https)://(?:[\\w_-]+(?:(?:\\.[\\w_-]+)+))(?:[\\w.,@?^=%&:/~+#-]*[\\w@?^=%&/~+#-])?)`)},",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "description": "DES is a hash algorithm that is considered weak and can cause hash collisions.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`), regexp.MustCompile(`Cipher\\.getInstance\\(`), regexp.MustCompile(`\"AES\"`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`)},",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "description": "Insecure implementation of SSL. Trusting any certificate or accepting self-signed certificates can cause a serious security breach, making the application vulnerable to MITM (Man In The Middle) attacks.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.net\\.ssl`), regexp.MustCompile(`TrustAllSSLSocket-Factory|AllTrustSSLSocketFactory|NonValidatingSSLSocketFactory|net\\.SSLCertificateSocketFactory|ALLOW_ALL_HOSTNAME_VERIFIER|\\.setDefaultHostnameVerifier\\(|NullHostnameVerifier\\(`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.net\\.ssl`)},",
+    "cwe_id": [
+      "cwe-295"
+    ]
+  },
+  {
+    "description": "The WebView loads files from external storage. External storage files can be modified by any application.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.loadUrl\\(`), regexp.MustCompile(`webkit\\.WebView`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`webkit\\.WebView`)},",
+    "cwe_id": [
+      "cwe-919"
+    ]
+  },
+  {
+    "description": "The file is 'World Readable'. Any application can read the file.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`MODE_WORLD_READABLE|Context\\.MODE_WORLD_READABLE`), regexp.MustCompile(`openFileOutput\\(\\s*\".+\"\\s*,\\s*1\\s*\\)`)},",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "description": "The application uses ECB as the 'block mode' of the encryption algorithm. ECB is considered a weak cryptographic algorithm, as it results in the same cipher for identical blocks of plain text.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`), regexp.MustCompile(`Cipher\\.getInstance\\(`), regexp.MustCompile(`\"ECB\"`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`)},",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "description": "The application executes Commands directly on the Operating System. If using any user input, it must be sanitized to the maximum, cleaning any unnecessary characters. In general, it is recommended to never use calls to native commands, being recommended the JNI (Java Native Interface) for such low level operations.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`Runtime\\.getRuntime\\(`),",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "description": "Invisible elements in the view can be used to hide data from the user, but can still be leaked.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`setVisibility\\(View\\.GONE\\)|setVisibility\\(View\\.INVISIBLE\\)`),",
+    "cwe_id": [
+      "cwe-919"
+    ]
+  },
+  {
+    "description": "The application loads and / or manipulates Dex files (Dexloading and dynamic classes).",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`dalvik\\.system\\.PathClassLoader|dalvik\\.system\\.DexFile|dalvik\\.system\\.DexPathList|dalvik\\.system\\.DexClassLoader|java\\.security\\.ClassLoader|java\\.net\\.URLClassLoader|java\\.security\\.SecureClassLoader`), regexp.MustCompile(`loadDex|loadClass|DexClassLoader|loadDexFile`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`dalvik\\.system\\.PathClassLoader|dalvik\\.system\\.DexFile|dalvik\\.system\\.DexPathList|dalvik\\.system\\.DexClassLoader|java\\.security\\.ClassLoader|java\\.net\\.URLClassLoader|java\\.security\\.SecureClassLoader`)},",
+    "cwe_id": [
+      "cwe-695"
+    ]
+  },
+  {
+    "description": "The app uses jackson deserialization libraryDeserialization of untrusted input can result inarbitary code execution.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`com\\.fasterxml\\.jackson\\.databind\\.ObjectMapper`), regexp.MustCompile(`\\.enableDefaultTyping\\(`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`com\\.fasterxml\\.jackson\\.databind\\.ObjectMapper`)},",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "description": "App can write to App Directory. Sensitive Information should be encrypted.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`MODE_PRIVATE|Context\\.MODE_PRIVATE`),",
+    "cwe_id": [
+      "cwe-919"
+    ]
+  },
+  {
+    "description": "This application has packages to access root privileges (Super User). A Super User on the user's device can do absolutely anything, making the application very powerful and possibly facilitating malicious actions. etc.",
+    "source_code": "Or:            []*regexp.Regexp{regexp.MustCompile(`com\\.noshufou\\.android\\.su`), regexp.MustCompile(`com\\.thirdparty\\.superuser`), regexp.MustCompile(`eu\\.chainfire\\.supersu`), regexp.MustCompile(`com\\.koushikdutta\\.superuser`), regexp.MustCompile(`eu\\.chainfire\\.`)},",
+    "cwe_id": [
+      "cwe-250"
+    ]
+  },
+  {
+    "description": "WebView request via GET. The Android WebViews API is very sensitive because it allows resources coming from the network to access data only available in the context of the application, making it easier for an attacker to execute Remote Code Execution, it is always necessary to ensure that the content sources presented in WebViews are encrypted and protected and user inputs are always sanitized.",
+    "source_code": "And:           []*regexp.Regexp{regexp.MustCompile(`WebView`), regexp.MustCompile(`loadData\\(`), regexp.MustCompile(`android\\.webkit`)},\n\t\tNotOr:         []*regexp.Regexp{regexp.MustCompile(`WebView`), regexp.MustCompile(`android\\.webkit`)},",
+    "cwe_id": [
+      "cwe-749"
+    ]
+  },
+  {
+    "description": "The App logs information. Sensitive information should not be logged.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`Log\\.(v|d|i|w|e|f|s)|System\\.out\\.print|System\\.err\\.print`),",
+    "cwe_id": [
+      "cwe-532"
+    ]
+  },
+  {
+    "description": "The application uses a predictable, therefore insecure, random number generator.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`java\\.util\\.Random`), regexp.MustCompile(`Random\\(\\)`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`java\\.util\\.Random`)},",
+    "cwe_id": [
+      "cwe-330"
+    ]
+  },
+  {
+    "description": "The application uses a predictable, therefore insecure, random number generator.",
+    "source_code": "ExactMatch:    regexp.MustCompile(`Random\\..*\\(.*\\)|Random\\(.*\\)|\\(.*\\).random\\(\\)`),",
+    "cwe_id": [
+      "cwe-330"
+    ]
+  },
+  {
+    "description": "The application uses GCM as the 'block mode' of the encryption algorithm. GCM is considered a secure cryptographic algorithm as long as each encrypted block is indistinguishable from a random permutation, otherwise, it would only increase the value of IV (Initialization Vector) by 1, so the keys become predictable, when analyzing a block with a sufficient number of messages encrypted with the same key and / or IV. It may be vulnerable to 'Stream Cipher Attack'.",
+    "source_code": "And: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`), regexp.MustCompile(`Cipher\\.getInstance\\(`), regexp.MustCompile(`\"GCM\"`)}, NotAnd: []*regexp.Regexp{regexp.MustCompile(`\\.crypto\\.Cipher`)},",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "description": "SHA-1 is a hash algorithm considered weak and can return the same result for two different contents, which can cause collisions and in extreme cases it can cause a security breach. https://en.wikipedia.org/wiki/Collision_resistance",
+    "source_code": "ExactMatch:    regexp.MustCompile(`MessageDigest\\.getInstance\\(\"*SHA-1\"*\\)|MessageDigest\\.getInstance\\(\"*sha-1\"*\\)|DigestUtils\\.sha\\(`),",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  }
+]

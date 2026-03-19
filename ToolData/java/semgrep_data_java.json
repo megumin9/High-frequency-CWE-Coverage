@@ -1,0 +1,954 @@
+[
+  {
+    "checker": "unrestricted-request-mapping",
+    "description": "Detected a method annotated with 'RequestMapping' that does not specify the HTTP method. CSRF protections are not enabled for GET, HEAD, TRACE, or OPTIONS, and by default all HTTP methods are allowed when the HTTP method is not explicitly specified. This means that a method that performs state changes could be vulnerable to CSRF attacks. To mitigate, add the 'method' field and specify the HTTP method (such as 'RequestMethod.POST').",
+    "source_code": "- patterns:\n  - pattern-inside: '@RequestMapping(...)\n\n      $RETURNTYPE $METHOD(...) { ... }\n\n      '\n  - pattern-not-inside: '@RequestMapping(..., method = $X, ...)\n\n      $RETURNTYPE $METHOD(...) { ... }\n\n      '\n  - pattern: 'RequestMapping\n\n      '\n",
+    "cwe_id": [
+      "cwe-352"
+    ]
+  },
+  {
+    "checker": "spring-unvalidated-redirect",
+    "description": "Application redirects a user to a destination URL specified by a user supplied parameter that is not validated.",
+    "source_code": "- pattern-either:\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  return \\\"redirect:\\\" + $URL;\\n\\\n      }\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  ...\\n  String $REDIR = \\\"redirect:\\\"\\\n      \\ + $URL;\\n  ...\\n  return $REDIR;\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  ...\\n  new ModelAndView(\\\"redirect:\\\"\\\n      \\ + $URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  ...\\n  String $REDIR = \\\"redirect:\\\"\\\n      \\ + $URL;\\n  ...\\n  new ModelAndView($REDIR);\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-601"
+    ]
+  },
+  {
+    "checker": "spring-actuator-fully-enabled-yaml",
+    "description": "Spring Boot Actuator is fully enabled. This exposes sensitive endpoints such as /actuator/env, /actuator/logfile, /actuator/heapdump and others. Unless you have Spring Security enabled or another means to protect these endpoints, this functionality is available without authentication, causing a severe security risk.",
+    "source_code": "- patterns:\n  - pattern-inside: \"management:\\n  ...\\n  endpoints:\\n    ...\\n    web:\\n      ...\\n\\\n      \\      exposure:\\n        ...\\n\"\n  - pattern: 'include: \"*\"\n\n      '\n",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "checker": "spring-actuator-dangerous-endpoints-enabled-yaml",
+    "description": "Spring Boot Actuator \"$ACTUATOR\" is enabled. Depending on the actuator, this can pose a significant security risk. Please double-check if the actuator is needed and properly secured.",
+    "source_code": "- patterns:\n  - pattern-inside: \"management:\\n  ...\\n  endpoints:\\n    ...\\n    web:\\n      ...\\n\\\n      \\      exposure:\\n        ...\\n        include:\\n          ...\\n\"\n  - pattern: 'include: [..., $ACTUATOR, ...]\n\n      '\n  - metavariable-comparison:\n      metavariable: $ACTUATOR\n      comparison: not str($ACTUATOR) in [\"health\",\"*\"]\n",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "checker": "spring-csrf-disabled",
+    "description": "CSRF protection is disabled for this configuration. This is a security risk.",
+    "source_code": "- pattern: $OBJ.csrf(...).disable(...)\n",
+    "cwe_id": [
+      "cwe-352"
+    ]
+  },
+  {
+    "checker": "spring-jsp-eval",
+    "description": "A Spring expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- pattern: '<spring:eval ... expression=...>\n\n    '\n",
+    "cwe_id": [
+      "cwe-95"
+    ]
+  },
+  {
+    "checker": "spring-actuator-dangerous-endpoints-enabled",
+    "description": "Spring Boot Actuators \"$...ACTUATORS\" are enabled. Depending on the actuators, this can pose a significant security risk. Please double-check if the actuators are needed and properly secured.",
+    "source_code": "- patterns:\n  - pattern: management.endpoints.web.exposure.include=$...ACTUATORS\n  - metavariable-comparison:\n      metavariable: $...ACTUATORS\n      comparison: not str($...ACTUATORS) in [\"health\",\"*\"]\n",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "checker": "spel-injection",
+    "description": "A Spring expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  ExpressionParser $PARSER;\\n  ...\\n\\\n        }\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  ExpressionParser $PARSER = ...;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  ExpressionParser $PARSER = ...;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  SpelExpressionParser $PARSER;\\n  ...\\n\\\n        }\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  SpelExpressionParser $PARSER = ...;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  SpelExpressionParser $PARSER =\\\n        \\ ...;\\n  ...\\n}\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  TemplateAwareExpressionParser $PARSER;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  TemplateAwareExpressionParser $PARSER\\\n        \\ = ...;\\n  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  TemplateAwareExpressionParser $PARSER\\\n        \\ = ...;\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  $PARSER.parseExpression(...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $PARSER.parseExpression(\\\"...\\\");\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $PARSER.parseExpression($S);\\n\\\n      \\  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-94"
+    ]
+  },
+  {
+    "checker": "spring-actuator-fully-enabled",
+    "description": "Spring Boot Actuator is fully enabled. This exposes sensitive endpoints such as /actuator/env, /actuator/logfile, /actuator/heapdump and others. Unless you have Spring Security enabled or another means to protect these endpoints, this functionality is available without authentication, causing a significant security risk.",
+    "source_code": "- pattern: management.endpoints.web.exposure.include=*\n",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "checker": "spring-sqli",
+    "description": "Detected a string argument from a public method contract in a raw SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern: $ARG\n    - pattern-inside: 'public $T $M (..., String $ARG,...){...}\n\n        '\n- pattern-sanitizers:\n  - not_conflicting: true\n    pattern-either:\n    - patterns:\n      - focus-metavariable: $A\n      - pattern-inside: 'new $TYPE(...,$A,...);\n\n          '\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - focus-metavariable: $A\n        - pattern: 'new PreparedStatementCreatorFactory($A,...);\n\n            '\n      - patterns:\n        - focus-metavariable: $A\n        - pattern: '(JdbcTemplate $T).$M($A,...)\n\n            '\n      - patterns:\n        - pattern: (String $A)\n        - pattern-inside: '(JdbcTemplate $T).batchUpdate(...)\n\n            '\n      - patterns:\n        - focus-metavariable: $A\n        - pattern: 'NamedParameterBatchUpdateUtils.$M($A,...)\n\n            '\n      - patterns:\n        - focus-metavariable: $A\n        - pattern: 'BatchUpdateUtils.$M($A,...)\n\n            '\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "tainted-url-host",
+    "description": "User data flows into the host portion of this manually-constructed URL. This could allow an attacker to send data to their own server, potentially exposing sensitive data such as cookies or authorization information sent with this request. They could also probe internal servers or other resources that the server running this code can access. (This is called server-side request forgery, or SSRF.) Do not allow arbitrary hosts. Instead, create an allowlist for approved hosts, hardcode the correct host, or ensure that the user data can only affect the path or parameters.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: \"$METHODNAME(..., @$REQ(...) $TYPE $SOURCE,...) {\\n  ...\\n\\\n          }\\n\"\n      - pattern-inside: \"$METHODNAME(..., @$REQ $TYPE $SOURCE,...) {\\n  ...\\n}\\n\"\n    - metavariable-regex:\n        metavariable: $TYPE\n        regex: ^(?!(Integer|Long|Float|Double|Char|Boolean|int|long|float|double|char|boolean))\n    - metavariable-regex:\n        metavariable: $REQ\n        regex: (RequestBody|PathVariable|RequestParam|RequestHeader|CookieValue|ModelAttribute)\n    - focus-metavariable: $SOURCE\n- pattern-sinks:\n  - pattern-either:\n    - pattern: new URL($ONEARG)\n    - patterns:\n      - pattern-either:\n        - pattern: '\"$URLSTR\" + ...\n\n            '\n        - pattern: '\"$URLSTR\".concat(...)\n\n            '\n        - patterns:\n          - pattern-inside: 'StringBuilder $SB = new StringBuilder(\"$URLSTR\");\n\n              ...\n\n              '\n          - pattern: $SB.append(...)\n        - patterns:\n          - pattern-inside: '$VAR = \"$URLSTR\";\n\n              ...\n\n              '\n          - pattern: $VAR += ...\n        - patterns:\n          - pattern: String.format(\"$URLSTR\", ...)\n          - pattern-not: String.format(\"$URLSTR\", \"...\", ...)\n        - patterns:\n          - pattern-inside: 'String $VAR = \"$URLSTR\";\n\n              ...\n\n              '\n          - pattern: String.format($VAR, ...)\n      - metavariable-regex:\n          metavariable: $URLSTR\n          regex: http(s?)://%(v|s|q).*\n",
+    "cwe_id": [
+      "cwe-918"
+    ]
+  },
+  {
+    "checker": "tainted-sql-string",
+    "description": "User data flows into this manually-constructed SQL string. User data can be safely inserted into SQL strings using prepared statements or an object-relational mapper (ORM). Manually-constructed SQL strings is a possible indicator of SQL injection, which could let an attacker steal or manipulate data from the database. Instead, use prepared statements (`connection.PreparedStatement`) or a safe library.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: \"$METHODNAME(..., @$REQ(...) $TYPE $SOURCE,...) {\\n  ...\\n\\\n          }\\n\"\n      - pattern-inside: \"$METHODNAME(..., @$REQ $TYPE $SOURCE,...) {\\n  ...\\n}\\n\"\n    - metavariable-regex:\n        metavariable: $REQ\n        regex: (RequestBody|PathVariable|RequestParam|RequestHeader|CookieValue)\n    - metavariable-regex:\n        metavariable: $TYPE\n        regex: ^(?!(Integer|Long|Float|Double|Char|Boolean|int|long|float|double|char|boolean))\n    - focus-metavariable: $SOURCE\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '\"$SQLSTR\" + ...\n\n          '\n      - pattern: '\"$SQLSTR\".concat(...)\n\n          '\n      - patterns:\n        - pattern-inside: 'StringBuilder $SB = new StringBuilder(\"$SQLSTR\");\n\n            ...\n\n            '\n        - pattern: $SB.append(...)\n      - patterns:\n        - pattern-inside: '$VAR = \"$SQLSTR\";\n\n            ...\n\n            '\n        - pattern: $VAR += ...\n      - pattern: String.format(\"$SQLSTR\", ...)\n      - patterns:\n        - pattern-inside: 'String $VAR = \"$SQLSTR\";\n\n            ...\n\n            '\n        - pattern: String.format($VAR, ...)\n    - pattern-not-inside: System.out.println(...)\n    - pattern-not-inside: $LOG.info(...)\n    - pattern-not-inside: $LOG.warn(...)\n    - pattern-not-inside: $LOG.warning(...)\n    - pattern-not-inside: $LOG.debug(...)\n    - pattern-not-inside: $LOG.debugging(...)\n    - pattern-not-inside: $LOG.error(...)\n    - pattern-not-inside: new Exception(...)\n    - pattern-not-inside: throw ...;\n    - metavariable-regex:\n        metavariable: $SQLSTR\n        regex: (?i)(select|delete|insert|create|update|alter|drop)\\b\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "tainted-html-string",
+    "description": "Detected user input flowing into a manually constructed HTML string. You may be accidentally bypassing secure methods of rendering HTML by manually constructing HTML and this could create a cross-site scripting vulnerability, which could let attackers steal sensitive user data. To be sure this is safe, check that the HTML is rendered safely. You can use the OWASP ESAPI encoder if you must render user data.",
+    "source_code": "- pattern-sources:\n  - label: INPUT\n    patterns:\n    - pattern-either:\n      - pattern-inside: \"$METHODNAME(..., @$REQ(...) $TYPE $SOURCE,...) {\\n  ...\\n\\\n          }\\n\"\n      - pattern-inside: \"$METHODNAME(..., @$REQ $TYPE $SOURCE,...) {\\n  ...\\n}\\n\"\n    - metavariable-regex:\n        metavariable: $TYPE\n        regex: ^(?!(Integer|Long|Float|Double|Char|Boolean|int|long|float|double|char|boolean))\n    - metavariable-regex:\n        metavariable: $REQ\n        regex: (RequestBody|PathVariable|RequestParam|RequestHeader|CookieValue|ModelAttribute)\n    - focus-metavariable: $SOURCE\n  - label: CONCAT\n    by-side-effect: true\n    requires: INPUT\n    patterns:\n    - pattern-either:\n      - pattern: '\"$HTMLSTR\" + ...\n\n          '\n      - pattern: '\"$HTMLSTR\".concat(...)\n\n          '\n      - patterns:\n        - pattern-inside: 'StringBuilder $SB = new StringBuilder(\"$HTMLSTR\");\n\n            ...\n\n            '\n        - pattern: $SB.append(...)\n      - patterns:\n        - pattern-inside: '$VAR = \"$HTMLSTR\";\n\n            ...\n\n            '\n        - pattern: $VAR += ...\n      - pattern: String.format(\"$HTMLSTR\", ...)\n      - patterns:\n        - pattern-inside: 'String $VAR = \"$HTMLSTR\";\n\n            ...\n\n            '\n        - pattern: String.format($VAR, ...)\n    - metavariable-regex:\n        metavariable: $HTMLSTR\n        regex: ^<\\w+\n- pattern-propagators:\n  - pattern: (StringBuilder $SB).append($...TAINTED)\n    from: $...TAINTED\n    to: $SB\n  - pattern: $VAR += $...TAINTED\n    from: $...TAINTED\n    to: $VAR\n- pattern-sinks:\n  - requires: CONCAT\n    patterns:\n    - pattern-either:\n      - pattern: new ResponseEntity<>($PAYLOAD, ...)\n      - pattern: new ResponseEntity<$ERROR>($PAYLOAD, ...)\n      - pattern: ResponseEntity. ... .body($PAYLOAD)\n      - patterns:\n        - pattern: 'ResponseEntity.$RESPFUNC($PAYLOAD). ...\n\n            '\n        - metavariable-regex:\n            metavariable: $RESPFUNC\n            regex: ^(ok|of)$\n    - focus-metavariable: $PAYLOAD\n- pattern-sanitizers:\n  - pattern-either:\n    - pattern: Encode.forHtml(...)\n    - pattern: (PolicyFactory $POLICY).sanitize(...)\n    - pattern: (AntiSamy $AS).scan(...)\n    - pattern: JSoup.clean(...)\n",
+    "cwe_id": [
+      "cwe-79"
+    ]
+  },
+  {
+    "checker": "tainted-system-command",
+    "description": "Detected user input entering a method which executes a system command. This could result in a command injection vulnerability, which allows an attacker to inject an arbitrary system command onto the server. The attacker could download malware onto or steal data from the server. Instead, use ProcessBuilder, separating the command into individual arguments, like this: `new ProcessBuilder(\"ls\", \"-al\", targetDirectory)`. Further, make sure you hardcode or allowlist the actual command so that attackers can't run arbitrary commands.",
+    "source_code": "- pattern-propagators:\n  - pattern: (StringBuilder $STRB).append($INPUT)\n    from: $INPUT\n    to: $STRB\n    label: CONCAT\n    requires: INPUT\n- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: \"$METHODNAME(..., @$REQ(...) $TYPE $SOURCE,...) {\\n  ...\\n\\\n          }\\n\"\n      - pattern-inside: \"$METHODNAME(..., @$REQ $TYPE $SOURCE,...) {\\n  ...\\n}\\n\"\n    - metavariable-regex:\n        metavariable: $TYPE\n        regex: ^(?!(Integer|Long|Float|Double|Char|Boolean|int|long|float|double|char|boolean))\n    - metavariable-regex:\n        metavariable: $REQ\n        regex: (RequestBody|PathVariable|RequestParam|RequestHeader|CookieValue|ModelAttribute)\n    - focus-metavariable: $SOURCE\n    label: INPUT\n  - patterns:\n    - pattern-either:\n      - pattern: $X + $SOURCE\n      - pattern: $SOURCE + $Y\n      - pattern: String.format(\"...\", ..., $SOURCE, ...)\n      - pattern: String.join(\"...\", ..., $SOURCE, ...)\n      - pattern: (String $STR).concat($SOURCE)\n      - pattern: $SOURCE.concat(...)\n      - pattern: $X += $SOURCE\n      - pattern: $SOURCE += $X\n    label: CONCAT\n    requires: INPUT\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(Process $P) = new Process(...);\n\n          '\n      - pattern: '(ProcessBuilder $PB).command(...);\n\n          '\n      - patterns:\n        - pattern-either:\n          - pattern: '(Runtime $R).$EXEC(...);\n\n              '\n          - pattern: 'Runtime.getRuntime(...).$EXEC(...);\n\n              '\n        - metavariable-regex:\n            metavariable: $EXEC\n            regex: (exec|loadLibrary|load)\n      - patterns:\n        - pattern: '(ProcessBuilder $PB).command(...).$ADD(...);\n\n            '\n        - metavariable-regex:\n            metavariable: $ADD\n            regex: (add|addAll)\n      - patterns:\n        - pattern-either:\n          - patterns:\n            - pattern-inside: '$BUILDER = new ProcessBuilder(...);\n\n                ...\n\n                '\n            - pattern: $BUILDER.start(...)\n          - pattern: 'new ProcessBuilder(...). ... .start(...);\n\n              '\n    requires: CONCAT\n",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "tainted-file-path",
+    "description": "Detected user input controlling a file path. An attacker could control the location of this file, to include going backwards in the directory with '../'. To address this, ensure that user-controlled variables in file paths are sanitized. You may also consider using a utility method such as org.apache.commons.io.FilenameUtils.getName(...) to only retrieve the file name from the path.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: \"$METHODNAME(..., @$REQ(...) $TYPE $SOURCE,...) {\\n  ...\\n\\\n          }\\n\"\n      - pattern-inside: \"$METHODNAME(..., @$REQ $TYPE $SOURCE,...) {\\n  ...\\n}\\n\"\n    - metavariable-regex:\n        metavariable: $TYPE\n        regex: ^(?!(Integer|Long|Float|Double|Char|Boolean|int|long|float|double|char|boolean))\n    - metavariable-regex:\n        metavariable: $REQ\n        regex: (RequestBody|PathVariable|RequestParam|RequestHeader|CookieValue|ModelAttribute)\n    - focus-metavariable: $SOURCE\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: new File(...)\n      - pattern: new java.io.File(...)\n      - pattern: new FileReader(...)\n      - pattern: new java.io.FileReader(...)\n      - pattern: new FileInputStream(...)\n      - pattern: new java.io.FileInputStream(...)\n      - pattern: (Paths $PATHS).get(...)\n      - patterns:\n        - pattern: '$CLASS.$FUNC(...)\n\n            '\n        - metavariable-regex:\n            metavariable: $FUNC\n            regex: ^(getResourceAsStream|getResource)$\n      - patterns:\n        - pattern-either:\n          - pattern: new ClassPathResource($FILE, ...)\n          - pattern: ResourceUtils.getFile($FILE, ...)\n          - pattern: new FileOutputStream($FILE, ...)\n          - pattern: new java.io.FileOutputStream($FILE, ...)\n          - pattern: new StreamSource($FILE, ...)\n          - pattern: new javax.xml.transform.StreamSource($FILE, ...)\n          - pattern: FileUtils.openOutputStream($FILE, ...)\n        - focus-metavariable: $FILE\n- pattern-sanitizers:\n  - pattern: org.apache.commons.io.FilenameUtils.getName(...)\n",
+    "cwe_id": [
+      "cwe-23"
+    ]
+  },
+  {
+    "checker": "cookie-issecure-false",
+    "description": "Default session middleware settings: `setSecure` not set to true. This ensures that the cookie is sent only over HTTPS to prevent cross-site scripting attacks.",
+    "source_code": "- patterns:\n  - pattern: $COOKIE = new Cookie($...ARGS);\n  - pattern-not-inside: '$COOKIE = new Cookie(...);\n\n      ...\n\n      $COOKIE.setSecure(...);\n\n      '\n",
+    "cwe_id": [
+      "cwe-319"
+    ]
+  },
+  {
+    "checker": "security-constraint-http-method",
+    "description": "The tag \"http-method\" is used to specify on which HTTP methods the java web security constraint apply. The target security constraints could be bypassed if a non listed HTTP method is used. Inverse the logic by using the tag \"http-method-omission\" to define for which HTTP methods the security constraint do not apply. Using this way, only expected allowed HTTP methods will be skipped by the security constraint.",
+    "source_code": "- pattern: <http-method>$X</http-method>\n",
+    "cwe_id": [
+      "cwe-863"
+    ]
+  },
+  {
+    "checker": "cookie-setSecure",
+    "description": "Default session middleware settings: `setSecure` not set to true. This ensures that the cookie is sent only over HTTPS to prevent cross-site scripting attacks.",
+    "source_code": "- patterns:\n  - patterns:\n    - pattern-inside: '$COOKIE = new Cookie(...);\n\n        ...\n\n        '\n    - pattern: '$COOKIE.setSecure(false);\n\n        '\n  - pattern-not-inside: '$COOKIE = new Cookie(...);\n\n      ...\n\n      $COOKIE.setSecure(true);\n\n      '\n",
+    "cwe_id": [
+      "cwe-319"
+    ]
+  },
+  {
+    "checker": "xmlinputfactory-external-entities-enabled",
+    "description": "XML external entities are enabled for this XMLInputFactory. This is vulnerable to XML external entity attacks. Disable external entities by setting \"javax.xml.stream.isSupportingExternalEntities\" to false.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(\"javax.xml.stream.isSupportingExternalEntities\",\n        true);\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(javax.xml.stream.XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,\n        true);\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(javax.xml.stream.XMLInputFactory.SUPPORT_DTD,\n        true);\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(\"javax.xml.stream.isSupportingExternalEntities\",\n        Boolean.TRUE);\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(javax.xml.stream.XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,\n        Boolean.TRUE);\n    - pattern: (javax.xml.stream.XMLInputFactory $XMLFACTORY).setProperty(javax.xml.stream.XMLInputFactory.SUPPORT_DTD,\n        Boolean.TRUE);\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "xmlinputfactory-possible-xxe",
+    "description": "XML external entities are not explicitly disabled for this XMLInputFactory. This could be vulnerable to XML external entity vulnerabilities. Explicitly disable external entities by setting \"javax.xml.stream.isSupportingExternalEntities\" to false.",
+    "source_code": "- patterns:\n  - pattern-not-inside: \"$METHOD(...) {\\n  ...\\n  $XMLFACTORY.setProperty(\\\"javax.xml.stream.isSupportingExternalEntities\\\"\\\n      , false);\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$METHOD(...) {\\n  ...\\n  $XMLFACTORY.setProperty(javax.xml.stream.XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,\\\n      \\ false);\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$METHOD(...) {\\n  ...\\n  $XMLFACTORY.setProperty(\\\"javax.xml.stream.isSupportingExternalEntities\\\"\\\n      , Boolean.FALSE);\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$METHOD(...) {\\n  ...\\n  $XMLFACTORY.setProperty(javax.xml.stream.XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES,\\\n      \\ Boolean.FALSE);\\n  ...\\n}\\n\"\n  - pattern-either:\n    - pattern: javax.xml.stream.XMLInputFactory.newFactory(...)\n    - pattern: new XMLInputFactory(...)\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "java-pattern-from-string-parameter",
+    "description": "A regular expression is being used directly from a String method parameter. This could be a Regular Expression Denial of Service (ReDoS) vulnerability if the parameter is user-controlled and not properly validated. Ensure that a validation is in place to prevent evaluation using a regular expression prone to ReDoS.",
+    "source_code": "- patterns:\n  - pattern-inside: \"$TYPE $METHOD(..., String $PARAM, ...) {\\n  ...\\n}\"\n  - pattern-either:\n    - pattern: java.util.regex.Pattern.matches($PARAM, $ANY_STRING_TO_MATCH)\n    - pattern: java.util.regex.Pattern.compile($PARAM,...)\n",
+    "cwe_id": [
+      "cwe-1333"
+    ]
+  },
+  {
+    "checker": "httpservlet-path-traversal",
+    "description": "Detected a potential path traversal. A malicious actor could control the location of this file, to include going backwards in the directory with '../'. To address this, ensure that user-controlled variables in file paths are sanitized. You may also consider using a utility method such as org.apache.commons.io.FilenameUtils.getName(...) to only retrieve the file name from the path.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ)\n\n          '\n      - patterns:\n        - pattern-inside: \"(javax.servlet.http.Cookie[] $COOKIES) = (HttpServletRequest\\\n            \\ $REQ).getCookies(...);\\n...\\nfor (javax.servlet.http.Cookie $COOKIE:\\\n            \\ $COOKIES) {\\n  ...\\n}\\n\"\n        - pattern: '$COOKIE.getValue(...)\n\n            '\n      - patterns:\n        - pattern-inside: '$TYPE[] $VALS = (HttpServletRequest $REQ).$GETFUNC(...);\n\n            ...\n\n            '\n        - pattern: '$PARAM = $VALS[$INDEX];\n\n            '\n- pattern-sanitizers:\n  - pattern: org.apache.commons.io.FilenameUtils.getName(...)\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(java.io.File $FILE) = ...\n\n          '\n      - pattern: '(java.io.FileOutputStream $FOS) = ...\n\n          '\n      - pattern: 'new java.io.FileInputStream(...)\n\n          '\n",
+    "cwe_id": [
+      "cwe-22"
+    ]
+  },
+  {
+    "checker": "insecure-jms-deserialization",
+    "description": "JMS Object messages depend on Java Serialization for marshalling/unmarshalling of the message payload when ObjectMessage.getObject() is called. Deserialization of untrusted data can lead to security flaws; a remote attacker could via a crafted JMS ObjectMessage to execute arbitrary code with the permissions of the application listening/consuming JMS Messages. In this case, the JMS MessageListener consume an ObjectMessage type received inside the onMessage method, which may lead to arbitrary code execution when calling the $Y.getObject method.",
+    "source_code": "- patterns:\n  - pattern-inside: \"public class $JMS_LISTENER implements MessageListener {\\n  ...\\n\\\n      \\  public void onMessage(Message $JMS_MSG) {\\n      ...\\n  }\\n}\\n\"\n  - pattern-either:\n    - pattern-inside: $X = $Y.getObject(...);\n    - pattern-inside: $X = ($Z) $Y.getObject(...);\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "use-snakeyaml-constructor",
+    "description": "Used SnakeYAML org.yaml.snakeyaml.Yaml() constructor with no arguments, which is vulnerable to deserialization attacks. Use the one-argument Yaml(...) constructor instead, with SafeConstructor or a custom Constructor as the argument.",
+    "source_code": "- patterns:\n  - pattern: '$Y = new org.yaml.snakeyaml.Yaml();\n\n      ...\n\n      $Y.load(...);\n\n      '\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "jackson-unsafe-deserialization",
+    "description": "When using Jackson to marshall/unmarshall JSON to Java objects, enabling default typing is dangerous and can lead to RCE. If an attacker can control `$JSON` it might be possible to provide a malicious JSON which can be used to exploit unsecure deserialization. In order to prevent this issue, avoid to enable default typing (globally or by using \"Per-class\" annotations) and avoid using `Object` and other dangerous types for member variable declaration which creating classes for Jackson based deserialization.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - patterns:\n      - pattern-inside: 'ObjectMapper $OM = new ObjectMapper(...);\n\n          ...\n\n          '\n      - pattern-inside: '$OM.enableDefaultTyping();\n\n          ...\n\n          '\n      - pattern: $OM.readValue($JSON, ...);\n    - patterns:\n      - pattern-inside: \"class $CLASS {\\n  ...\\n  @JsonTypeInfo(use = Id.CLASS,...)\\n\\\n          \\  $TYPE $VAR;\\n  ...\\n}\\n\"\n      - metavariable-regex:\n          metavariable: $TYPE\n          regex: (Object|Serializable|Comparable)\n      - pattern: $OM.readValue($JSON, $CLASS.class);\n    - patterns:\n      - pattern-inside: \"class $CLASS {\\n  ...\\n  ObjectMapper $OM;\\n  ...\\n  $INITMETHODTYPE\\\n          \\ $INITMETHOD(...) {\\n    ...\\n    $OM = new ObjectMapper();\\n    ...\\n\\\n          \\    $OM.enableDefaultTyping();\\n    ...\\n  }\\n  ...\\n}\\n\"\n      - pattern-inside: \"$METHODTYPE $METHOD(...) {\\n  ...  \\n}\\n\"\n      - pattern: $OM.readValue($JSON, ...);\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "do-privileged-use",
+    "description": "Marking code as privileged enables a piece of trusted code to temporarily enable access to more resources than are available directly to the code that called it. Be very careful in your use of the privileged construct, and always remember to make the privileged code section as small as possible.",
+    "source_code": "- patterns:\n  - pattern-inside: 'import java.security.*;\n\n      ...\n\n      '\n  - pattern-either:\n    - pattern: AccessController.doPrivileged(...);\n    - pattern: class $ACTION implements PrivilegedAction<Void> { ... }\n",
+    "cwe_id": [
+      "cwe-269"
+    ]
+  },
+  {
+    "checker": "servletresponse-writer-xss",
+    "description": "Cross-site scripting detected in HttpServletResponse writer with variable '$VAR'. User input was detected going directly from the HttpServletRequest into output. Ensure your data is properly encoded using org.owasp.encoder.Encode.forHtml: 'Encode.forHtml($VAR)'.",
+    "source_code": "- patterns:\n  - pattern-inside: $TYPE $FUNC(..., HttpServletResponse $RESP, ...) { ... }\n  - pattern-inside: $VAR = $REQ.getParameter(...); ...\n  - pattern-either:\n    - pattern: $RESP.getWriter(...).write(..., $VAR, ...);\n    - pattern: '$WRITER = $RESP.getWriter(...);\n\n        ...\n\n        $WRITER.write(..., $VAR, ...);\n\n        '\n",
+    "cwe_id": [
+      "cwe-79"
+    ]
+  },
+  {
+    "checker": "dangerous-groovy-shell",
+    "description": "A expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: '$SHELL.parse(...)\n\n        '\n    - pattern: '$SHELL.evaluate(...)\n\n        '\n    - pattern: '$SHELL.parseClass(...)\n\n        '\n  - pattern-either:\n    - pattern-inside: 'groovy.lang.GroovyShell $SHELL = ...;\n\n        ...\n\n        '\n    - pattern-inside: 'groovy.lang.GroovyClassLoader $SHELL = ...;\n\n        ...\n\n        '\n  - pattern-not: '$SHELL.parse(\"...\",...)\n\n      '\n  - pattern-not: '$SHELL.evaluate(\"...\",...)\n\n      '\n  - pattern-not: '$SHELL.parseClass(\"...\",...)\n\n      '\n",
+    "cwe_id": [
+      "cwe-94"
+    ]
+  },
+  {
+    "checker": "formatted-sql-string",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ)\n\n          '\n      - patterns:\n        - pattern-inside: \"$ANNOT $FUNC (..., $INPUT, ...) {\\n  ...\\n}\\n\"\n        - pattern: (String $INPUT)\n        - focus-metavariable: $INPUT\n    label: INPUT\n  - patterns:\n    - pattern-either:\n      - pattern: $X + $INPUT\n      - pattern: $X += $INPUT\n      - pattern: String.format(..., $INPUT, ...)\n      - pattern: String.join(..., $INPUT, ...)\n      - pattern: (String $STR).concat($INPUT)\n      - pattern: $INPUT.concat(...)\n      - patterns:\n        - pattern-either:\n          - pattern: $STRB.append($INPUT)\n          - pattern: new $STRB(..., $INPUT, ...)\n        - metavariable-type:\n            metavariable: $STRB\n            type: StringBuilder\n    label: CONCAT\n    requires: INPUT\n- pattern-propagators:\n  - pattern: (StringBuffer $S).append($X)\n    from: $X\n    to: $S\n  - pattern: (StringBuilder $S).append($X)\n    from: $X\n    to: $S\n- pattern-sinks:\n  - patterns:\n    - pattern-not: $S.$SQLFUNC(<... \"=~/.*TABLE *$/\" ...>)\n    - pattern-not: $S.$SQLFUNC(<... \"=~/.*TABLE %s$/\" ...>)\n    - pattern-either:\n      - pattern: (Statement $S).$SQLFUNC(...)\n      - pattern: (PreparedStatement $P).$SQLFUNC(...)\n      - pattern: (Connection $C).createStatement(...).$SQLFUNC(...)\n      - pattern: (Connection $C).prepareStatement(...).$SQLFUNC(...)\n      - pattern: (EntityManager $EM).$SQLFUNC(...)\n    - metavariable-regex:\n        metavariable: $SQLFUNC\n        regex: execute|executeQuery|createQuery|query|addBatch|nativeSQL|create|prepare\n    requires: CONCAT\n- pattern-sanitizers:\n  - patterns:\n    - pattern: (CriteriaBuilder $CB).$ANY(...)\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "tainted-env-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into the environment variables of an 'exec' command.  Instead, call the command with user-supplied arguments by using the overloaded method with one String array as the argument. `exec({\"command\", \"arg1\", \"arg2\"})`.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ)\n\n          '\n      - patterns:\n        - pattern-inside: \"(javax.servlet.http.Cookie[] $COOKIES) = (HttpServletRequest\\\n            \\ $REQ).getCookies(...);\\n...\\nfor (javax.servlet.http.Cookie $COOKIE:\\\n            \\ $COOKIES) {\\n  ...\\n}\\n\"\n        - pattern: '$COOKIE.getValue(...)\n\n            '\n- pattern-sinks:\n  - patterns:\n    - pattern: (java.lang.Runtime $R).exec($CMD, $ENV_ARGS, ...);\n    - focus-metavariable: $ENV_ARGS\n",
+    "cwe_id": [
+      "cwe-454"
+    ]
+  },
+  {
+    "checker": "cookie-missing-secure-flag",
+    "description": "A cookie was detected without setting the 'secure' flag. The 'secure' flag for cookies prevents the client from transmitting the cookie over insecure channels such as HTTP. Set the 'secure' flag by calling '$COOKIE.setSecure(true);'",
+    "source_code": "- patterns:\n  - pattern-not-inside: $COOKIE.setValue(\"\"); ...\n  - pattern-either:\n    - pattern: $COOKIE.setSecure(false);\n    - patterns:\n      - pattern-not-inside: $COOKIE.setSecure(...); ...\n      - pattern-not-inside: $COOKIE = ResponseCookie.from(...). ...; ...\n      - pattern: $RESPONSE.addCookie($COOKIE);\n",
+    "cwe_id": [
+      "cwe-614"
+    ]
+  },
+  {
+    "checker": "tainted-cmd-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into a 'ProcessBuilder' or 'exec' command. This could lead to command injection if variables passed into the exec commands are not properly sanitized. Instead, avoid using these OS commands with user-supplied input, or, if you must use these commands, use a whitelist of specific values.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ)\n\n          '\n      - patterns:\n        - pattern-inside: \"(javax.servlet.http.Cookie[] $COOKIES) = (HttpServletRequest\\\n            \\ $REQ).getCookies(...);\\n...\\nfor (javax.servlet.http.Cookie $COOKIE:\\\n            \\ $COOKIES) {\\n  ...\\n}\\n\"\n        - pattern: '$COOKIE.getValue(...)\n\n            '\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(ProcessBuilder $PB) = ...;\n\n          '\n      - patterns:\n        - pattern: '(Process $P) = ...;\n\n            '\n        - pattern-not: '(Process $P) = (java.lang.Runtime $R).exec(...);\n\n            '\n      - patterns:\n        - pattern: (java.lang.Runtime $R).exec($CMD, ...);\n        - focus-metavariable: $CMD\n      - patterns:\n        - pattern-either:\n          - pattern-inside: \"(java.util.List<$TYPE> $ARGLIST) = ...;  \\n...\\n(ProcessBuilder\\\n              \\ $PB) = ...;\\n...\\n$PB.command($ARGLIST);\\n\"\n          - pattern-inside: \"(java.util.List<$TYPE> $ARGLIST) = ...;  \\n...\\n(ProcessBuilder\\\n              \\ $PB) = ...;\\n\"\n          - pattern-inside: \"(java.util.List<$TYPE> $ARGLIST) = ...;  \\n...\\n(Process\\\n              \\ $P) = ...;\\n\"\n        - pattern: '$ARGLIST.add(...);\n\n            '\n",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "tainted-ldapi-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into an LDAP query. This could lead to LDAP injection if the input is not properly sanitized, which could result in attackers modifying objects in the LDAP tree structure. Ensure data passed to an LDAP query is not controllable or properly sanitize the data.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern: (HttpServletRequest $REQ)\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(javax.naming.directory.InitialDirContext $IDC).search(...)\n\n          '\n      - pattern: '(javax.naming.directory.DirContext $CTX).search(...)\n\n          '\n    - pattern-not: '(javax.naming.directory.InitialDirContext $IDC).search($Y, \"...\",\n        ...)\n\n        '\n    - pattern-not: '(javax.naming.directory.DirContext $CTX).search($Y, \"...\", ...)\n\n        '\n",
+    "cwe_id": [
+      "cwe-90"
+    ]
+  },
+  {
+    "checker": "command-injection-formatted-runtime-call",
+    "description": "A formatted or concatenated string was detected as input to a java.lang.Runtime call. This is dangerous if a variable is controlled by user input and could result in a command injection. Ensure your variables are not controlled by users or sufficiently sanitized.",
+    "source_code": "- patterns:\n  - metavariable-pattern:\n      metavariable: $RUNTIME\n      patterns:\n      - pattern-either:\n        - pattern: (java.lang.Runtime $R)\n        - pattern: java.lang.Runtime.getRuntime(...)\n  - pattern-either:\n    - pattern: $RUNTIME.exec($X + $Y);\n    - pattern: $RUNTIME.exec(String.format(...));\n    - pattern: $RUNTIME.loadLibrary($X + $Y);\n    - pattern: $RUNTIME.loadLibrary(String.format(...));\n    - patterns:\n      - pattern-either:\n        - pattern: '$RUNTIME.exec(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\", \"-c\", $ARG,...)\n\n            '\n        - pattern: '$RUNTIME.exec(Arrays.asList(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...),...)\n\n            '\n        - pattern: '$RUNTIME.exec(new String[]{\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...},...)\n\n            '\n        - patterns:\n          - pattern-either:\n            - pattern: '$RUNTIME.exec($CMD,\"-c\",$ARG,...)\n\n                '\n            - pattern: '$RUNTIME.exec(Arrays.asList($CMD,\"-c\",$ARG,...),...)\n\n                '\n            - pattern: '$RUNTIME.exec(new String[]{$CMD,\"-c\",$ARG,...},...)\n\n                '\n          - pattern-inside: '$CMD = \"=~/(sh|bash|ksh|csh|tcsh|zsh)/\";\n\n              ...\n\n              '\n        - patterns:\n          - pattern-either:\n            - pattern: '$RUNTIME.exec($CMD, $EXECUTE, $ARG, ...)\n\n                '\n          - pattern-inside: '$CMD = new String[]{\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\n              ...};\n\n              ...\n\n              '\n        - patterns:\n          - pattern-either:\n            - pattern: '$RUNTIME.exec(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\", $BASH, $ARG,...)\n\n                '\n            - pattern: '$RUNTIME.exec(Arrays.asList(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",$BASH,$ARG,...),...)\n\n                '\n            - pattern: '$RUNTIME.exec(new String[]{\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",$BASH,$ARG,...},...)\n\n                '\n          - pattern-inside: '$BASH = new String[]{\"=~/(-c)/\", ...};\n\n              ...\n\n              '\n      - pattern-not-inside: '$ARG = \"...\";\n\n          ...\n\n          '\n      - pattern-not: '$RUNTIME.exec(\"...\",\"...\",\"...\",...)\n\n          '\n      - pattern-not: '$RUNTIME.exec(new String[]{\"...\",\"...\",\"...\",...},...)\n\n          '\n      - pattern-not: '$RUNTIME.exec(Arrays.asList(\"...\",\"...\",\"...\",...),...)\n\n          '\n",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "jdbc-sql-formatted-string",
+    "description": "Possible JDBC injection detected. Use the parameterized query feature available in queryForObject instead of concatenating or formatting strings: 'jdbc.queryForObject(\"select * from table where name = ?\", Integer.class, parameterName);'",
+    "source_code": "- patterns:\n  - pattern-inside: '$JDBC = new JdbcTemplate(...);\n\n      ...\n\n      '\n  - pattern-either:\n    - pattern: $JDBC.queryForObject($STR + $VAR, ...);\n    - pattern: $JDBC.queryForObject(String.format(...), ...);\n    - pattern: 'String $Q = $STR + $VAR;\n\n        ...\n\n        $JDBC.queryForObject($Q, ...);\n\n        '\n    - pattern: 'String $Q = String.format(...);\n\n        ...\n\n        $JDBC.queryForObject($Q, ...);\n\n        '\n    - pattern: 'StringBuilder $Q = new StringBuilder(...);\n\n        ...\n\n        $Q.append($STR + $VAR);\n\n        ...\n\n        $JDBC.queryForObject($Q, ...);\n\n        '\n    - pattern: $JDBC.queryForList($STR + $VAR);\n    - pattern: $JDBC.queryForList(String.format(...));\n    - pattern: 'String $Q = $STR + $VAR;\n\n        ...\n\n        $JDBC.queryForList($Q);\n\n        '\n    - pattern: 'String $Q = String.format(...);\n\n        ...\n\n        $JDBC.queryForList($Q);\n\n        '\n    - pattern: 'StringBuilder $Q = new StringBuilder(...);\n\n        ...\n\n        $Q.append($STR + $VAR);\n\n        ...\n\n        $JDBC.queryForList($Q, ...);\n\n        '\n    - pattern: $JDBC.update($STR + $VAR);\n    - pattern: $JDBC.update(String.format(...));\n    - pattern: 'String $Q = $STR + $VAR;\n\n        ...\n\n        $JDBC.update($Q);\n\n        '\n    - pattern: 'String $Q = String.format(...);\n\n        ...\n\n        $JDBC.update($Q);\n\n        '\n    - pattern: 'StringBuilder $Q = new StringBuilder(...);\n\n        ...\n\n        $Q.append($STR + $VAR);\n\n        ...\n\n        $JDBC.update($Q, ...);\n\n        '\n    - pattern: $JDBC.execute($STR + $VAR);\n    - pattern: $JDBC.execute(String.format(...));\n    - pattern: 'String $Q = $STR + $VAR;\n\n        ...\n\n        $JDBC.execute($Q);\n\n        '\n    - pattern: 'String $Q = String.format(...);\n\n        ...\n\n        $JDBC.execute($Q);\n\n        '\n    - pattern: 'StringBuilder $Q = new StringBuilder(...);\n\n        ...\n\n        $Q.append($STR + $VAR);\n\n        ...\n\n        $JDBC.execute($Q, ...);\n\n        '\n    - pattern: $JDBC.insert($STR + $VAR);\n    - pattern: $JDBC.insert(String.format(...));\n    - pattern: 'String $Q = $STR + $VAR;\n\n        ...\n\n        $JDBC.insert($Q);\n\n        '\n    - pattern: 'String $Q = String.format(...);\n\n        ...\n\n        $JDBC.insert($Q);\n\n        '\n    - pattern: 'StringBuilder $Q = new StringBuilder(...);\n\n        ...\n\n        $Q.append($STR + $VAR);\n\n        ...\n\n        $JDBC.insert($Q, ...);\n\n        '\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "md5-used-as-password",
+    "description": "It looks like MD5 is used as a password hash. MD5 is not considered a secure password hash because it can be cracked by an attacker in a short amount of time. Use a suitable password hashing function such as PBKDF2 or bcrypt. You can use `javax.crypto.SecretKeyFactory` with `SecretKeyFactory.getInstance(\"PBKDF2WithHmacSHA1\")` or, if using Spring, `org.springframework.security.crypto.bcrypt`.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-inside: '$TYPE $MD = MessageDigest.getInstance(\"MD5\");\n\n        ...\n\n        '\n    - pattern: $MD.digest(...);\n- pattern-sinks:\n  - patterns:\n    - pattern: $MODEL.$METHOD(...);\n    - metavariable-regex:\n        metavariable: $METHOD\n        regex: (?i)(.*password.*)\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "cbc-padding-oracle",
+    "description": "Using CBC with PKCS5Padding is susceptible to padding oracle attacks. A malicious actor could discern the difference between plaintext with valid or invalid padding. Further, CBC mode does not include any integrity checks. Use 'AES/GCM/NoPadding' instead.",
+    "source_code": "- patterns:\n  - pattern-inside: Cipher.getInstance(\"=~/.*\\/CBC\\/PKCS5Padding/\")\n  - pattern: '\"=~/.*\\/CBC\\/PKCS5Padding/\"\n\n      '\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "blowfish-insufficient-key-size",
+    "description": "Using less than 128 bits for Blowfish is considered insecure. Use 128 bits or more, or switch to use AES instead.",
+    "source_code": "- patterns:\n  - pattern: '$KEYGEN = KeyGenerator.getInstance(\"Blowfish\");\n\n      ...\n\n      $KEYGEN.init($SIZE);\n\n      '\n  - metavariable-comparison:\n      metavariable: $SIZE\n      comparison: $SIZE < 128\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "tainted-session-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into a session command, like `setAttribute`. User input into such a command could lead to an attacker inputting malicious code into your session parameters, blurring the line between what's trusted and untrusted, and therefore leading to a trust boundary violation. This could lead to programmers trusting unvalidated data. Instead, thoroughly sanitize user input before passing it into such function calls.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern: '(HttpServletRequest $REQ).$FUNC(...)\n\n            '\n        - pattern-not: '(HttpServletRequest $REQ).getSession()\n\n            '\n      - patterns:\n        - pattern-inside: \"(javax.servlet.http.Cookie[] $COOKIES) = (HttpServletRequest\\\n            \\ $REQ).getCookies(...);\\n...\\nfor (javax.servlet.http.Cookie $COOKIE:\\\n            \\ $COOKIES) {\\n  ...\\n}\\n\"\n        - pattern: '$COOKIE.getValue(...)\n\n            '\n      - patterns:\n        - pattern-inside: '$TYPE[] $VALS = (HttpServletRequest $REQ).$GETFUNC(...\n            );\n\n            ...\n\n            '\n        - pattern: '$PARAM = $VALS[$INDEX];\n\n            '\n      - patterns:\n        - pattern-inside: '$HEADERS = (HttpServletRequest $REQ).getHeaders(...);\n\n            ...\n\n            $PARAM = $HEADERS.$FUNC(...);\n\n            ...\n\n            '\n        - pattern: 'java.net.URLDecoder.decode($PARAM, ...)\n\n            '\n- pattern-sinks:\n  - patterns:\n    - pattern: (HttpServletRequest $REQ).getSession().$FUNC($NAME, $VALUE);\n    - metavariable-regex:\n        metavariable: $FUNC\n        regex: ^(putValue|setAttribute)$\n    - focus-metavariable: $VALUE\n",
+    "cwe_id": [
+      "cwe-501"
+    ]
+  },
+  {
+    "checker": "xml-decoder",
+    "description": "XMLDecoder should not be used to parse untrusted data. Deserializing user input can lead to arbitrary code execution. Use an alternative and explicitly disable external entities. See https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html for alternatives and vulnerability prevention.",
+    "source_code": "- patterns:\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  new XMLDecoder(...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  new XMLDecoder(\\\"...\\\");\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $STR = \\\"...\\\";\\n  ...\\n  new\\\n      \\ XMLDecoder($STR);\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "insecure-smtp-connection",
+    "description": "Insecure SMTP connection detected. This connection will trust any SSL certificate. Enable certificate verification by setting 'email.setSSLCheckServerIdentity(true)'.",
+    "source_code": "- patterns:\n  - pattern-not-inside: '$EMAIL.setSSLCheckServerIdentity(true);\n\n      ...\n\n      '\n  - pattern-inside: '$EMAIL = new SimpleEmail(...);\n\n      ...\n\n      '\n  - pattern: $EMAIL.send(...);\n",
+    "cwe_id": [
+      "cwe-297"
+    ]
+  },
+  {
+    "checker": "xssrequestwrapper-is-insecure",
+    "description": "It looks like you're using an implementation of XSSRequestWrapper from dzone. (https://www.javacodegeeks.com/2012/07/anti-cross-site-scripting-xss-filter.html) The XSS filtering in this code is not secure and can be bypassed by malicious actors. It is recommended to use a stack that automatically escapes in your view or templates instead of filtering yourself.",
+    "source_code": "- pattern-either:\n  - pattern: \"class XSSRequestWrapper extends HttpServletRequestWrapper {\\n  ...\\n\\\n      }\\n\"\n  - pattern: '$P = $X.compile(\"</script>\", $X.CASE_INSENSITIVE);\n\n      $V = $P.matcher(...).replaceAll(\"\");'\n",
+    "cwe_id": [
+      "cwe-79"
+    ]
+  },
+  {
+    "checker": "overly-permissive-file-permission",
+    "description": "Detected file permissions that are overly permissive (read, write, and execute). It is generally a bad practices to set overly permissive file permission such as read+write+exec for all users. If the file affected is a configuration, a binary, a script or sensitive data, it can lead to privilege escalation or information leakage. Instead, follow the principle of least privilege and give users only the  permissions they need.",
+    "source_code": "- pattern-either:\n  - pattern: java.nio.file.Files.setPosixFilePermissions($FILE, java.nio.file.attribute.PosixFilePermissions.fromString(\"=~/(^......r..$)|(^.......w.$)|(^........x$)/\"));\n  - pattern: '$TYPE $P = java.nio.file.attribute.PosixFilePermissions.fromString(\"=~/(^......r..$)|(^.......w.$)|(^........x$)/\");\n\n      ...\n\n      java.nio.file.Files.setPosixFilePermissions($FILE, $P);\n\n      '\n  - pattern: '$P.add(java.nio.file.attribute.PosixFilePermission.OTHERS_READ);\n\n      ...\n\n      java.nio.file.Files.setPosixFilePermissions($FILE, $P);\n\n      '\n  - pattern: '$P.add(java.nio.file.attribute.PosixFilePermission.OTHERS_WRITE);\n\n      ...\n\n      java.nio.file.Files.setPosixFilePermissions($FILE, $P);\n\n      '\n  - pattern: '$P.add(java.nio.file.attribute.PosixFilePermission.OTHERS_EXECUTE);\n\n      ...\n\n      java.nio.file.Files.setPosixFilePermissions($FILE, $P);'\n",
+    "cwe_id": [
+      "cwe-276"
+    ]
+  },
+  {
+    "checker": "crlf-injection-logs",
+    "description": "When data from an untrusted source is put into a logger and not neutralized correctly, an attacker could forge log entries or include malicious content.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - patterns:\n      - pattern-inside: \"class $CLASS {\\n  ...\\n  Logger $LOG = ...;\\n  ...\\n}\\n\"\n      - pattern-either:\n        - pattern-inside: \"$X $METHOD(...,HttpServletRequest $REQ,...) {\\n  ...\\n\\\n            }\\n\"\n        - pattern-inside: \"$X $METHOD(...,ServletRequest $REQ,...) {\\n  ...\\n}\\n\"\n        - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  HttpServletRequest $REQ = ...;\\n\\\n            \\  ...\\n}\\n\"\n        - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  ServletRequest $REQ = ...;\\n\\\n            \\  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  Logger $LOG = ...;\\n  ...\\n  HttpServletRequest\\\n        \\ $REQ = ...;\\n  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  Logger $LOG = ...;\\n  ...\\n  ServletRequest\\\n        \\ $REQ = ...;\\n  ...\\n}\\n\"\n  - pattern-either:\n    - pattern: 'String $VAL = $REQ.getParameter(...);\n\n        ...\n\n        $LOG.$LEVEL(<... $VAL ...>);\n\n        '\n    - pattern: 'String $VAL = $REQ.getParameter(...);\n\n        ...\n\n        $LOG.log($LEVEL,<... $VAL ...>);\n\n        '\n    - pattern: '$LOG.$LEVEL(<... $REQ.getParameter(...) ...>);\n\n        '\n    - pattern: '$LOG.log($LEVEL,<... $REQ.getParameter(...) ...>);\n\n        '\n",
+    "cwe_id": [
+      "cwe-93"
+    ]
+  },
+  {
+    "checker": "unsafe-reflection",
+    "description": "If an attacker can supply values that the application then uses to determine which class to instantiate or which method to invoke, the potential exists for the attacker to create control flow paths through the application that were not intended by the application developers. This attack vector may allow the attacker to bypass authentication or access control checks or otherwise cause the application to behave in an unexpected manner.",
+    "source_code": "- patterns:\n  - pattern: 'Class.forName($CLASS,...)\n\n      '\n  - pattern-not: 'Class.forName(\"...\",...)\n\n      '\n  - pattern-not-inside: '$CLASS = \"...\";\n\n      ...\n\n      '\n",
+    "cwe_id": [
+      "cwe-470"
+    ]
+  },
+  {
+    "checker": "tainted-xpath-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into a XPath evaluate or compile command. This could lead to xpath injection if variables passed into the evaluate or compile commands are not properly sanitized. Xpath injection could lead to unauthorized access to sensitive information in XML documents. Instead, thoroughly sanitize user input or use parameterized xpath queries if you can.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern: '(HttpServletRequest $REQ).$FUNC(...)\n\n        '\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(javax.xml.xpath.XPath $XP).evaluate(...)\n\n          '\n      - pattern: '(javax.xml.xpath.XPath $XP).compile(...).evaluate(...)\n\n          '\n",
+    "cwe_id": [
+      "cwe-643"
+    ]
+  },
+  {
+    "checker": "command-injection-process-builder",
+    "description": "A formatted or concatenated string was detected as input to a ProcessBuilder call. This is dangerous if a variable is controlled by user input and could result in a command injection. Ensure your variables are not controlled by users or sufficiently sanitized.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern: 'new ProcessBuilder($CMD,...)\n\n        '\n    - pattern-not-inside: '$CMD = \"...\";\n\n        ...\n\n        '\n    - pattern-not-inside: '$CMD = Arrays.asList(\"...\",...);\n\n        ...\n\n        '\n    - pattern-not-inside: '$CMD = new String[]{\"...\",...};\n\n        ...\n\n        '\n    - pattern-not: 'new ProcessBuilder(\"...\",...)\n\n        '\n    - pattern-not: 'new ProcessBuilder(new String[]{\"...\",...},...)\n\n        '\n    - pattern-not: 'new ProcessBuilder(Arrays.asList(\"...\",...),...)\n\n        '\n  - patterns:\n    - pattern: '$PB.command($CMD,...)\n\n        '\n    - pattern-inside: '$TYPE $PB = new ProcessBuilder(...);\n\n        ...\n\n        '\n    - pattern-not-inside: '$CMD = \"...\";\n\n        ...\n\n        '\n    - pattern-not-inside: '$CMD = Arrays.asList(\"...\",...);\n\n        ...\n\n        '\n    - pattern-not-inside: '$CMD = new String[]{\"...\",...};\n\n        ...\n\n        '\n    - pattern-not: '$PB.command(\"...\",...)\n\n        '\n    - pattern-not: '$PB.command(new String[]{\"...\",...},...)\n\n        '\n    - pattern-not: '$PB.command(Arrays.asList(\"...\",...),...)\n\n        '\n  - patterns:\n    - pattern-either:\n      - pattern: 'new ProcessBuilder(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...)\n\n          '\n      - pattern: 'new ProcessBuilder(\"cmd\",\"/c\",$ARG,...)\n\n          '\n      - pattern: 'new ProcessBuilder(Arrays.asList(\"cmd\",\"/c\",$ARG,...),...)\n\n          '\n      - pattern: 'new ProcessBuilder(new String[]{\"cmd\",\"/c\",$ARG,...},...)\n\n          '\n      - patterns:\n        - pattern-either:\n          - pattern: 'new ProcessBuilder($CMD,\"/c\",$ARG,...)\n\n              '\n          - pattern: 'new ProcessBuilder(Arrays.asList($CMD,\"/c\",$ARG,...),...)\n\n              '\n          - pattern: 'new ProcessBuilder(new String[]{$CMD,\"/c\",$ARG,...},...)\n\n              '\n        - pattern-inside: '$CMD = \"cmd\";\n\n            ...\n\n            '\n    - pattern-not-inside: '$ARG = \"...\";\n\n        ...\n\n        '\n    - pattern-not: 'new ProcessBuilder(\"...\",\"...\",\"...\",...)\n\n        '\n    - pattern-not: 'new ProcessBuilder(new String[]{\"...\",\"...\",\"...\",...},...)\n\n        '\n    - pattern-not: 'new ProcessBuilder(Arrays.asList(\"...\",\"...\",\"...\",...),...)\n\n        '\n  - patterns:\n    - pattern-either:\n      - pattern: '$PB.command(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...)\n\n          '\n      - pattern: '$PB.command(\"cmd\",\"/c\",$ARG,...)\n\n          '\n      - pattern: '$PB.command(Arrays.asList(\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...),...)\n\n          '\n      - pattern: '$PB.command(Arrays.asList(\"cmd\",\"/c\",$ARG,...),...)\n\n          '\n      - pattern: '$PB.command(new String[]{\"=~/(sh|bash|ksh|csh|tcsh|zsh)/\",\"-c\",$ARG,...},...)\n\n          '\n      - pattern: '$PB.command(new String[]{\"cmd\",\"/c\",$ARG,...},...)\n\n          '\n      - patterns:\n        - pattern-either:\n          - pattern: '$PB.command($CMD,\"-c\",$ARG,...)\n\n              '\n          - pattern: '$PB.command(Arrays.asList($CMD,\"-c\",$ARG,...),...)\n\n              '\n          - pattern: '$PB.command(new String[]{$CMD,\"-c\",$ARG,...},...)\n\n              '\n        - pattern-inside: '$CMD = \"=~/(sh|bash|ksh|csh|tcsh|zsh)/\";\n\n            ...\n\n            '\n      - patterns:\n        - pattern-either:\n          - pattern: '$PB.command($CMD,\"/c\",$ARG,...)\n\n              '\n          - pattern: '$PB.command(Arrays.asList($CMD,\"/c\",$ARG,...),...)\n\n              '\n          - pattern: '$PB.command(new String[]{$CMD,\"/c\",$ARG,...},...)\n\n              '\n        - pattern-inside: '$CMD = \"cmd\";\n\n            ...\n\n            '\n    - pattern-inside: '$TYPE $PB = new ProcessBuilder(...);\n\n        ...\n\n        '\n    - pattern-not-inside: '$ARG = \"...\";\n\n        ...\n\n        '\n    - pattern-not: '$PB.command(\"...\",\"...\",\"...\",...)\n\n        '\n    - pattern-not: '$PB.command(new String[]{\"...\",\"...\",\"...\",...},...)\n\n        '\n    - pattern-not: '$PB.command(Arrays.asList(\"...\",\"...\",\"...\",...),...)\n\n        '\n",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "java-reverse-shell",
+    "description": "Semgrep found potential reverse shell behavior",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: \"Socket $S=new Socket(...);\\n...\\nInputStream $SI = $S.getInputStream();\\n\\\n        ...\\nwhile(!$S.isClosed())\\n{\\n  ...\\n  while($SI.available()>0)$PO.write($SI.read());\\n\\\n        \\  ...\\n  $SO.flush();\\n  ...\\n}\\n\"\n  - pattern-inside: 'Process $P=new ProcessBuilder(...).redirectErrorStream(true).start();\n\n      ...\n\n      $P.destroy();\n\n      '\n",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "cookie-missing-httponly",
+    "description": "A cookie was detected without setting the 'HttpOnly' flag. The 'HttpOnly' flag for cookies instructs the browser to forbid client-side scripts from reading the cookie. Set the 'HttpOnly' flag by calling 'cookie.setHttpOnly(true);'",
+    "source_code": "- patterns:\n  - pattern-not-inside: $COOKIE.setValue(\"\"); ...\n  - pattern-either:\n    - pattern: $COOKIE.setHttpOnly(false);\n    - patterns:\n      - pattern-not-inside: $COOKIE.setHttpOnly(...); ...\n      - pattern-not-inside: $COOKIE = ResponseCookie.from(...). ...; ...\n      - pattern: $RESPONSE.addCookie($COOKIE);\n",
+    "cwe_id": [
+      "cwe-1004"
+    ]
+  },
+  {
+    "checker": "permissive-cors",
+    "description": "https://find-sec-bugs.github.io/bugs.htm#PERMISSIVE_CORS Permissive CORS policy will allow a malicious application to communicate with the victim application in an inappropriate way, leading to spoofing, data theft, relay and other attacks.",
+    "source_code": "- pattern-either:\n  - pattern: 'HttpServletResponse $RES = ...;\n\n      ...\n\n      $RES.addHeader(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\");\n\n      '\n  - pattern: 'HttpServletResponse $RES = ...;\n\n      ...\n\n      $RES.setHeader(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\");\n\n      '\n  - pattern: 'ServerHttpResponse $RES = ...;\n\n      ...\n\n      $RES.getHeaders().add(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\");\n\n      '\n  - pattern: 'HttpHeaders $HEADERS = ...;\n\n      ...\n\n      $HEADERS.set(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\");\n\n      '\n  - pattern: 'ServerWebExchange $SWE = ...;\n\n      ...\n\n      $SWE.getResponse().getHeaders().add(\"Access-Control-Allow-Origin\", \"*\");\n\n      '\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.addHeader(\\\"\\\n      =~/access-control-allow-origin/i\\\", \\\"=~/^\\\\*|null$/i\\\");\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.setHeader(\\\"\\\n      =~/access-control-allow-origin/i\\\", \\\"=~/^\\\\*|null$/i\\\");\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,ServerHttpResponse $RES,...) {\\n  ...\\n  $RES.getHeaders().add(\\\"\\\n      =~/access-control-allow-origin/i\\\", \\\"=~/^\\\\*|null$/i\\\");\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,ServerWebExchange $SWE,...) {\\n  ...\\n  $SWE.getResponse().getHeaders().add(\\\"\\\n      =~/access-control-allow-origin/i\\\", \\\"=~/^\\\\*|null$/i\\\");\\n  ...\\n}\\n\"\n  - pattern: ResponseEntity.$RES().header(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\")\n  - pattern: ServerResponse.$RES().header(\"=~/access-control-allow-origin/i\", \"=~/^\\*|null$/i\")\n",
+    "cwe_id": [
+      "cwe-183"
+    ]
+  },
+  {
+    "checker": "bad-hexa-conversion",
+    "description": "'Integer.toHexString()' strips leading zeroes from each byte if read byte-by-byte. This mistake weakens the hash value computed since it introduces more collisions. Use 'String.format(\"%02X\", ...)' instead.",
+    "source_code": "- pattern: \"$X $METHOD(...) {\\n  ...\\n  MessageDigest $MD = ...;\\n  ...\\n  $MD.digest(...);\\n\\\n    \\  ...\\n  Integer.toHexString(...);\\n}\"\n",
+    "cwe_id": [
+      "cwe-704"
+    ]
+  },
+  {
+    "checker": "script-engine-injection",
+    "description": "Detected potential code injection using ScriptEngine. Ensure user-controlled data cannot enter '.eval()', otherwise, this is a code injection vulnerability.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  ScriptEngine $SE;\\n  ...\\n}\\n\"\n    - pattern-inside: \"class $CLASS {\\n  ...\\n  ScriptEngine $SE = ...;\\n  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  ScriptEngine $SE = ...;\\n  ...\\n\\\n        }\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  $SE.eval(...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $SE.eval(\\\"...\\\");\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $SE.eval($S);\\n\\\n      \\  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-94"
+    ]
+  },
+  {
+    "checker": "el-injection",
+    "description": "An expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: \"class $CLASS {\\n  ...\\n  ExpressionFactory $EF;\\n  ...\\n  $X $METHOD(...)\\\n        \\ {\\n    ...\\n    $EF.createValueExpression($CTX,$INPUT,...);\\n    ...\\n \\\n        \\ }\\n  ...\\n}\\n\"\n    - pattern: \"class $CLASS {\\n  ...\\n  ExpressionFactory $EF = ...;\\n  ...\\n  $X\\\n        \\ $METHOD(...) {\\n    ...\\n    $EF.createValueExpression($CTX,$INPUT,...);\\n\\\n        \\    ...\\n  }\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ExpressionFactory $EF = ...;\\n  ...\\n\\\n        \\  $EF.createValueExpression($CTX,$INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ExpressionFactory $EF,...) {\\n  ...\\n  $EF.createValueExpression($CTX,$INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"class $CLASS {\\n  ...\\n  ExpressionFactory $EF;\\n  ...\\n  $X $METHOD(...)\\\n        \\ {\\n    ...\\n    $EF.createMethodExpression($CTX,$INPUT,...);\\n    ...\\n\\\n        \\  }\\n  ...\\n}\\n\"\n    - pattern: \"class $CLASS {\\n  ...\\n  ExpressionFactory $EF = ...;\\n  ...\\n  $X\\\n        \\ $METHOD(...) {\\n    ...\\n    $EF.createMethodExpression($CTX,$INPUT,...);\\n\\\n        \\    ...\\n  }\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ExpressionFactory $EF = ...;\\n  ...\\n\\\n        \\  $EF.createMethodExpression($CTX,$INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ExpressionFactory $EF,...) {\\n  ...\\n  $EF.createMethodExpression($CTX,$INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(String $INPUT, ...) {\\n  ...\\n  $OBJECT.buildConstraintViolationWithTemplate($INPUT,\\\n        \\ ...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $EF.createValueExpression($CTX,\\\"...\\\"\\\n      ,...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $EF.createValueExpression($CTX,$S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $EF.createMethodExpression($CTX,\\\"...\\\"\\\n      ,...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $EF.createMethodExpression($CTX,$S,...);\\n\\\n      \\  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-94"
+    ]
+  },
+  {
+    "checker": "ldap-entry-poisoning",
+    "description": "An object-returning LDAP search will allow attackers to control the LDAP response. This could lead to Remote Code Execution.",
+    "source_code": "- pattern-either:\n  - pattern: 'new SearchControls($S, $CL, $TL, $AT, true, $DEREF)\n\n      '\n  - pattern: 'SearchControls $VAR = new SearchControls();\n\n      ...\n\n      $VAR.setReturningObjFlag(true);\n\n      '\n",
+    "cwe_id": [
+      "cwe-90"
+    ]
+  },
+  {
+    "checker": "http-response-splitting",
+    "description": "Older Java application servers are vulnerable to HTTP response splitting, which may occur if an HTTP request can be injected with CRLF characters. This finding is reported for completeness; it is recommended to ensure your environment is not affected by testing this yourself.",
+    "source_code": "- pattern-either:\n  - pattern: '$VAR = $REQ.getParameter(...);\n\n      ...\n\n      $COOKIE = new Cookie(..., $VAR, ...);\n\n      ...\n\n      $RESP.addCookie($COOKIE, ...);\n\n      '\n  - patterns:\n    - pattern-inside: \"$RETTYPE $FUNC(...,@PathVariable $TYPE $VAR, ...) {\\n  ...\\n\\\n        }\\n\"\n    - pattern: '$COOKIE = new Cookie(..., $VAR, ...);\n\n        ...\n\n        $RESP.addCookie($COOKIE, ...);\n\n        '\n",
+    "cwe_id": [
+      "cwe-113"
+    ]
+  },
+  {
+    "checker": "url-rewriting",
+    "description": "URL rewriting has significant security risks. Since session ID appears in the URL, it may be easily seen by third parties.",
+    "source_code": "- pattern-either:\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.encodeURL(...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.encodeUrl(...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.encodeRedirectURL(...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...) {\\n  ...\\n  $RES.encodeRedirectUrl(...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  HttpServletResponse $RES = ...;\\n  ...\\n\\\n      \\  $RES.encodeURL(...);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  HttpServletResponse $RES = ...;\\n  ...\\n\\\n      \\  $RES.encodeUrl(...);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  HttpServletResponse $RES = ...;\\n  ...\\n\\\n      \\  $RES.encodeRedirectURL(...);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  HttpServletResponse $RES = ...;\\n  ...\\n\\\n      \\  $RES.encodeRedirectUrl(...);\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-200"
+    ]
+  },
+  {
+    "checker": "object-deserialization",
+    "description": "Found object deserialization using ObjectInputStream. Deserializing entire Java objects is dangerous because malicious actors can create Java object streams with unintended consequences. Ensure that the objects being deserialized are not user-controlled. If this must be done, consider using HMACs to sign the data stream to make sure it is not tampered with, or consider only transmitting object fields and populating a new object.",
+    "source_code": "- pattern: new ObjectInputStream(...);\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "weak-ssl-context",
+    "description": "An insecure SSL context was detected. TLS versions 1.0, 1.1, and all SSL versions are considered weak encryption and are deprecated. Use SSLContext.getInstance(\"TLSv1.2\") for the best security.",
+    "source_code": "- patterns:\n  - pattern-not: SSLContext.getInstance(\"TLSv1.3\")\n  - pattern-not: SSLContext.getInstance(\"TLSv1.2\")\n  - pattern: SSLContext.getInstance(\"...\")\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "unvalidated-redirect",
+    "description": "Application redirects to a destination URL specified by a user-supplied parameter that is not validated. This could direct users to malicious locations. Consider using an allowlist to validate URLs.",
+    "source_code": "- pattern-either:\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,String $URL,...) {\\n  ...\\n\\\n      \\  $RES.sendRedirect($URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...,HttpServletResponse $RES,...) {\\n  ...\\n\\\n      \\  $RES.sendRedirect($URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletRequest $REQ,...,HttpServletResponse $RES,...)\\\n      \\ {\\n  ...\\n  String $URL = $REQ.getParameter(...);\\n  ...\\n  $RES.sendRedirect($URL);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,HttpServletRequest $REQ,...)\\\n      \\ {\\n  ...\\n  String $URL = $REQ.getParameter(...);\\n  ...\\n  $RES.sendRedirect($URL);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  ...\\n  HttpServletResponse $RES\\\n      \\ = ...;\\n  ...\\n  $RES.sendRedirect($URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletRequest $REQ,...,HttpServletResponse $RES,...)\\\n      \\ {\\n  ...\\n  $RES.sendRedirect($REQ.getParameter(...));\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,HttpServletRequest $REQ,...)\\\n      \\ {\\n  ...\\n  $RES.sendRedirect($REQ.getParameter(...));\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,String $URL,...) {\\n  ...\\n\\\n      \\  $RES.addHeader(\\\"Location\\\",$URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...,HttpServletResponse $RES,...) {\\n  ...\\n\\\n      \\  $RES.addHeader(\\\"Location\\\",$URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletRequest $REQ,...,HttpServletResponse $RES,...)\\\n      \\ {\\n  ...\\n  String $URL = $REQ.getParameter(...);\\n  ...\\n  $RES.addHeader(\\\"\\\n      Location\\\",$URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,HttpServletRequest $REQ,...)\\\n      \\ {\\n  ...\\n  String $URL = $REQ.getParameter(...);\\n  ...\\n  $RES.addHeader(\\\"\\\n      Location\\\",$URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,String $URL,...) {\\n  ...\\n  HttpServletResponse $RES\\\n      \\ = ...;\\n  ...\\n  $RES.addHeader(\\\"Location\\\",$URL);\\n  ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletRequest $REQ,...,HttpServletResponse $RES,...)\\\n      \\ {\\n  ...\\n  $RES.addHeader(\\\"Location\\\",$REQ.getParameter(...));\\n  ...\\n\\\n      }\\n\"\n  - pattern: \"$X $METHOD(...,HttpServletResponse $RES,...,HttpServletRequest $REQ,...)\\\n      \\ {\\n  ...\\n  $RES.addHeader(\\\"Location\\\",$REQ.getParameter(...));\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-601"
+    ]
+  },
+  {
+    "checker": "anonymous-ldap-bind",
+    "description": "Detected anonymous LDAP bind. This permits anonymous users to execute LDAP statements. Consider enforcing authentication for LDAP. See https://docs.oracle.com/javase/tutorial/jndi/ldap/auth_mechs.html for more information.",
+    "source_code": "- pattern: '$ENV.put($CTX.SECURITY_AUTHENTICATION, \"none\");\n\n    ...\n\n    $DCTX = new InitialDirContext($ENV, ...);\n\n    '\n",
+    "cwe_id": [
+      "cwe-287"
+    ]
+  },
+  {
+    "checker": "ldap-injection",
+    "description": "Detected non-constant data passed into an LDAP query. If this data can be controlled by an external user, this is an LDAP injection. Ensure data passed to an LDAP query is not controllable; or properly sanitize the data.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  InitialDirContext $CTX = ...;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  DirContext $CTX = ...;\\n  ...\\n\\\n        }\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  InitialLdapContext $CTX = ...;\\n\\\n        \\  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  LdapContext $CTX = ...;\\n  ...\\n\\\n        }\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  LdapCtx $CTX = ...;\\n  ...\\n}\\n\"\n    - pattern-inside: \"$X $METHOD(...) {\\n  ...\\n  EventDirContext $CTX = ...;\\n \\\n        \\ ...\\n}\\n\"\n  - pattern: \"$X $METHOD(...) {\\n  ...\\n  $CTX.search($Y,$INPUT,...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $CTX.search($Y,\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n",
+    "cwe_id": [
+      "cwe-90"
+    ]
+  },
+  {
+    "checker": "ognl-injection",
+    "description": "A expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.getGetMethod($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.getSetMethod($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.getField($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.setProperties($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.setProperty($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.getValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlReflectionProvider $P,...) {\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.getGetMethod($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.getSetMethod($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.getField($T,\\\n        \\ $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.setProperties($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.setProperty($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.getValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ReflectionProvider $P,...) {\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,TextParseUtil $P,...) {\\n  ...\\n  $P.translateVariables($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,TextParseUtil $P,...) {\\n  ...\\n  $P.translateVariablesCollection($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,TextParseUtil $P,...) {\\n  ...\\n  $P.shallBeIncluded($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,TextParseUtil $P,...) {\\n  ...\\n  $P.commaDelimitedStringToSet($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,TextParser $P,...) {\\n  ...\\n  $P.evaluate($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlTextParser $P,...) {\\n  ...\\n  $P.evaluate($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.setProperties($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.setProperty($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.getValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.callMethod($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlUtil $P,...) {\\n  ...\\n  $P.compile($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,VelocityStrutsUtil $P,...) {\\n  ...\\n  $P.evaluate($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.isTrue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.findString($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.getText($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.translateVariables($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,StrutsUtil $P,...) {\\n  ...\\n  $P.makeSelectList($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,OgnlTool $P,...) {\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ValueStack $P,...) {\\n  ...\\n  $P.findString($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ValueStack $P,...) {\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ValueStack $P,...) {\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...,ValueStack $P,...) {\\n  ...\\n  $P.setParameter($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getGetMethod($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getSetMethod($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getField($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setProperties($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setProperty($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getValue($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setValue($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getGetMethod($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getSetMethod($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getField($T, $INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setProperties($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setProperty($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.getValue($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ReflectionProvider $P = ...;\\n  ...\\n\\\n        \\  $P.setValue($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  TextParseUtil $P = ...;\\n  ...\\n  $P.translateVariables($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  TextParseUtil $P = ...;\\n  ...\\n  $P.translateVariablesCollection($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  TextParseUtil $P = ...;\\n  ...\\n  $P.shallBeIncluded($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  TextParseUtil $P = ...;\\n  ...\\n  $P.commaDelimitedStringToSet($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  TextParser $P = ...;\\n  ...\\n  $P.evaluate($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlTextParser $P = ...;\\n  ...\\n  $P.evaluate($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.setProperties($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.setProperty($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.getValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.callMethod($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlUtil $P = ...;\\n  ...\\n  $P.compile($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  VelocityStrutsUtil $P = ...;\\n  ...\\n\\\n        \\  $P.evaluate($INPUT,...);\\n  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.isTrue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.findString($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.getText($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.translateVariables($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  StrutsUtil $P = ...;\\n  ...\\n  $P.makeSelectList($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  OgnlTool $P = ...;\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ValueStack $P = ...;\\n  ...\\n  $P.findString($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ValueStack $P = ...;\\n  ...\\n  $P.findValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ValueStack $P = ...;\\n  ...\\n  $P.setValue($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n    - pattern: \"$X $METHOD(...) {\\n  ...\\n  ValueStack $P = ...;\\n  ...\\n  $P.setParameter($INPUT,...);\\n\\\n        \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.getGetMethod($T,\\\"...\\\",...);\\n \\\n      \\ ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.getSetMethod($T,\\\"...\\\",...);\\n \\\n      \\ ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.getField($T,\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.setProperties(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.setProperty(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.getValue(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.setValue(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.translateVariables(\\\"...\\\",...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.translateVariablesCollection(\\\"...\\\"\\\n      ,...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.shallBeIncluded(\\\"...\\\",...);\\n \\\n      \\ ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.commaDelimitedStringToSet(\\\"...\\\"\\\n      ,...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.evaluate(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.callMethod(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.compile(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.isTrue(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.findString(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.findValue(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.getText(\\\"...\\\",...);\\n  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.makeSelectList(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  $P.setParameter(\\\"...\\\",...);\\n  ...\\n\\\n      }\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.getGetMethod($T,$S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.getSetMethod($T,$S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.getField($T,$S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.setProperties($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.setProperty($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.getValue($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.setValue($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.translateVariables($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.translateVariablesCollection($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.shallBeIncluded($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.commaDelimitedStringToSet($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.evaluate($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.callMethod($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.compile($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.isTrue($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.findString($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.findValue($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.getText($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.makeSelectList($S,...);\\n\\\n      \\  ...\\n}\\n\"\n  - pattern-not: \"$X $METHOD(...) {\\n  ...\\n  String $S = \\\"...\\\";\\n  ...\\n  $P.setParameter($S,...);\\n\\\n      \\  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-94"
+    ]
+  },
+  {
+    "checker": "vertx-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern-inside: 'String $SQL = $X + $Y;\n\n            ...\n\n            '\n        - pattern-inside: 'String $SQL = String.format(...);\n\n            ...\n\n            '\n        - pattern-inside: \"$TYPE $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n      - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n          ...\n\n          '\n      - pattern: $SC.$METHOD($SQL,...)\n    - pattern: '$SC.$METHOD(String.format(...),...);\n\n        '\n    - pattern: '$SC.$METHOD($X + $Y,...);\n\n        '\n  - pattern-either:\n    - pattern-inside: 'SqlClient $SC = ...;\n\n        ...\n\n        '\n    - pattern-inside: 'SqlConnection $SC = ...;\n\n        ...\n\n        '\n    - pattern-inside: \"$TYPE $FUNC(...,SqlClient $SC,...) {\\n  ...\\n}\\n\"\n    - pattern-inside: \"$TYPE $FUNC(...,SqlConnection $SC,...) {\\n  ...\\n}\\n\"\n  - pattern-not: '$SC.$METHOD(\"...\" + \"...\",...);\n\n      '\n  - metavariable-regex:\n      metavariable: $METHOD\n      regex: ^(query|preparedQuery|prepare)$\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "hibernate-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: 'String $SQL = $X + $Y;\n\n          ...\n\n          '\n      - pattern-inside: 'String $SQL = String.format(...);\n\n          ...\n\n          '\n      - pattern-inside: '$VAL $FUNC(...,String $SQL,...) {\n\n          ...\n\n          }\n\n          '\n    - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n        ...\n\n        '\n    - pattern: org.hibernate.criterion.Restrictions.sqlRestriction($SQL,...)\n  - pattern: org.hibernate.criterion.Restrictions.sqlRestriction(String.format(...),...)\n  - patterns:\n    - pattern: org.hibernate.criterion.Restrictions.sqlRestriction($X + $Y,...)\n    - pattern-not: org.hibernate.criterion.Restrictions.sqlRestriction(\"...\" + \"...\",...)\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern-either:\n          - pattern-inside: 'String $SQL = $X + $Y;\n\n              ...\n\n              '\n          - pattern-inside: 'String $SQL = String.format(...);\n\n              ...\n\n              '\n          - pattern-inside: \"$TYPE $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n        - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n            ...\n\n            '\n        - pattern: $SESSION.$METHOD($SQL,...)\n      - pattern: '$SESSION.$METHOD(String.format(...),...);\n\n          '\n      - pattern: '$SESSION.$METHOD($X + $Y,...);\n\n          '\n    - pattern-either:\n      - pattern-inside: 'org.hibernate.Session $SESSION = ...;\n\n          ...\n\n          '\n      - pattern-inside: \"$TYPE $FUNC(...,org.hibernate.Session $SESSION,...) {\\n \\\n          \\ ...\\n}\\n\"\n    - pattern-not: '$SESSION.$METHOD(\"...\" + \"...\",...);\n\n        '\n    - metavariable-regex:\n        metavariable: $METHOD\n        regex: ^(createQuery|createSQLQuery)$\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "tainted-sql-from-http-request",
+    "description": "Detected input from a HTTPServletRequest going into a SQL sink or statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use parameterized SQL queries or properly sanitize user input instead.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ).$REQFUNC(...)\n\n          '\n      - pattern: \"(ServletRequest $REQ).$REQFUNC(...) \\n\"\n    - metavariable-regex:\n        metavariable: $REQFUNC\n        regex: (getInputStream|getParameter|getParameterMap|getParameterValues|getReader|getCookies|getHeader|getHeaderNames|getHeaders|getPart|getParts|getQueryString)\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: \"(java.sql.CallableStatement $STMT) = ...; \\n\"\n      - pattern: '(java.sql.Statement $STMT) = ...;\n\n          ...\n\n          $OUTPUT = $STMT.$FUNC(...);\n\n          '\n      - pattern: '(java.sql.PreparedStatement $STMT) = ...;\n\n          '\n      - pattern: '$VAR = $CONN.prepareStatement(...)\n\n          '\n      - pattern: '$PATH.queryForObject(...);\n\n          '\n      - pattern: '(java.util.Map<String, Object> $STMT) = $PATH.queryForMap(...);\n\n          '\n      - pattern: '(org.springframework.jdbc.support.rowset.SqlRowSet $STMT) = ...;\n\n          '\n      - pattern: '(org.springframework.jdbc.core.JdbcTemplate $TEMPL).batchUpdate(...)\n\n          '\n      - patterns:\n        - pattern-inside: '(String $SQL) = \"$SQLSTR\" + ...;\n\n            ...\n\n            '\n        - pattern: $PATH.$SQLCMD(..., $SQL, ...);\n        - metavariable-regex:\n            metavariable: $SQLSTR\n            regex: (?i)(^SELECT.* | ^INSERT.* | ^UPDATE.*)\n        - metavariable-regex:\n            metavariable: $SQLCMD\n            regex: (execute|query|executeUpdate|batchUpdate)\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "turbine-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern-either:\n          - pattern-inside: 'String $SQL = $X + $Y;\n\n              ...\n\n              '\n          - pattern-inside: 'String $SQL = String.format(...);\n\n              ...\n\n              '\n          - pattern-inside: \"$VAL $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n        - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n            ...\n\n            '\n        - pattern: $PEER.executeQuery($SQL,...)\n      - pattern: '$PEER.executeQuery(String.format(...),...)\n\n          '\n      - pattern: '$PEER.executeQuery($X + $Y,...)\n\n          '\n    - pattern-not: '$PEER.executeQuery(\"...\" + \"...\",...)\n\n        '\n    - metavariable-regex:\n        metavariable: $PEER\n        regex: (BasePeer|GroupPeer)\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern-either:\n          - pattern-inside: 'String $SQL = $X + $Y;\n\n              ...\n\n              '\n          - pattern-inside: 'String $SQL = String.format(...);\n\n              ...\n\n              '\n          - pattern-inside: \"$VAL $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n        - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n            ...\n\n            '\n        - pattern: $P.executeQuery($SQL,...)\n      - pattern: '$P.executeQuery(String.format(...),...)\n\n          '\n      - pattern: '$P.executeQuery($X + $Y,...)\n\n          '\n    - pattern-either:\n      - pattern-inside: 'BasePeer $P = ...;\n\n          ...\n\n          '\n      - pattern-inside: 'GroupPeer $P = ...;\n\n          ...\n\n          '\n      - pattern-inside: \"$VAL $FUNC(...,GroupPeer $P,...) {\\n  ...\\n}\\n\"\n      - pattern-inside: \"$VAL $FUNC(...,BasePeer $P,...) {\\n  ...\\n}\\n\"\n    - pattern-not: '$P.executeQuery(\"...\" + \"...\",...)\n\n        '\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "jdo-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern-either:\n          - pattern-inside: 'String $SQL = $X + $Y;\n\n              ...\n\n              '\n          - pattern-inside: 'String $SQL = String.format(...);\n\n              ...\n\n              '\n          - pattern-inside: \"$TYPE $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n        - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n            ...\n\n            '\n        - pattern: $Q.$METHOD($SQL,...)\n      - pattern: '$Q.$METHOD(String.format(...),...);\n\n          '\n      - pattern: '$Q.$METHOD($X + $Y,...);\n\n          '\n    - pattern-either:\n      - pattern-inside: 'javax.jdo.Query $Q = ...;\n\n          ...\n\n          '\n      - pattern-inside: \"$TYPE $FUNC(...,javax.jdo.Query $Q,...) {\\n  ...\\n}\\n\"\n    - pattern-not: '$Q.$METHOD(\"...\" + \"...\",...);\n\n        '\n    - metavariable-regex:\n        metavariable: $METHOD\n        regex: ^(setFilter|setGrouping)$\n  - patterns:\n    - pattern-either:\n      - patterns:\n        - pattern-either:\n          - pattern-inside: 'String $SQL = $X + $Y;\n\n              ...\n\n              '\n          - pattern-inside: 'String $SQL = String.format(...);\n\n              ...\n\n              '\n          - pattern-inside: \"$VAL $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n        - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n            ...\n\n            '\n        - pattern: $PM.newQuery(...,$SQL,...)\n      - pattern: '$PM.newQuery(...,String.format(...),...);\n\n          '\n      - pattern: '$PM.newQuery(...,$X + $Y,...);\n\n          '\n    - pattern-either:\n      - pattern-inside: 'javax.jdo.PersistenceManager $PM = ...;\n\n          ...\n\n          '\n      - pattern-inside: \"$TYPE $FUNC(...,javax.jdo.PersistenceManager $PM,...) {\\n\\\n          \\  ...\\n}\\n\"\n    - pattern-not: '$PM.newQuery(...,\"...\" + \"...\",...);\n\n        '\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "jdbc-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern-inside: 'String $SQL = $X + $Y;\n\n            ...\n\n            '\n        - pattern-inside: 'String $SQL = String.format(...);\n\n            ...\n\n            '\n        - pattern-inside: \"$VAL $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n      - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n          ...\n\n          '\n      - pattern: $S.$METHOD($SQL,...)\n    - pattern: '$S.$METHOD(String.format(...),...);\n\n        '\n    - pattern: '$S.$METHOD($X + $Y,...);\n\n        '\n  - pattern-either:\n    - pattern-inside: 'java.sql.Statement $S = ...;\n\n        ...\n\n        '\n    - pattern-inside: \"$TYPE $FUNC(...,java.sql.Statement $S,...) {\\n  ...\\n}\\n\"\n  - pattern-not: '$S.$METHOD(\"...\" + \"...\",...);\n\n      '\n  - metavariable-regex:\n      metavariable: $METHOD\n      regex: ^(executeQuery|execute|executeUpdate|executeLargeUpdate|addBatch|nativeSQL)$\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "jpa-sqli",
+    "description": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern-inside: 'String $SQL = $X + $Y;\n\n            ...\n\n            '\n        - pattern-inside: 'String $SQL = String.format(...);\n\n            ...\n\n            '\n        - pattern-inside: \"$TYPE $FUNC(...,String $SQL,...) {\\n  ...\\n}\\n\"\n      - pattern-not-inside: 'String $SQL = \"...\" + \"...\";\n\n          ...\n\n          '\n      - pattern: $EM.$METHOD($SQL,...)\n    - pattern: '$EM.$METHOD(String.format(...),...);\n\n        '\n    - pattern: '$EM.$METHOD($X + $Y,...);\n\n        '\n  - pattern-either:\n    - pattern-inside: 'EntityManager $EM = ...;\n\n        ...\n\n        '\n    - pattern-inside: \"$TYPE $FUNC(...,EntityManager $EM,...) {\\n  ...\\n}\\n\"\n  - pattern-not: '$EM.$METHOD(\"...\" + \"...\",...);\n\n      '\n  - metavariable-regex:\n      metavariable: $METHOD\n      regex: ^(createQuery|createNativeQuery)$\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "use-of-md5-digest-utils",
+    "description": "Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is therefore not suitable as a cryptographic signature. Use HMAC instead.",
+    "source_code": "- patterns:\n  - pattern: '$DU.$GET_ALGO().digest(...)\n\n      '\n  - metavariable-pattern:\n      metavariable: $GET_ALGO\n      pattern: getMd5Digest\n  - metavariable-pattern:\n      metavariable: $DU\n      pattern: DigestUtils\n  - focus-metavariable: $GET_ALGO\n",
+    "cwe_id": [
+      "cwe-328"
+    ]
+  },
+  {
+    "checker": "ecb-cipher",
+    "description": "Cipher in ECB mode is detected. ECB mode produces the same output for the same input each time which allows an attacker to intercept and replay the data. Further, ECB mode does not provide any integrity checking. See https://find-sec-bugs.github.io/bugs.htm#CIPHER_INTEGRITY.",
+    "source_code": "- patterns:\n  - pattern: 'Cipher $VAR = $CIPHER.getInstance($MODE);\n\n      '\n  - metavariable-regex:\n      metavariable: $MODE\n      regex: .*ECB.*\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "desede-is-deprecated",
+    "description": "Triple DES (3DES or DESede) is considered deprecated. AES is the recommended cipher. Upgrade to use AES.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: '$CIPHER.getInstance(\"=~/DESede.*/\")\n\n        '\n    - pattern: '$CRYPTO.KeyGenerator.getInstance(\"DES\")\n\n        '\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "rsa-no-padding",
+    "description": "Using RSA without OAEP mode weakens the encryption.",
+    "source_code": "- pattern: $CIPHER.getInstance(\"=~/RSA/[Nn][Oo][Nn][Ee]/NoPadding/\")\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "use-of-rc4",
+    "description": "Use of RC4 was detected. RC4 is vulnerable to several attacks, including stream cipher attacks and bit flipping attacks. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- pattern: $CIPHER.getInstance(\"RC4\")\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "use-of-rc2",
+    "description": "Use of RC2 was detected. RC2 is vulnerable to related-key attacks, and is therefore considered non-compliant. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- pattern: $CIPHER.getInstance(\"RC2\")\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "unencrypted-socket",
+    "description": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+    "source_code": "- pattern-either:\n  - pattern: new ServerSocket(...)\n  - pattern: new Socket(...)\n",
+    "cwe_id": [
+      "cwe-319"
+    ]
+  },
+  {
+    "checker": "gcm-detection",
+    "description": "GCM detected, please check that IV/nonce is not reused, an Initialization Vector (IV) is a nonce used to randomize the encryption, so that even if multiple messages with identical plaintext are encrypted, the generated corresponding ciphertexts are different. Unlike the Key, the IV usually does not need to be secret, rather it is important that it is random and unique. Certain encryption schemes the IV is exchanged in public as part of the ciphertext. Reusing same Initialization Vector with the same Key to encrypt multiple plaintext blocks allows an attacker to compare the ciphertexts and then, with some assumptions on the content of the messages, to gain important information about the data being encrypted.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: $METHOD.getInstance(\"AES/GCM/NoPadding\",...);\n    - pattern: new GCMParameterSpec(...);\n",
+    "cwe_id": [
+      "cwe-323"
+    ]
+  },
+  {
+    "checker": "use-of-weak-rsa-key",
+    "description": "RSA keys should be at least 2048 bits based on NIST recommendation.",
+    "source_code": "- patterns:\n  - pattern: 'KeyPairGenerator $KEY = $G.getInstance(\"RSA\");\n\n      ...\n\n      $KEY.initialize($BITS);\n\n      '\n  - metavariable-comparison:\n      metavariable: $BITS\n      comparison: $BITS < 2048\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "use-of-sha1",
+    "description": "Detected SHA1 hash algorithm which is considered insecure. SHA1 is not collision resistant and is therefore not suitable as a cryptographic signature. Instead, use PBKDF2 for password hashing or SHA256 or SHA512 for other hash function applications.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern: 'java.security.MessageDigest.getInstance(\"$ALGO\", ...);\n\n        '\n    - metavariable-regex:\n        metavariable: $ALGO\n        regex: (SHA1|SHA-1)\n  - pattern: '$DU.getSha1Digest().digest(...)\n\n      '\n",
+    "cwe_id": [
+      "cwe-328"
+    ]
+  },
+  {
+    "checker": "weak-random",
+    "description": "Detected use of the functions `Math.random()` or `java.util.Random()`. These are both not cryptographically strong random number generators (RNGs). If you are using these RNGs to create passwords or secret tokens, use `java.security.SecureRandom` instead.",
+    "source_code": "- pattern-either:\n  - pattern: 'new java.util.Random(...).$FUNC(...)\n\n      '\n  - pattern: 'java.lang.Math.random(...)\n\n      '\n",
+    "cwe_id": [
+      "cwe-330"
+    ]
+  },
+  {
+    "checker": "no-null-cipher",
+    "description": "NullCipher was detected. This will not encrypt anything; the cipher text will be the same as the plain text. Use a valid, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: new NullCipher(...);\n    - pattern: new javax.crypto.NullCipher(...);\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "no-static-initialization-vector",
+    "description": "Initialization Vectors (IVs) for block ciphers should be randomly generated each time they are used. Using a static IV means the same plaintext encrypts to the same ciphertext every time, weakening the strength of the encryption.",
+    "source_code": "- pattern-either:\n  - pattern: \"byte[] $IV = {\\n    ...\\n};\\n...\\nnew IvParameterSpec($IV, ...);\\n\"\n  - pattern: \"class $CLASS {\\n    byte[] $IV = {\\n        ...\\n    };\\n    ...\\n \\\n      \\   $METHOD(...) {\\n        ...\\n        new IvParameterSpec($IV, ...);\\n  \\\n      \\      ...\\n    }\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-329"
+    ]
+  },
+  {
+    "checker": "des-is-deprecated",
+    "description": "DES is considered deprecated. AES is the recommended cipher. Upgrade to use AES. See https://www.nist.gov/news-events/news/2005/06/nist-withdraws-outdated-data-encryption-standard for more information.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern-inside: $CIPHER.getInstance(\"=~/DES/.*/\")\n    - pattern-inside: $CIPHER.getInstance(\"DES\")\n  - pattern-either:\n    - pattern: '\"=~/DES/.*/\"\n\n        '\n    - pattern: '\"DES\"\n\n        '\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "use-of-sha224",
+    "description": "This code uses a 224-bit hash function, which is deprecated or disallowed in some security policies. Consider updating to a stronger hash function such as SHA-384 or higher to ensure compliance and security.",
+    "source_code": "- pattern-either:\n  - pattern: org.apache.commons.codec.digest.DigestUtils.getSha3_224Digest()\n  - pattern: org.apache.commons.codec.digest.DigestUtils.getSha512_224Digest()\n  - pattern: org.apache.commons.codec.digest.DigestUtils.sha3_224(...)\n  - pattern: org.apache.commons.codec.digest.DigestUtils.sha3_224Hex(...)\n  - pattern: org.apache.commons.codec.digest.DigestUtils.sha512_224(...)\n  - pattern: org.apache.commons.codec.digest.DigestUtils.sha512_224Hex(...)\n  - pattern: new org.apache.commons.codec.digest.DigestUtils(org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_224)\n  - pattern: new org.apache.commons.codec.digest.DigestUtils(org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_512_224)\n  - pattern: new org.apache.commons.codec.digest.DigestUtils(org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA3_224)\n  - patterns:\n    - pattern: java.security.MessageDigest.getInstance(\"$ALGO\", ...);\n    - metavariable-regex:\n        metavariable: $ALGO\n        regex: .*224\n",
+    "cwe_id": [
+      "cwe-328"
+    ]
+  },
+  {
+    "checker": "use-of-aes-ecb",
+    "description": "Use of AES with ECB mode detected. ECB doesn't provide message confidentiality and  is not semantically secure so should not be used. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- pattern: $CIPHER.getInstance(\"=~/AES/ECB.*/\")\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "use-of-md5",
+    "description": "Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is therefore not suitable as a cryptographic signature. Use HMAC instead.",
+    "source_code": "- patterns:\n  - pattern: 'java.security.MessageDigest.getInstance($ALGO, ...);\n\n      '\n  - metavariable-regex:\n      metavariable: $ALGO\n      regex: (?i)(.MD5.)\n  - focus-metavariable: $ALGO\n",
+    "cwe_id": [
+      "cwe-328"
+    ]
+  },
+  {
+    "checker": "gcm-nonce-reuse",
+    "description": "GCM IV/nonce is reused: encryption can be totally useless",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: new GCMParameterSpec(..., \"...\".getBytes(...), ...);\n    - pattern: byte[] $NONCE = \"...\".getBytes(...); ... new GCMParameterSpec(...,\n        $NONCE, ...);\n",
+    "cwe_id": [
+      "cwe-323"
+    ]
+  },
+  {
+    "checker": "use-of-default-aes",
+    "description": "Use of AES with no settings detected. By default, java.crypto.Cipher uses ECB mode. ECB doesn't  provide message confidentiality and is not semantically secure so should not be used. Instead, use a strong, secure cipher: java.crypto.Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- pattern-either:\n  - patterns:\n    - pattern-either:\n      - pattern-inside: 'import javax;\n\n          ...\n\n          '\n    - pattern-either:\n      - pattern: javax.crypto.Cipher.getInstance(\"AES\")\n      - pattern: (javax.crypto.Cipher $CIPHER).getInstance(\"AES\")\n  - patterns:\n    - pattern-either:\n      - pattern-inside: 'import javax.*;\n\n          ...\n\n          '\n      - pattern-inside: 'import javax.crypto;\n\n          ...\n\n          '\n    - pattern-either:\n      - pattern: crypto.Cipher.getInstance(\"AES\")\n      - pattern: (crypto.Cipher $CIPHER).getInstance(\"AES\")\n  - patterns:\n    - pattern-either:\n      - pattern-inside: 'import javax.crypto.*;\n\n          ...\n\n          '\n      - pattern-inside: 'import javax.crypto.Cipher;\n\n          ...\n\n          '\n    - pattern-either:\n      - pattern: Cipher.getInstance(\"AES\")\n      - pattern: (Cipher $CIPHER).getInstance(\"AES\")\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "use-of-blowfish",
+    "description": "Use of Blowfish was detected. Blowfish uses a 64-bit block size that  makes it vulnerable to birthday attacks, and is therefore considered non-compliant.  Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+    "source_code": "- pattern: $CIPHER.getInstance(\"Blowfish\")\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "avoid-implementing-custom-digests",
+    "description": "Cryptographic algorithms are notoriously difficult to get right. By implementing a custom message digest, you risk introducing security issues into your program. Use one of the many sound message digests already available to you: MessageDigest sha256Digest = MessageDigest.getInstance(\"SHA256\");",
+    "source_code": "- pattern: \"class $CLASS extends MessageDigest {\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "insecure-trust-manager",
+    "description": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern-inside: \"class $CLASS implements X509TrustManager {\\n  ...\\n}\\n\"\n    - pattern-inside: \"new X509TrustManager() {\\n  ...\\n}\\n\"\n    - pattern-inside: \"class $CLASS implements X509ExtendedTrustManager {\\n  ...\\n\\\n        }\\n\"\n    - pattern-inside: \"new X509ExtendedTrustManager() {\\n  ...\\n}\\n\"\n  - pattern-not: public void checkClientTrusted(...) { $SOMETHING; }\n  - pattern-not: public void checkServerTrusted(...) { $SOMETHING; }\n  - pattern-either:\n    - pattern: public void checkClientTrusted(...) {}\n    - pattern: public void checkServerTrusted(...) {}\n    - pattern: public X509Certificate[] getAcceptedIssuers(...) { return null; }\n",
+    "cwe_id": [
+      "cwe-295"
+    ]
+  },
+  {
+    "checker": "defaulthttpclient-is-deprecated",
+    "description": "DefaultHttpClient is deprecated. Further, it does not support connections using TLS1.2, which makes using DefaultHttpClient a security hazard. Use HttpClientBuilder instead.",
+    "source_code": "- pattern: new DefaultHttpClient(...);\n",
+    "cwe_id": [
+      "cwe-326"
+    ]
+  },
+  {
+    "checker": "insecure-hostname-verifier",
+    "description": "Insecure HostnameVerifier implementation detected. This will accept any SSL certificate with any hostname, which creates the possibility for man-in-the-middle attacks.",
+    "source_code": "- pattern-either:\n  - pattern: \"class $CLASS implements HostnameVerifier {\\n  ...\\n  public boolean\\\n      \\ verify(...) { return true; }\\n}\\n\"\n  - pattern: \"new HostnameVerifier(...){\\n  public boolean verify(...) {\\n    return\\\n      \\ true;\\n  }\\n}\"\n  - pattern: import org.apache.http.conn.ssl.NoopHostnameVerifier;\n",
+    "cwe_id": [
+      "cwe-295"
+    ]
+  },
+  {
+    "checker": "no-direct-response-writer",
+    "description": "Detected a request with potential user-input going into a OutputStream or Writer object. This bypasses any view or template environments, including HTML escaping, which may expose this application to cross-site scripting (XSS) vulnerabilities. Consider using a view technology such as JavaServer Faces (JSFs) which automatically escapes HTML views.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletRequest $REQ).$REQFUNC(...)\n\n          '\n      - pattern: \"(ServletRequest $REQ).$REQFUNC(...) \\n\"\n    - metavariable-regex:\n        metavariable: $REQFUNC\n        regex: (getInputStream|getParameter|getParameterMap|getParameterValues|getReader|getCookies|getHeader|getHeaderNames|getHeaders|getPart|getParts|getQueryString)\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '(HttpServletResponse $RESPONSE).getWriter(...).$WRITE(...)\n\n          '\n      - pattern: '(HttpServletResponse $RESPONSE).getOutputStream(...).$WRITE(...)\n\n          '\n      - pattern: '(java.io.PrintWriter $WRITER).$WRITE(...)\n\n          '\n      - pattern: '(PrintWriter $WRITER).$WRITE(...)\n\n          '\n      - pattern: '(javax.servlet.ServletOutputStream $WRITER).$WRITE(...)\n\n          '\n      - pattern: '(ServletOutputStream $WRITER).$WRITE(...)\n\n          '\n      - pattern: '(java.io.OutputStream $WRITER).$WRITE(...)\n\n          '\n      - pattern: '(OutputStream $WRITER).$WRITE(...)\n\n          '\n- pattern-sanitizers:\n  - pattern-either:\n    - pattern: Encode.forHtml(...)\n    - pattern: (PolicyFactory $POLICY).sanitize(...)\n    - pattern: (AntiSamy $AS).scan(...)\n    - pattern: JSoup.clean(...)\n    - pattern: org.apache.commons.lang.StringEscapeUtils.escapeHtml(...)\n    - pattern: org.springframework.web.util.HtmlUtils.htmlEscape(...)\n    - pattern: org.owasp.esapi.ESAPI.encoder().encodeForHTML(...)\n",
+    "cwe_id": [
+      "cwe-79"
+    ]
+  },
+  {
+    "checker": "autoescape-disabled",
+    "description": "Detected an element with disabled HTML escaping. If external data can reach this, this is a cross-site scripting (XSS) vulnerability. Ensure no external data can reach here, or remove 'escape=false' from this element.",
+    "source_code": "- pattern-regex: .*escape.*?=.*?false.*\n",
+    "cwe_id": [
+      "cwe-150"
+    ]
+  },
+  {
+    "checker": "use-jstl-escaping",
+    "description": "Detected an Expression Language segment in a tag that does not escape output. This is dangerous because if any data in this expression can be controlled externally, it is a cross-site scripting vulnerability. Instead, use the 'out' tag from the JSTL taglib to escape this expression. See https://www.tutorialspoint.com/jsp/jstl_core_out_tag.htm for more information.",
+    "source_code": "- pattern-regex: <(?![A-Za-z0-9]+:out).*?\\$\\{.*?\\}.*>\n",
+    "cwe_id": [
+      "cwe-116"
+    ]
+  },
+  {
+    "checker": "use-escapexml",
+    "description": "Detected an Expression Language segment that does not escape output. This is dangerous because if any data in this expression can be controlled externally, it is a cross-site scripting vulnerability. Instead, use the 'escapeXml' function from the JSTL taglib. See https://www.tutorialspoint.com/jsp/jstl_function_escapexml.htm for more information.",
+    "source_code": "- pattern-regex: \\$\\{(?!.*escapeXml).*\\}\n",
+    "cwe_id": [
+      "cwe-116"
+    ]
+  },
+  {
+    "checker": "no-scriptlets",
+    "description": "JSP scriptlet detected. Scriptlets are difficult to use securely and are considered bad practice. See https://stackoverflow.com/a/3180202. Instead, consider migrating to JSF or using the Expression Language '${...}' with the escapeXml function in your JSP files.",
+    "source_code": "- pattern-regex: \\<\\%[^\\@].*\n",
+    "cwe_id": [
+      "cwe-116"
+    ]
+  },
+  {
+    "checker": "transformerfactory-dtds-not-disabled",
+    "description": "DOCTYPE declarations are enabled for this TransformerFactory. This is vulnerable to XML external entity attacks. Disable this by setting the attributes \"accessExternalDTD\" and \"accessExternalStylesheet\" to \"\".",
+    "source_code": "- pattern-sources:\n  - by-side-effect: true\n    patterns:\n    - pattern-either:\n      - pattern: '$FACTORY = TransformerFactory.newInstance();\n\n          '\n      - patterns:\n        - pattern: $FACTORY\n        - pattern-inside: \"class $C {\\n  ...\\n  $V $FACTORY = TransformerFactory.newInstance();\\n\\\n            \\  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = TransformerFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD,\\\n            \\ \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET,\\\n            \\ \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = TransformerFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET,\\\n            \\ \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD,\\\n            \\ \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = TransformerFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setAttribute(\\\"=~/.*accessExternalDTD.*/\\\"\\\n            , \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(\\\"=~/.*accessExternalStylesheet.*/\\\"\\\n            , \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = TransformerFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setAttribute(\\\"=~/.*accessExternalStylesheet.*/\\\"\\\n            , \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(\\\"=~/.*accessExternalDTD.*/\\\"\\\n            , \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n- pattern-sinks:\n  - patterns:\n    - pattern: $FACTORY.newTransformer(...);\n- pattern-sanitizers:\n  - by-side-effect: true\n    pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern: '$FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET,\n            \"\"); ...\n\n            $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \"\");\n\n            '\n        - pattern: '$FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \"\");\n\n            ...\n\n            $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, \"\");\n\n            '\n        - pattern: '$FACTORY.setAttribute(\"=~/.*accessExternalStylesheet.*/\", \"\");\n            ...\n\n            $FACTORY.setAttribute(\"=~/.*accessExternalDTD.*/\", \"\");\n\n            '\n        - pattern: '$FACTORY.setAttribute(\"=~/.*accessExternalDTD.*/\", \"\");\n\n            ...\n\n            $FACTORY.setAttribute(\"=~/.*accessExternalStylesheet.*/\", \"\");\n\n            '\n      - focus-metavariable: $FACTORY\n    - patterns:\n      - pattern-either:\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET,\\\n            \\ \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD,\\\n            \\ \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD,\\\n            \\ \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET,\\\n            \\ \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setAttribute(\\\"\\\n            =~/.*accessExternalStylesheet.*/\\\", \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(\\\"\\\n            =~/.*accessExternalDTD.*/\\\", \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setAttribute(\\\"\\\n            =~/.*accessExternalDTD.*/\\\", \\\"\\\");\\n    ...\\n    $FACTORY.setAttribute(\\\"\\\n            =~/.*accessExternalStylesheet.*/\\\", \\\"\\\");\\n    ...\\n  }\\n  ...\\n}\\n\"\n      - pattern: $M($X)\n      - focus-metavariable: $X\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "documentbuilderfactory-external-parameter-entities-true",
+    "description": "External entities are allowed for $DBFACTORY. This is vulnerable to XML external entity attacks. Disable this by setting the feature \"http://xml.org/sax/features/external-parameter-entities\" to false.",
+    "source_code": "- pattern: $DBFACTORY.setFeature(\"http://xml.org/sax/features/external-parameter-entities\",\n    true);\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "documentbuilderfactory-disallow-doctype-decl-missing",
+    "description": "DOCTYPE declarations are enabled for this DocumentBuilderFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature \"http://apache.org/xml/features/disallow-doctype-decl\" to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features \"http://xml.org/sax/features/external-general-entities\" and \"http://xml.org/sax/features/external-parameter-entities\" to false.",
+    "source_code": "- pattern-sources:\n  - by-side-effect: true\n    patterns:\n    - pattern-either:\n      - pattern: '$FACTORY = DocumentBuilderFactory.newInstance();\n\n          '\n      - patterns:\n        - pattern: $FACTORY\n        - pattern-inside: \"class $C {\\n  ...\\n  $V $FACTORY = DocumentBuilderFactory.newInstance();\\n\\\n            \\  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = DocumentBuilderFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://apache.org/xml/features/disallow-doctype-decl\\\"\\\n            , true);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = DocumentBuilderFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = DocumentBuilderFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            , false);\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n- pattern-sinks:\n  - patterns:\n    - pattern: $FACTORY.newDocumentBuilder();\n- pattern-sanitizers:\n  - by-side-effect: true\n    pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern: '$FACTORY.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\",\n            true);\n\n            '\n        - pattern: '$FACTORY.setFeature(\"http://xml.org/sax/features/external-general-entities\",\n            false);\n\n            ...\n\n            $FACTORY.setFeature(\"http://xml.org/sax/features/external-parameter-entities\",\n            false);\n\n            '\n        - pattern: '$FACTORY.setFeature(\"http://xml.org/sax/features/external-parameter-entities\",\n            false);\n\n            ...\n\n            $FACTORY.setFeature(\"http://xml.org/sax/features/external-general-entities\",\n            false);\n\n            '\n      - focus-metavariable: $FACTORY\n    - patterns:\n      - pattern-either:\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://apache.org/xml/features/disallow-doctype-decl\\\",\\n    true);\\n\\\n            \\    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://xml.org/sax/features/external-general-entities\\\", false);\\n   \\\n            \\ ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://xml.org/sax/features/external-parameter-entities\\\", false);\\n \\\n            \\   ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            ,false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n      - pattern: $M($X)\n      - focus-metavariable: $X\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "documentbuilderfactory-external-general-entities-true",
+    "description": "External entities are allowed for $DBFACTORY. This is vulnerable to XML external entity attacks. Disable this by setting the feature \"http://xml.org/sax/features/external-general-entities\" to false.",
+    "source_code": "- pattern: $DBFACTORY.setFeature(\"http://xml.org/sax/features/external-general-entities\",\n    true);\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "saxparserfactory-disallow-doctype-decl-missing",
+    "description": "DOCTYPE declarations are enabled for this SAXParserFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature `http://apache.org/xml/features/disallow-doctype-decl` to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features `http://xml.org/sax/features/external-general-entities` and `http://xml.org/sax/features/external-parameter-entities` to false. NOTE - The previous links are not meant to be clicked. They are the literal config key values that are supposed to be used to disable these features. For more information, see https://semgrep.dev/docs/cheat-sheets/java-xxe/#3a-documentbuilderfactory.",
+    "source_code": "- pattern-sources:\n  - by-side-effect: true\n    patterns:\n    - pattern-either:\n      - pattern: '$FACTORY = SAXParserFactory.newInstance();\n\n          '\n      - patterns:\n        - pattern: $FACTORY\n        - pattern-inside: \"class $C {\\n  ...\\n  $V $FACTORY = SAXParserFactory.newInstance();\\n\\\n            \\  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = SAXParserFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://apache.org/xml/features/disallow-doctype-decl\\\"\\\n            , true);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = SAXParserFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-not-inside: \"class $C {\\n  ...\\n  $V $FACTORY = SAXParserFactory.newInstance();\\n\\\n            \\  static {\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            , false);\\n    ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n- pattern-sinks:\n  - patterns:\n    - pattern: $FACTORY.newSAXParser();\n- pattern-sanitizers:\n  - by-side-effect: true\n    pattern-either:\n    - patterns:\n      - pattern-either:\n        - pattern: '$FACTORY.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\",\n            true);\n\n            '\n        - pattern: '$FACTORY.setFeature(\"http://xml.org/sax/features/external-general-entities\",\n            false);\n\n            ...\n\n            $FACTORY.setFeature(\"http://xml.org/sax/features/external-parameter-entities\",\n            false);\n\n            '\n        - pattern: '$FACTORY.setFeature(\"http://xml.org/sax/features/external-parameter-entities\",\n            false);\n\n            ...\n\n            $FACTORY.setFeature(\"http://xml.org/sax/features/external-general-entities\",\n            false);\n\n            '\n      - focus-metavariable: $FACTORY\n    - patterns:\n      - pattern-either:\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://apache.org/xml/features/disallow-doctype-decl\\\",\\n    true);\\n\\\n            \\    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://xml.org/sax/features/external-general-entities\\\", false);\\n   \\\n            \\ ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n            , false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n        - pattern-inside: \"class $C {\\n  ...\\n  $T $M(...) {\\n    ...\\n    $FACTORY.setFeature(\\\"\\\n            http://xml.org/sax/features/external-parameter-entities\\\", false);\\n \\\n            \\   ...\\n    $FACTORY.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n            ,false);\\n    ...\\n  }\\n  ...\\n}\\n\"\n      - pattern: $M($X)\n      - focus-metavariable: $X\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "documentbuilderfactory-disallow-doctype-decl-false",
+    "description": "DOCTYPE declarations are enabled for $DBFACTORY. Without prohibiting external entity declarations, this is vulnerable to XML external entity attacks. Disable this by setting the feature \"http://apache.org/xml/features/disallow-doctype-decl\" to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features \"http://xml.org/sax/features/external-general-entities\" and \"http://xml.org/sax/features/external-parameter-entities\" to false.",
+    "source_code": "- patterns:\n  - pattern: $DBFACTORY.setFeature(\"http://apache.org/xml/features/disallow-doctype-decl\",\n      false);\n  - pattern-not-inside: \"$RETURNTYPE $METHOD(...){\\n  ...\\n  $DBF.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n      , false);\\n  ...\\n  $DBF.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n      , false);\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$RETURNTYPE $METHOD(...){\\n  ...\\n  $DBF.setFeature(\\\"http://xml.org/sax/features/external-parameter-entities\\\"\\\n      , false);\\n  ...\\n  $DBF.setFeature(\\\"http://xml.org/sax/features/external-general-entities\\\"\\\n      , false);\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$RETURNTYPE $METHOD(...){\\n  ...\\n  $DBF.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD,\\\n      \\ \\\"\\\");\\n  ...\\n  $DBF.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, \\\"\\\n      \\\");\\n  ...\\n}\\n\"\n  - pattern-not-inside: \"$RETURNTYPE $METHOD(...){\\n  ...\\n  $DBF.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA,\\\n      \\ \\\"\\\");\\n  ...\\n  $DBF.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, \\\"\\\"\\\n      );\\n  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-611"
+    ]
+  },
+  {
+    "checker": "insecure-resteasy-deserialization",
+    "description": "When a Restful webservice endpoint is configured to use wildcard mediaType {*/*} as a value for the @Consumes annotation, an attacker could abuse the SerializableProvider by sending a HTTP Request with a Content-Type of application/x-java-serialized-object. The body of that request would be processed by the SerializationProvider and could contain a malicious payload, which may lead to arbitrary code execution when calling the $Y.getObject method.",
+    "source_code": "- pattern-either:\n  - pattern: '@Consumes({\"application/x-java-serialized-object\"})\n\n      '\n  - pattern: '@Consumes({\"*/*\"})\n\n      '\n  - pattern: '@Consumes(\"*/*\")\n\n      '\n  - pattern: '@Consumes({MediaType.WILDCARD_TYPE})\n\n      '\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "default-resteasy-provider-abuse",
+    "description": "When a Restful webservice endpoint isn't configured with a @Consumes annotation, an attacker could abuse the SerializableProvider by sending a HTTP Request with a Content-Type of application/x-java-serialized-object. The body of that request would be processed by the SerializationProvider and could contain a malicious payload, which may lead to arbitrary code execution. Instead, add a @Consumes annotation to the function or class.",
+    "source_code": "- patterns:\n  - pattern: '@Path(\"...\")\n\n      public $RETURNTYPE $METHOD(...) { ...}\n\n      '\n  - pattern-not-inside: '@GET\n\n      public $RETURNTYPE $METHOD(...) { ...}\n\n      '\n  - pattern-not-inside: '@Path(\"...\")\n\n      @Consumes(...)\n\n      public $RETURNTYPE $METHOD(...) { ...}\n\n      '\n  - pattern-not-inside: '@Consumes(...)\n\n      public class $CLASSNAME { ... }\n\n      '\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "jax-rs-path-traversal",
+    "description": "Detected a potential path traversal. A malicious actor could control the location of this file, to include going backwards in the directory with '../'. To address this, ensure that user-controlled variables in file paths are sanitized. You may also consider using a utility method such as org.apache.commons.io.FilenameUtils.getName(...) to only retrieve the file name from the path.",
+    "source_code": "- pattern-either:\n  - pattern: \"$RETURNTYPE $FUNC (..., @PathParam(...) $TYPE $VAR, ...) {\\n  ...\\n\\\n      \\  new File(..., $VAR, ...);\\n  ...\\n}\\n\"\n  - pattern: \"$RETURNTYPE $FUNC (..., @javax.ws.rs.PathParam(...) $TYPE $VAR, ...)\\\n      \\ {\\n  ...\\n  new File(..., $VAR, ...);\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-22"
+    ]
+  },
+  {
+    "checker": "jjwt-none-alg",
+    "description": "Detected use of the 'none' algorithm in a JWT token. The 'none' algorithm assumes the integrity of the token has already been verified. This would allow a malicious actor to forge a JWT token that will automatically be verified. Do not explicitly use the 'none' algorithm. Instead, use an algorithm such as 'HS256'.",
+    "source_code": "- patterns:\n  - pattern: 'io.jsonwebtoken.Jwts.builder();\n\n      '\n  - pattern-not-inside: \"$RETURNTYPE $FUNC(...) {\\n  ...\\n  $JWTS.signWith(...);\\n\\\n      \\  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "exported_activity",
+    "description": "The application exports an activity. Any application on the device can launch the exported activity which may compromise the integrity of your application or its data.  Ensure that any exported activities do not have privileged access to your application's control plane.",
+    "source_code": "- patterns:\n  - pattern-not-inside: <activity ... android:exported=\"false\" ... />\n  - pattern-inside: \"<activity  ... /> \\n\"\n  - pattern-either:\n    - pattern: '<activity ... android:exported=\"true\" ... />\n\n        '\n    - pattern: '<activity ... <intent-filter> ... />\n\n        '\n",
+    "cwe_id": [
+      "cwe-926"
+    ]
+  },
+  {
+    "checker": "find-sql-string-concatenation",
+    "description": "In $METHOD, $X is used to construct a SQL query via string concatenation.",
+    "source_code": "- pattern-either:\n  - pattern: \"$RETURN $METHOD(...,String $X,...){\\n  ...\\n  Session $SESSION = ...;\\n\\\n      \\  ...\\n  String $QUERY = ... + $X + ...;\\n  ...\\n  PreparedStatement $PS =\\\n      \\ $SESSION.connection().prepareStatement($QUERY);\\n  ...\\n  ResultSet $RESULT\\\n      \\ = $PS.executeQuery();\\n  ...\\n}\\n\"\n  - pattern: \"$RETURN $METHOD(...,String $X,...){\\n  ...\\n  String $QUERY = ... +\\\n      \\ $X + ...;\\n  ...\\n  Session $SESSION = ...;\\n  ...\\n  PreparedStatement $PS\\\n      \\ = $SESSION.connection().prepareStatement($QUERY);\\n  ...\\n  ResultSet $RESULT\\\n      \\ = $PS.executeQuery();\\n  ...\\n}\\n\"\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "seam-log-injection",
+    "description": "Seam Logging API support an expression language to introduce bean property to log messages. The expression language can also be the source to unwanted code execution. In this context, an expression is built with a dynamic value. The source of the value(s) should be verified to avoid that unfiltered values fall into this risky code evaluation.",
+    "source_code": "- patterns:\n  - pattern: '$LOG.$INFO($X + $Y,...)\n\n      '\n  - pattern-either:\n    - pattern-inside: 'import org.jboss.seam.log.Log;\n\n        ...\n\n        '\n    - pattern-inside: 'org.jboss.seam.log.Log $LOG = ...;\n\n        ...\n\n        '\n  - metavariable-regex:\n      metavariable: $INFO\n      regex: (debug|error|fatal|info|trace|warn)\n",
+    "cwe_id": [
+      "cwe-95"
+    ]
+  },
+  {
+    "checker": "java-jwt-none-alg",
+    "description": "Detected use of the 'none' algorithm in a JWT token. The 'none' algorithm assumes the integrity of the token has already been verified. This would allow a malicious actor to forge a JWT token that will automatically be verified. Do not explicitly use the 'none' algorithm. Instead, use an algorithm such as 'HS256'.",
+    "source_code": "- pattern-either:\n  - pattern: '$JWT.sign(com.auth0.jwt.algorithms.Algorithm.none());\n\n      '\n  - pattern: '$NONE = com.auth0.jwt.algorithms.Algorithm.none();\n\n      ...\n\n      $JWT.sign($NONE);\n\n      '\n  - pattern: \"class $CLASS {\\n  ...\\n  $TYPE $NONE = com.auth0.jwt.algorithms.Algorithm.none();\\n\\\n      \\  ...\\n  $RETURNTYPE $FUNC (...) {\\n    ...\\n    $JWT.sign($NONE);\\n    ...\\n\\\n      \\  }\\n  ...\\n}\"\n",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "java-jwt-hardcoded-secret",
+    "description": "A hard-coded credential was detected. It is not recommended to store credentials in source-code, as this risks secrets being leaked and used by either an internal or external malicious adversary. It is recommended to use environment variables to securely provide credentials or retrieve credentials from a secure vault or HSM (Hardware Security Module).",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: '(Algorithm $ALG) = $ALGO.$HMAC(\"$Y\");\n\n        '\n    - pattern: '$SECRET = \"$Y\";\n\n        ...\n\n        (Algorithm $ALG) = $ALGO.$HMAC($SECRET);\n\n        '\n    - pattern: \"class $CLASS {\\n  ...\\n  $TYPE $SECRET = \\\"$Y\\\";\\n  ...\\n  $RETURNTYPE\\\n        \\ $FUNC (...) {\\n    ...\\n    (Algorithm $ALG) = $ALGO.$HMAC($SECRET);\\n \\\n        \\   ...\\n  }\\n  ...\\n}\\n\"\n  - focus-metavariable: $Y\n  - metavariable-regex:\n      metavariable: $HMAC\n      regex: (HMAC384|HMAC256|HMAC512)\n",
+    "cwe_id": [
+      "cwe-798"
+    ]
+  },
+  {
+    "checker": "java-jwt-decode-without-verify",
+    "description": "Detected the decoding of a JWT token without a verify step. JWT tokens must be verified before use, otherwise the token's integrity is unknown. This means a malicious actor could forge a JWT token with any claims. Call '.verify()' before using the token.",
+    "source_code": "- patterns:\n  - pattern: 'com.auth0.jwt.JWT.decode(...);\n\n      '\n  - pattern-not-inside: \"class $CLASS {\\n  ...\\n  $RETURNTYPE $FUNC (...) {\\n    ...\\n\\\n      \\    $VERIFIER.verify(...);\\n    ...\\n  }\\n}\"\n",
+    "cwe_id": [
+      "cwe-345"
+    ]
+  },
+  {
+    "checker": "mongodb-nosqli",
+    "description": "Detected non-constant data passed into a NoSQL query using the 'where' evaluation operator. If this data can be controlled by an external user, this is a NoSQL injection. Ensure data passed to the NoSQL query is not user controllable, or properly sanitize the data. Ideally, avoid using the 'where' operator at all and instead use the helper methods provided by com.mongodb.client.model.Filters with comparative operators such as eq, ne, lt, gt, etc.",
+    "source_code": "- patterns:\n  - pattern-either:\n    - pattern: (com.mongodb.BasicDBObject $QUERY).put(\"$where\", $INPUT);\n    - pattern: '(HashMap<String, String> $MAP).put(\"$where\", $INPUT);\n\n        ...\n\n        (com.mongodb.BasicDBObject $QUERY).putAll($MAP);\n\n        '\n    - pattern: (com.mongodb.BasicDBObject $QUERY).append(\"$where\", $INPUT);\n    - pattern: new com.mongodb.BasicDBObject(\"$where\", $INPUT);\n    - pattern: '(HashMap<String, String> $MAP).put(\"$where\", $INPUT);\n\n        ...\n\n        new com.mongodb.BasicDBObject($MAP);\n\n        '\n    - pattern: '(HashMap<String, String> $MAP).put(\"$where\", $INPUT);\n\n        ...\n\n        String json = new JSONObject($MAP).toString();\n\n        ...\n\n        (com.mongodb.BasicDBObject $QUERY).parse((String $JSON));\n\n        '\n    - pattern: com.mongodb.BasicDBObjectBuilder.start().add(\"$where\", $INPUT);\n    - pattern: com.mongodb.BasicDBObjectBuilder.start().append(\"$where\", $INPUT);\n    - pattern: com.mongodb.BasicDBObjectBuilder.start(\"$where\", $INPUT);\n    - pattern: '(HashMap<String, String> $MAP).put(\"$where\", $INPUT);\n\n        ...\n\n        com.mongodb.BasicDBObjectBuilder.start($MAP);\n\n        '\n  - metavariable-pattern:\n      metavariable: $INPUT\n      patterns:\n      - pattern: '...\n\n          '\n      - pattern-not: '\"...\"\n\n          '\n",
+    "cwe_id": [
+      "cwe-943"
+    ]
+  },
+  {
+    "checker": "tainted-sqli",
+    "description": "Detected SQL statement that is tainted by `$EVENT` object. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use parameterized SQL queries or properly sanitize user input instead.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - focus-metavariable: $EVENT\n    - pattern-either:\n      - pattern: \"$HANDLERTYPE $HANDLER($TYPE $EVENT, com.amazonaws.services.lambda.runtime.Context\\\n          \\ $CONTEXT) {\\n  ...\\n}\\n\"\n      - pattern: \"$HANDLERTYPE $HANDLER(InputStream $EVENT, OutputStream $OUT, com.amazonaws.services.lambda.runtime.Context\\\n          \\ $CONTEXT) {\\n  ...\\n}\\n\"\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: \"(java.sql.CallableStatement $STMT) = ...; \\n\"\n      - pattern: '(java.sql.Statement $STMT) = ...;\n\n          '\n      - pattern: '(java.sql.PreparedStatement $STMT) = ...;\n\n          '\n      - pattern: '$VAR = $CONN.prepareStatement(...)\n\n          '\n      - pattern: '$PATH.queryForObject(...);\n\n          '\n      - pattern: '(java.util.Map<String, Object> $STMT) = $PATH.queryForMap(...);\n\n          '\n      - pattern: '(org.springframework.jdbc.support.rowset.SqlRowSet $STMT) = ...;\n\n          '\n      - patterns:\n        - pattern-inside: '(String $SQL) = \"$SQLSTR\" + ...;\n\n            ...\n\n            '\n        - pattern: $PATH.$SQLCMD(..., $SQL, ...);\n        - metavariable-regex:\n            metavariable: $SQLSTR\n            regex: (?i)(^SELECT.* | ^INSERT.* | ^UPDATE.*)\n        - metavariable-regex:\n            metavariable: $SQLCMD\n            regex: (execute|query|executeUpdate|batchUpdate)\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "tainted-sql-string",
+    "description": "Detected user input used to manually construct a SQL string. This is usually bad practice because manual construction could accidentally result in a SQL injection. An attacker could use a SQL injection to steal or modify contents of the database. Instead, use a parameterized query which is available by default in most database engines. Alternatively, consider using an object-relational mapper (ORM) such as Sequelize which will protect your queries.",
+    "source_code": "- pattern-sources:\n  - patterns:\n    - focus-metavariable: $EVENT\n    - pattern-either:\n      - pattern: \"$HANDLERTYPE $HANDLER($TYPE $EVENT, com.amazonaws.services.lambda.runtime.Context\\\n          \\ $CONTEXT) {\\n  ...\\n}\\n\"\n      - pattern: \"$HANDLERTYPE $HANDLER(InputStream $EVENT, OutputStream $OUT, com.amazonaws.services.lambda.runtime.Context\\\n          \\ $CONTEXT) {\\n  ...\\n}\\n\"\n- pattern-sinks:\n  - patterns:\n    - pattern-either:\n      - pattern: '\"$SQLSTR\" + ...\n\n          '\n      - pattern: '\"$SQLSTR\".concat(...)\n\n          '\n      - patterns:\n        - pattern-inside: 'StringBuilder $SB = new StringBuilder(\"$SQLSTR\");\n\n            ...\n\n            '\n        - pattern: $SB.append(...)\n      - patterns:\n        - pattern-inside: '$VAR = \"$SQLSTR\";\n\n            ...\n\n            '\n        - pattern: $VAR += ...\n      - pattern: String.format(\"$SQLSTR\", ...)\n    - metavariable-regex:\n        metavariable: $SQLSTR\n        regex: (?i)(select|delete|insert|create|update|alter|drop)\\b\n    - pattern-not-inside: 'System.out.$PRINTLN(...)\n\n        '\n",
+    "cwe_id": [
+      "cwe-89"
+    ]
+  },
+  {
+    "checker": "server-dangerous-class-deserialization",
+    "description": "Using a non-primitive class with Java RMI may be an insecure deserialization vulnerability. Depending on the underlying implementation. This object could be manipulated by a malicious actor allowing them to execute code on your system. Instead, use an integer ID to look up your object, or consider alternative serialization schemes such as JSON.",
+    "source_code": "- patterns:\n  - pattern: \"interface $INTERFACE extends Remote {\\n  $RETURNTYPE $METHOD($CLASS\\\n      \\ $PARAM) throws RemoteException;\\n}\\n\"\n  - metavariable-regex:\n      metavariable: $CLASS\n      regex: (?!int|boolean|short|long|byte|char|float|double)\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  },
+  {
+    "checker": "server-dangerous-object-deserialization",
+    "description": "Using an arbitrary object ('$PARAMTYPE $PARAM') with Java RMI is an insecure deserialization vulnerability. This object can be manipulated by a malicious actor allowing them to execute code on your system. Instead, use an integer ID to look up your object, or consider alternative serialization schemes such as JSON.",
+    "source_code": "- patterns:\n  - pattern: \"interface $INTERFACE extends Remote {\\n  $RETURNTYPE $METHOD($PARAMTYPE\\\n      \\ $PARAM) throws RemoteException;\\n}\\n\"\n  - metavariable-pattern:\n      metavariable: $PARAMTYPE\n      language: generic\n      patterns:\n      - pattern-not: String\n      - pattern-not: java.lang.String\n      - pattern-not: boolean\n      - pattern-not: Boolean\n      - pattern-not: java.lang.Boolean\n      - pattern-not: byte\n      - pattern-not: Byte\n      - pattern-not: java.lang.Byte\n      - pattern-not: char\n      - pattern-not: Character\n      - pattern-not: java.lang.Character\n      - pattern-not: double\n      - pattern-not: Double\n      - pattern-not: java.lang.Double\n      - pattern-not: float\n      - pattern-not: Float\n      - pattern-not: java.lang.Float\n      - pattern-not: int\n      - pattern-not: Integer\n      - pattern-not: java.lang.Integer\n      - pattern-not: long\n      - pattern-not: Long\n      - pattern-not: java.lang.Long\n      - pattern-not: short\n      - pattern-not: Short\n      - pattern-not: java.lang.Short\n",
+    "cwe_id": [
+      "cwe-502"
+    ]
+  }
+]

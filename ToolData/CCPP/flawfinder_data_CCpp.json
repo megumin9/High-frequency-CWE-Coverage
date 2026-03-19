@@ -1,0 +1,519 @@
+[
+  {
+    "checker": "FF1001",
+    "description": "strcpy <name:c_buffer> Does not check for buffer overflows when copying to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1002",
+    "description": "strcpyA|strcpyW|StrCpy|StrCpyA|lstrcpyA|lstrcpyW|_tccpy|_mbccpy|_ftcscpy|_mbsncpy|StrCpyN|StrCpyNA|StrCpyNW|StrNCpy|strcpynA|StrNCpyA|StrNCpyW|lstrcpynA|lstrcpynW <name:normal> Does not check for buffer overflows when copying to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1003",
+    "description": "lstrcpy|wcscpy|_tcscpy|_mbscpy <name:c_buffer> Does not check for buffer overflows when copying to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1004",
+    "description": "memcpy|CopyMemory|bcopy <name:c_memcpy> Does not check for buffer overflows when copying to destination",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1005",
+    "description": "strcat <name:c_buffer> Does not check for buffer overflows when concatenating to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1006",
+    "description": "lstrcat|wcscat|_tcscat|_mbscat <name:c_buffer> Does not check for buffer overflows when concatenating to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1007",
+    "description": "StrCat|StrCatA|StrcatW|lstrcatA|lstrcatW|strCatBuff|StrCatBuffA|StrCatBuffW|StrCatChainW|_tccat|_mbccat|_ftcscat|StrCatN|StrCatNA|StrCatNW|StrNCat|StrNCatA|StrNCatW|lstrncat|lstrcatnA|lstrcatnW <name:normal> Does not check for buffer overflows when concatenating to destination [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1008",
+    "description": "strncpy <name:c_buffer> Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1009",
+    "description": "lstrcpyn|wcsncpy|_tcsncpy|_mbsnbcpy <name:c_buffer> Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1010",
+    "description": "strncat <name:c_strncat> Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1011",
+    "description": "lstrcatn|wcsncat|_tcsncat|_mbsnbcat <name:c_strncat> Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned]",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1012",
+    "description": "strccpy|strcadd <name:normal> Subject to buffer overflow if buffer is not as big as claimed",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1013",
+    "description": "char|TCHAR|wchar_t <name:c_static_array> Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (,)",
+    "cwe_id": [
+      "cwe-119",
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1014",
+    "description": "gets|_getts <name:normal> Does not check for buffer overflows (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1015",
+    "description": "sprintf|vsprintf|swprintf|vswprintf|_stprintf|_vstprintf <name:c_sprintf> Does not check for buffer overflows",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1016",
+    "description": "printf|vprintf|vwprintf|vfwprintf|_vtprintf|wprintf <name:c_printf> If format strings can be influenced by an attacker, they can be exploited",
+    "cwe_id": [
+      "cwe-134"
+    ]
+  },
+  {
+    "checker": "FF1017",
+    "description": "fprintf|vfprintf|_ftprintf|_vftprintf|fwprintf|fvwprintf <name:c_printf> If format strings can be influenced by an attacker, they can be exploited",
+    "cwe_id": [
+      "cwe-134"
+    ]
+  },
+  {
+    "checker": "FF1018",
+    "description": "syslog <name:c_printf> If syslog's format strings can be influenced by an attacker, they can be exploited",
+    "cwe_id": [
+      "cwe-134"
+    ]
+  },
+  {
+    "checker": "FF1019",
+    "description": "snprintf|vsnprintf|_snprintf|_sntprintf|_vsntprintf <name:c_printf> If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate",
+    "cwe_id": [
+      "cwe-134"
+    ]
+  },
+  {
+    "checker": "FF1020",
+    "description": "scanf|vscanf|wscanf|_tscanf|vwscanf <name:c_scanf> The scanf() family's %s operation, without a limit specification, permits buffer overflows (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1021",
+    "description": "fscanf|sscanf|vsscanf|vfscanf|_ftscanf|fwscanf|vfwscanf|vswscanf <name:c_scanf> The scanf() family's %s operation, without a limit specification, permits buffer overflows (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1022",
+    "description": "strlen|wcslen|_tcslen|_mbslen <name:normal> Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected)",
+    "cwe_id": [
+      "cwe-126"
+    ]
+  },
+  {
+    "checker": "FF1023",
+    "description": "MultiByteToWideChar <name:c_multi_byte_to_wide_char> Requires maximum length in CHARACTERS, not bytes",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1024",
+    "description": "streadd|strecpy <name:normal> This function does not protect against buffer overflows",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1025",
+    "description": "strtrns <name:normal> This function does not protect against buffer overflows",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1026",
+    "description": "realpath <name:normal> This function does not protect against buffer overflows, and some implementations can overflow internally (,)",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-785"
+    ]
+  },
+  {
+    "checker": "FF1027",
+    "description": "getopt|getopt_long <name:normal> Some older implementations do not protect against internal buffer overflows (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1028",
+    "description": "getwd <name:normal> This does not protect against buffer overflows by itself, so use with caution (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1029",
+    "description": "getchar|fgetc|getc|read|_gettc <name:normal> Check buffer boundaries if used in a loop including recursive loops (, )",
+    "cwe_id": [
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1030",
+    "description": "access <name:normal> This usually indicates a security flaw. If an attacker can change anything along the path between the call to access() and the file's actual use (e.g., by moving files), the attacker can exploit the race condition (,)",
+    "cwe_id": [
+      "cwe-362",
+      "cwe-367"
+    ]
+  },
+  {
+    "checker": "FF1031",
+    "description": "chown <name:normal> This accepts filename arguments; if an attacker can move those files, a race condition results.",
+    "cwe_id": [
+      "cwe-362"
+    ]
+  },
+  {
+    "checker": "FF1032",
+    "description": "chgrp <name:normal> This accepts filename arguments; if an attacker can move those files, a race condition results.",
+    "cwe_id": [
+      "cwe-362"
+    ]
+  },
+  {
+    "checker": "FF1033",
+    "description": "chmod <name:normal> This accepts filename arguments; if an attacker can move those files, a race condition results.",
+    "cwe_id": [
+      "cwe-362"
+    ]
+  },
+  {
+    "checker": "FF1034",
+    "description": "vfork <name:normal> On some old systems, vfork() permits race conditions, and it's very difficult to use correctly",
+    "cwe_id": [
+      "cwe-362"
+    ]
+  },
+  {
+    "checker": "FF1035",
+    "description": "readlink <name:normal> This accepts filename arguments; if an attacker can move those files or change the link content, a race condition results. Also, it does not terminate with ASCII NUL. (, )",
+    "cwe_id": [
+      "cwe-362",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1036",
+    "description": "tmpfile <name:normal> Function tmpfile() has a security flaw on some systems (e.g., older System V systems)",
+    "cwe_id": [
+      "cwe-377"
+    ]
+  },
+  {
+    "checker": "FF1037",
+    "description": "tmpnam|tempnam <name:normal> Temporary file race condition",
+    "cwe_id": [
+      "cwe-377"
+    ]
+  },
+  {
+    "checker": "FF1038",
+    "description": "mktemp <name:normal> Temporary file race condition",
+    "cwe_id": [
+      "cwe-377"
+    ]
+  },
+  {
+    "checker": "FF1039",
+    "description": "mkstemp <name:normal> Potential for temporary file vulnerability in some circumstances. Some older Unix-like systems create temp files with permission to write by all by default, so be sure to set the umask to override this. Also, some older Unix systems might fail to use O_EXCL when opening the file, so make sure that O_EXCL is used by the library",
+    "cwe_id": [
+      "cwe-377"
+    ]
+  },
+  {
+    "checker": "FF1040",
+    "description": "fopen|open <name:normal> Check when opening files - can an attacker redirect it (via symlinks), force the opening of special file type (e.g., device files), move things around to create a race condition, control its ancestors, or change its contents?",
+    "cwe_id": [
+      "cwe-362"
+    ]
+  },
+  {
+    "checker": "FF1041",
+    "description": "umask <name:normal> Ensure that umask is given most restrictive possible setting (e.g., 066 or 077)",
+    "cwe_id": [
+      "cwe-732"
+    ]
+  },
+  {
+    "checker": "FF1042",
+    "description": "GetTempFileName <name:normal> Temporary file race condition in certain cases (e.g., if run as SYSTEM in many versions of Windows)",
+    "cwe_id": [
+      "cwe-377"
+    ]
+  },
+  {
+    "checker": "FF1043",
+    "description": "execl|execlp|execle|execv|execvp|popen|WinExec|ShellExecute <name:normal> This causes a new program to execute and is difficult to use safely",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "FF1044",
+    "description": "system <name:found_system> This causes a new program to execute and is difficult to use safely",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "FF1045",
+    "description": "CreateProcessAsUser|CreateProcessWithLogon <name:normal> This causes a new process to execute and is difficult to use safely",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "FF1046",
+    "description": "CreateProcess <name:c_hit_if_null> This causes a new process to execute and is difficult to use safely",
+    "cwe_id": [
+      "cwe-78"
+    ]
+  },
+  {
+    "checker": "FF1047",
+    "description": "atoi|atol|_wtoi|_wtoi64 <name:normal> Unless checked, the resulting number can exceed the expected range",
+    "cwe_id": [
+      "cwe-190"
+    ]
+  },
+  {
+    "checker": "FF1048",
+    "description": "drand48|erand48|jrand48|lcong48|lrand48|mrand48|nrand48|random|seed48|setstate|srand|strfry|srandom|g_rand_boolean|g_rand_int|g_rand_int_range|g_rand_double|g_rand_double_range|g_random_boolean|g_random_int|g_random_int_range|g_random_double|g_random_double_range <name:normal> This function is not sufficiently random for security-related functions such as key and nonce creation",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "FF1049",
+    "description": "crypt|crypt_r <name:normal> The crypt functions use a poor one-way hashing algorithm; since they only accept passwords of 8 characters or fewer and only a two-byte salt, they are excessively vulnerable to dictionary attacks given today's faster computing equipment",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "FF1050",
+    "description": "EVP_des_ecb|EVP_des_cbc|EVP_des_cfb|EVP_des_ofb|EVP_desx_cbc <name:normal> DES only supports a 56-bit keysize, which is too small given today's computers",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "FF1051",
+    "description": "EVP_rc4_40|EVP_rc2_40_cbc|EVP_rc2_64_cbc <name:normal> These keysizes are too small given today's computers",
+    "cwe_id": [
+      "cwe-327"
+    ]
+  },
+  {
+    "checker": "FF1052",
+    "description": "chroot <name:normal> chroot can be very helpful, but is hard to use correctly (, )",
+    "cwe_id": [
+      "cwe-250",
+      "cwe-22"
+    ]
+  },
+  {
+    "checker": "FF1053",
+    "description": "getenv|curl_getenv <name:normal> Environment variables are untrustable input if they can be set by an attacker. They can have any content and length, and the same variable can be set more than once (, )",
+    "cwe_id": [
+      "cwe-807",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1054",
+    "description": "g_get_home_dir <name:normal> This function is synonymous with 'getenv(\"HOME\")';it returns untrustable input if the environment can beset by an attacker. It can have any content and length, and the same variable can be set more than once (, )",
+    "cwe_id": [
+      "cwe-807",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1055",
+    "description": "g_get_tmp_dir <name:normal> This function is synonymous with 'getenv(\"TMP\")';it returns untrustable input if the environment can beset by an attacker. It can have any content and length, and the same variable can be set more than once (, )",
+    "cwe_id": [
+      "cwe-807",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1056",
+    "description": "RpcImpersonateClient|ImpersonateLoggedOnUser|CoImpersonateClient|ImpersonateNamedPipeClient|ImpersonateDdeClientWindow|ImpersonateSecurityContext|SetThreadToken <name:normal> If this call fails, the program could fail to drop heightened privileges",
+    "cwe_id": [
+      "cwe-250"
+    ]
+  },
+  {
+    "checker": "FF1057",
+    "description": "InitializeCriticalSection <name:normal> Exceptions can be thrown in low-memory situations (, )",
+    "cwe_id": [
+      "cwe-248",
+      "cwe-400"
+    ]
+  },
+  {
+    "checker": "FF1058",
+    "description": "LoadLibrary <name:normal> Ensure that the full path to the library is specified, or current directory may be used (, )",
+    "cwe_id": [
+      "cwe-829",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1059",
+    "description": "LoadLibraryEx <name:load_library_ex> Ensure that the full path to the library is specified, or current directory may be used (, )",
+    "cwe_id": [
+      "cwe-829",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1060",
+    "description": "SetSecurityDescriptorDacl <name:c_hit_if_null> Never create NULL ACLs; an attacker can set it to Everyone (Deny All Access), which would even forbid administrator access",
+    "cwe_id": [
+      "cwe-732"
+    ]
+  },
+  {
+    "checker": "FF1061",
+    "description": "AddAccessAllowedAce <name:normal> This doesn't set the inheritance bits in the access control entry (ACE) header",
+    "cwe_id": [
+      "cwe-732"
+    ]
+  },
+  {
+    "checker": "FF1062",
+    "description": "getlogin <name:normal> It's often easy to fool getlogin. Sometimes it does not work at all, because some program messed up the utmp file. Often, it gives only the first 8 characters of the login name. The user currently logged in on the controlling tty of our program need not be the user who started it. Avoid getlogin() for security-related purposes",
+    "cwe_id": [
+      "cwe-807"
+    ]
+  },
+  {
+    "checker": "FF1063",
+    "description": "cuserid <name:normal> Exactly what cuserid() does is poorly defined (e.g., some systems use the effective uid, like Linux, while others like System V use the real uid). Thus, you can't trust what it does. It's certainly not portable (The cuserid function was included in the 1988 version of POSIX, but removed from the 1990 version). Also, if passed a non-null parameter, there's a risk of a buffer overflow if the passed-in buffer is not at least L_cuserid characters long",
+    "cwe_id": [
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1064",
+    "description": "getpw <name:normal> This function is dangerous; it may overflow the provided buffer. It extracts data from a 'protected' area, but most systems have many commands to let users modify the protected area, and it's not always clear what their limits are. Best to avoid using this function altogether (, )",
+    "cwe_id": [
+      "cwe-676",
+      "cwe-120"
+    ]
+  },
+  {
+    "checker": "FF1065",
+    "description": "getpass <name:normal> This function is obsolete and not portable. It was in SUSv2 but removed by POSIX.2. What it does exactly varies considerably between systems, particularly in where its prompt is displayed and where it gets its data (e.g., /dev/tty, stdin, stderr, etc.). In addition, some implementations overflow buffers. (, , )",
+    "cwe_id": [
+      "cwe-676",
+      "cwe-120",
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1066",
+    "description": "gsignal|ssignal <name:normal> These functions are considered obsolete on most systems, and very non-portable (Linux-based systems handle them radically different, basically if gsignal/ssignal were the same as raise/signal respectively, while System V considers them a separate set and obsolete)",
+    "cwe_id": [
+      "cwe-676"
+    ]
+  },
+  {
+    "checker": "FF1067",
+    "description": "memalign <name:normal> On some systems (though not Linux-based systems) an attempt to free() results from memalign() may fail. This may, on a few systems, be exploitable. Also note that memalign() may not check that the boundary parameter is correct",
+    "cwe_id": [
+      "cwe-676"
+    ]
+  },
+  {
+    "checker": "FF1068",
+    "description": "ulimit <name:normal> This C routine is considered obsolete (as opposed to the shell command by the same name, which is NOT obsolete)",
+    "cwe_id": [
+      "cwe-676"
+    ]
+  },
+  {
+    "checker": "FF1069",
+    "description": "usleep <name:normal> This C routine is considered obsolete (as opposed to the shell command by the same name). The interaction of this function with SIGALRM and other timer functions such as sleep(), alarm(), setitimer(), and nanosleep() is unspecified",
+    "cwe_id": [
+      "cwe-676"
+    ]
+  },
+  {
+    "checker": "FF1070",
+    "description": "recv|recvfrom|recvmsg|fread|readv <name:normal> Function accepts input from outside program",
+    "cwe_id": [
+      "cwe-20"
+    ]
+  },
+  {
+    "checker": "FF1071",
+    "description": "equal|mismatch|is_permutation <name:cpp_unsafe_stl> Function does not check the second iterator for over-read conditions",
+    "cwe_id": [
+      "cwe-126"
+    ]
+  }
+]

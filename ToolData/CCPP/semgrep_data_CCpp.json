@@ -1,0 +1,96 @@
+[
+    {
+        "name": "double-free",
+        "source_code": "patterns:\n  - pattern-not: |\n      free($VAR);\n      ...\n      $VAR = NULL;\n      ...\n      free($VAR);\n  - pattern-not: |\n      free($VAR);\n      ...\n      $VAR = malloc(...);\n      ...\n      free($VAR);\n  - pattern-inside: |\n      free($VAR);\n      ...\n      $FREE($VAR);\n  - metavariable-pattern:\n      metavariable: $FREE\n      pattern: free\n  - focus-metavariable: $FREE",
+        "description": "Variable '$VAR' was freed twice. This can lead to undefined behavior.",
+        "cwe_id": [
+            "CWE-415"
+        ]
+    },
+    {
+        "name": "function-use-after-free",
+        "source_code": "patterns:\n      - pattern-either:\n        - pattern: $FUNC(..., <... $VAR ...>, ...)\n        - pattern: $FUNC(..., <... $VAR->$ACCESSOR ...>, ...)\n        - pattern: $FUNC(..., <... (*$VAR).$ACCESSOR ...>, ...)\n        - pattern: $FUNC(..., <... $VAR[$NUM] ...>, ...)\n      - metavariable-regex:\n          metavariable: $FUNC\n          regex: (?!^free$)\n      - pattern-inside:\n          free($VAR);\n          ...\n      - pattern-not-inside:\n          free($VAR);\n          ...\n          $VAR = NULL;\n          ...\n      - pattern-not-inside:\n          free($VAR);\n          ...\n          $VAR = malloc(...);\n          ...",
+        "description": "Variable '$VAR' was passed to a function after being freed. This can lead to undefined behavior.",
+        "cwe_id": [
+            "CWE-416"
+        ]
+    },
+    {
+        "name": "info-leak-on-non-formated-string",
+        "source_code": "printf(argv[$NUM]);",
+        "description": "Use %s, %d, %c... to format your variables, otherwise this could leak information.",
+        "cwe_id": [
+            "CWE-532"
+        ]
+    },
+    {
+        "name": "insecure-use-gets-fn",
+        "source_code": "gets(...)",
+        "description": "Avoid 'gets()'. This function does not consider buffer boundaries and can lead to buffer overflows. Use 'fgets()' or 'gets_s()' instead.",
+        "cwe_id": [
+            "CWE-676"
+        ]
+    },
+    {
+        "name": "insecure-use-memset",
+        "source_code": "memset($...VARS)",
+        "description": "When handling sensitive information in a buffer, it's important to ensure  that the data is securely erased before the buffer is deleted or reused.  While `memset()` is commonly used for this purpose, it can leave sensitive  information behind due to compiler optimizations or other factors.  To avoid this potential vulnerability, it's recommended to use the  `memset_s()` function instead. `memset_s()` is a standardized function  that securely overwrites the memory with a specified value, making it more  difficult for an attacker to recover any sensitive data that was stored in  the buffer. By using `memset_s()` instead of `memset()`, you can help to  ensure that your application is more secure and less vulnerable to exploits  that rely on residual data in memory.",
+        "cwe_id": ["CWE-14"]
+    },
+    {
+        "name": "insecure-use-printf-fn",
+        "source_code": "patterns:\n  - pattern-either:\n    - pattern: |\n        $FUNC($BUFFER, argv[$NUM], ...);\n        ...\n        vsprintf(..., $BUFFER, ...);\n    - pattern: vsprintf(..., argv[$NUM], ...)\n    - pattern: |\n        $FUNC($BUFFER, argv[$NUM], ...);\n        ...\n        sprintf(..., $BUFFER, ...);\n    - pattern: sprintf(...,argv[$NUM],...)\n    - pattern: |\n        $FUNC($BUFFER, argv[$NUM], ...);\n        ...\n        printf(..., $BUFFER, ...);\n    - pattern: printf(...,argv[$NUM],...)\n  - metavariable-comparison:\n      metavariable: $NUM\n      comparison: int($NUM) > 0",
+        "description": "Avoid using user-controlled format strings passed into 'sprintf', 'printf' and 'vsprintf'. These functions put you at risk of buffer overflow vulnerabilities through the use of format string exploits. Instead, use 'snprintf' and 'vsnprintf'.",
+        "cwe_id": [
+            "CWE-134"
+        ]
+    },
+    {
+        "name": "insecure-use-scanf-fn",
+        "source_code": "scanf(...)",
+        "description": "Avoid using 'scanf()'. This function, when used improperly, does not consider buffer boundaries and can lead to buffer overflows. Use 'fgets()' instead for reading input.",
+        "cwe_id": [
+            "CWE-676"
+        ]
+    },
+    {
+        "name": "insecure-use-strcat-fn",
+        "source_code": "pattern-either:\n  - pattern: strcat(...)\n  - pattern: strncat(...)",
+        "description": "Finding triggers whenever there is a strcat or strncat used. This is an issue because strcat or strncat can lead to buffer overflow vulns. Fix this by using strcat_s instead.",
+        "cwe_id": [
+            "CWE-676"
+        ]
+    },
+    {
+        "name": "insecure-use-string-copy-fn",
+        "source_code": "pattern-either:\n  - pattern: strcpy(...)\n  - pattern: strncpy(...)",
+        "description": "Finding triggers whenever there is a strcpy or strncpy used. This is an issue because strcpy does not affirm the size of the destination array and strncpy will not automatically NULL-terminate strings. This can lead to buffer overflows, which can cause program crashes and potentially let an attacker inject code in the program. Fix this by using strcpy_s instead (although note that strcpy_s is an optional part of the C11 standard, and so may not be available).",
+        "cwe_id": [
+            "CWE-676"
+        ]
+    },
+    {
+        "name": "insecure-use-strtok-fn",
+        "source_code": "strtok(...)",
+        "description": "Avoid using 'strtok()'. This function directly modifies the first argument buffer, permanently erasing the delimiter character. Use 'strtok_r()' instead.",
+        "cwe_id": [
+            "CWE-676"
+        ]
+    },
+    {
+        "name": "random-fd-exhaustion",
+        "source_code": "pattern-either:\n  - patterns:\n    - pattern: |\n        $FD = open(\"/dev/urandom\", ...);\n        ...\n        read($FD, ...);\n    - pattern-not: |\n        $FD = open(\"/dev/urandom\", ...);\n        ...\n        $BYTES_READ = read($FD, ...);\n  - patterns:\n    - pattern: |\n        $FD = open(\"/dev/random\", ...);\n        ...\n        read($FD, ...);\n    - pattern-not: |\n        $FD = open(\"/dev/random\", ...);\n        ...\n        $BYTES_READ = read($FD, ...);\n  message: >-",
+        "description": "Call to 'read()' without error checking is susceptible to file descriptor exhaustion. Consider using the 'getrandom()' function.",
+        "cwe_id": [
+            "CWE-774"
+        ]
+    },
+    {
+        "name": "use-after-free",
+        "source_code": "patterns:\n      - pattern-either:\n        - pattern: $VAR->$ACCESSOR\n        - pattern: (*$VAR).$ACCESSOR\n        - pattern: $VAR[$NUM]\n      - pattern-inside:\n          free($VAR);\n          ...\n      - pattern-not-inside:\n          $VAR = NULL;\n          ...\n      - pattern-not-inside:\n          free($VAR);\n          ...\n          $VAR = malloc(...);\n          ...",
+        "description": "Variable '$VAR' was used after being freed. This can lead to undefined behavior.",
+        "cwe_id": [
+            "CWE-416"
+        ]
+    }
+]
