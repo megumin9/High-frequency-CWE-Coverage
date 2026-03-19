@@ -1,0 +1,2511 @@
+[
+  {
+    "cve_id": "CVE-2017-9898",
+    "description": "XnView Classic for Windows Version 2.40 allows remote attackers to execute code via a crafted .fpx file, related to a \"User Mode Write AV starting at Xfpx+0x0000000000004cbb.\"",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-53030",
+    "description": "Vulnerability in the Oracle VM VirtualBox product of Oracle Virtualization (component: Core).   The supported version that is affected is 7.1.10. Easily exploitable vulnerability allows high privileged attacker with logon to the infrastructure where Oracle VM VirtualBox executes to compromise Oracle VM VirtualBox.  While the vulnerability is in Oracle VM VirtualBox, attacks may significantly impact additional products (scope change).  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all Oracle VM VirtualBox accessible data. CVSS 3.1 Base Score 6.0 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:N/A:N).",
+    "cwe_ids": [
+      "CWE-269"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-9865",
+    "description": "The function GfxImageColorMap::getGray in GfxState.cc in Poppler 0.54.0 allows remote attackers to cause a denial of service (stack-based buffer over-read and application crash) via a crafted PDF document, related to missing color-map validation in ImageOutputDev.cc.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4264",
+    "description": "Multiple memory corruption issues were addressed with improved memory handling. This issue affected versions prior to iOS 11.4.1, tvOS 11.4.1, watchOS 4.3.2, Safari 11.1.2, iTunes 12.8 for Windows, iCloud for Windows 7.6.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-10671",
+    "description": "Heap-based Buffer Overflow in the de_dotdot function in libhttpd.c in sthttpd before 2.27.1 allows remote attackers to cause a denial of service (daemon crash) or possibly have unspecified other impact via a crafted filename.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-38152",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nremoteproc: core: Clear table_sz when rproc_shutdown\n\nThere is case as below could trigger kernel dump:\nUse U-Boot to start remote processor(rproc) with resource table\npublished to a fixed address by rproc. After Kernel boots up,\nstop the rproc, load a new firmware which doesn't have resource table\n,and start rproc.\n\nWhen starting rproc with a firmware not have resource table,\n`memcpy(loaded_table, rproc->cached_table, rproc->table_sz)` will\ntrigger dump, because rproc->cache_table is set to NULL during the last\nstop operation, but rproc->table_sz is still valid.\n\nThis issue is found on i.MX8MP and i.MX9.\n\nDump as below:\nUnable to handle kernel NULL pointer dereference at virtual address 0000000000000000\nMem abort info:\n  ESR = 0x0000000096000004\n  EC = 0x25: DABT (current EL), IL = 32 bits\n  SET = 0, FnV = 0\n  EA = 0, S1PTW = 0\n  FSC = 0x04: level 0 translation fault\nData abort info:\n  ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000\n  CM = 0, WnR = 0, TnD = 0, TagAccess = 0\n  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0\nuser pgtable: 4k pages, 48-bit VAs, pgdp=000000010af63000\n[0000000000000000] pgd=0000000000000000, p4d=0000000000000000\nInternal error: Oops: 0000000096000004 [#1] PREEMPT SMP\nModules linked in:\nCPU: 2 UID: 0 PID: 1060 Comm: sh Not tainted 6.14.0-rc7-next-20250317-dirty #38\nHardware name: NXP i.MX8MPlus EVK board (DT)\npstate: a0000005 (NzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)\npc : __pi_memcpy_generic+0x110/0x22c\nlr : rproc_start+0x88/0x1e0\nCall trace:\n __pi_memcpy_generic+0x110/0x22c (P)\n rproc_boot+0x198/0x57c\n state_store+0x40/0x104\n dev_attr_store+0x18/0x2c\n sysfs_kf_write+0x7c/0x94\n kernfs_fop_write_iter+0x120/0x1cc\n vfs_write+0x240/0x378\n ksys_write+0x70/0x108\n __arm64_sys_write+0x1c/0x28\n invoke_syscall+0x48/0x10c\n el0_svc_common.constprop.0+0xc0/0xe0\n do_el0_svc+0x1c/0x28\n el0_svc+0x30/0xcc\n el0t_64_sync_handler+0x10c/0x138\n el0t_64_sync+0x198/0x19c\n\nClear rproc->table_sz to address the issue.",
+    "cwe_ids": [
+      "CWE-476",
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-9829",
+    "description": "'/cgi-bin/admin/downloadMedias.cgi' of the web service in most of the VIVOTEK Network Cameras is vulnerable, which allows remote attackers to read any file on the camera's Linux filesystem via a crafted HTTP request containing \"..\" sequences. This vulnerability is already verified on VIVOTEK Network Camera IB8369/FD8164/FD816BA; most others have similar firmware that may be affected.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-10753",
+    "description": "Stack-based buffer overflow in the delayed_output function in music.c in abcm2ps through 8.13.20 allows remote attackers to cause a denial of service (application crash) or possibly have unspecified other impact.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-28085",
+    "description": "A flaw was found in htmldoc commit 31f7804. A heap buffer overflow in the function pdf_write_names in ps-pdf.cxx may lead to arbitrary code execution and Denial of Service (DoS).",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3526",
+    "description": "A vulnerability classified as problematic was found in Linux Kernel. This vulnerability affects the function macvlan_handle_frame of the file drivers/net/macvlan.c of the component skb. The manipulation leads to memory leak. The attack can be initiated remotely. It is recommended to apply a patch to fix this issue. The identifier of this vulnerability is VDB-211024.",
+    "cwe_ids": [
+      "CWE-404",
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3256",
+    "description": "Use After Free in GitHub repository vim/vim prior to 9.0.0530.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-37911",
+    "description": "Due to improper restrictions on XML entities multiple vulnerabilities exist in the command line interface of ArubaOS. A successful exploit could allow an authenticated attacker to retrieve files from the local system or cause the application to consume system resources, resulting in a denial of service condition.\n\n",
+    "cwe_ids": [
+      "CWE-611",
+      "CWE-611"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-24043",
+    "description": "A missing bound check in RTCP flag parsing code prior to WhatsApp for Android v2.21.23.2, WhatsApp Business for Android v2.21.23.2, WhatsApp for iOS v2.21.230.6, WhatsApp Business for iOS 2.21.230.7, and WhatsApp Desktop v2.2145.0 could have allowed an out-of-bounds heap read if a user sent a malformed RTCP packet during an established call.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-1135",
+    "description": "Use after free in Shopping Cart in Google Chrome prior to 100.0.4896.60 allowed a remote attacker to potentially exploit heap corruption via standard feature user interaction.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-0393",
+    "description": "In decrypt and decrypt_1_2 of CryptoPlugin.cpp, there is a possible out of bounds read due to a missing bounds check. This could lead to local information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-9 Android-10 Android-11Android ID: A-154123412",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-49158",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nscsi: qla2xxx: Fix warning message due to adisc being flushed\n\nFix warning message due to adisc being flushed.  Linux kernel triggered a\nwarning message where a different error code type is not matching up with\nthe expected type. Add additional translation of one error code type to\nanother.\n\nWARNING: CPU: 2 PID: 1131623 at drivers/scsi/qla2xxx/qla_init.c:498\nqla2x00_async_adisc_sp_done+0x294/0x2b0 [qla2xxx]\nCPU: 2 PID: 1131623 Comm: drmgr Not tainted 5.13.0-rc1-autotest #1\n..\nGPR28: c000000aaa9c8890 c0080000079ab678 c00000140a104800 c00000002bd19000\nNIP [c00800000790857c] qla2x00_async_adisc_sp_done+0x294/0x2b0 [qla2xxx]\nLR [c008000007908578] qla2x00_async_adisc_sp_done+0x290/0x2b0 [qla2xxx]\nCall Trace:\n[c00000001cdc3620] [c008000007908578] qla2x00_async_adisc_sp_done+0x290/0x2b0 [qla2xxx] (unreliable)\n[c00000001cdc3710] [c0080000078f3080] __qla2x00_abort_all_cmds+0x1b8/0x580 [qla2xxx]\n[c00000001cdc3840] [c0080000078f589c] qla2x00_abort_all_cmds+0x34/0xd0 [qla2xxx]\n[c00000001cdc3880] [c0080000079153d8] qla2x00_abort_isp_cleanup+0x3f0/0x570 [qla2xxx]\n[c00000001cdc3920] [c0080000078fb7e8] qla2x00_remove_one+0x3d0/0x480 [qla2xxx]\n[c00000001cdc39b0] [c00000000071c274] pci_device_remove+0x64/0x120\n[c00000001cdc39f0] [c0000000007fb818] device_release_driver_internal+0x168/0x2a0\n[c00000001cdc3a30] [c00000000070e304] pci_stop_bus_device+0xb4/0x100\n[c00000001cdc3a70] [c00000000070e4f0] pci_stop_and_remove_bus_device+0x20/0x40\n[c00000001cdc3aa0] [c000000000073940] pci_hp_remove_devices+0x90/0x130\n[c00000001cdc3b30] [c0080000070704d0] disable_slot+0x38/0x90 [rpaphp] [\nc00000001cdc3b60] [c00000000073eb4c] power_write_file+0xcc/0x180\n[c00000001cdc3be0] [c0000000007354bc] pci_slot_attr_store+0x3c/0x60\n[c00000001cdc3c00] [c00000000055f820] sysfs_kf_write+0x60/0x80 [c00000001cdc3c20]\n[c00000000055df10] kernfs_fop_write_iter+0x1a0/0x290\n[c00000001cdc3c70] [c000000000447c4c] new_sync_write+0x14c/0x1d0\n[c00000001cdc3d10] [c00000000044b134] vfs_write+0x224/0x330\n[c00000001cdc3d60] [c00000000044b3f4] ksys_write+0x74/0x130\n[c00000001cdc3db0] [c00000000002df70] system_call_exception+0x150/0x2d0\n[c00000001cdc3e10] [c00000000000d45c] system_call_common+0xec/0x278",
+    "cwe_ids": [
+      "CWE-617"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-5185",
+    "description": "Blink in Google Chrome prior to 54.0.2840.59 for Windows, Mac, and Linux; 54.0.2840.85 for Android incorrectly allowed reentrance of FrameView::updateLifecyclePhasesInternal(), which allowed a remote attacker to perform an out of bounds memory read via crafted HTML pages.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-13419",
+    "description": "An issue has been found in libsndfile 1.0.28. There is a memory leak in psf_allocate in common.c, as demonstrated by sndfile-convert. NOTE: The maintainer and third parties were unable to reproduce and closed the issue",
+    "cwe_ids": [
+      "CWE-772"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-2839",
+    "description": "Mozilla Firefox before 48.0 and Firefox ESR 45.x before 45.3 on Linux make cairo _cairo_surface_get_extents calls that do not properly interact with libav header allocation in FFmpeg 0.10, which allows remote attackers to cause a denial of service (application crash) via a crafted video.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-19481",
+    "description": "An issue was discovered in OpenSC through 0.19.0 and 0.20.x through 0.20.0-rc3. libopensc/card-cac1.c mishandles buffer limits for CAC certificates.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-29806",
+    "description": "No cwe for this issue in Microsoft Edge (Chromium-based) allows an unauthorized attacker to execute code over a network.",
+    "cwe_ids": [
+      "CWE-843",
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-17680",
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of Foxit Reader 9.2.0.9297. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the handling of the style property of a Field object. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-6915.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-8739",
+    "description": "The JAX-RS module in Apache CXF prior to 3.0.12 and 3.1.x prior to 3.1.9 provides a number of Atom JAX-RS MessageBodyReaders. These readers use Apache Abdera Parser which expands XML entities by default which represents a major XXE risk.",
+    "cwe_ids": [
+      "CWE-611"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2025-61758",
+    "description": "Vulnerability in the PeopleSoft Enterprise FIN IT Asset Management product of Oracle PeopleSoft (component: IT Asset Management).   The supported version that is affected is 9.2. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise PeopleSoft Enterprise FIN IT Asset Management.  Successful attacks of this vulnerability can result in  unauthorized access to critical data or complete access to all PeopleSoft Enterprise FIN IT Asset Management accessible data. CVSS 3.1 Base Score 6.5 (Confidentiality impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N).",
+    "cwe_ids": [
+      "CWE-284"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2022-23037",
+    "description": "Linux PV device frontends vulnerable to attacks by backends T[his CNA information record relates to multiple CVEs; the text explains which aspects/vulnerabilities correspond to which CVE.] Several Linux PV device frontends are using the grant table interfaces for removing access rights of the backends in ways being subject to race conditions, resulting in potential data leaks, data corruption by malicious backends, and denial of service triggered by malicious backends: blkfront, netfront, scsifront and the gntalloc driver are testing whether a grant reference is still in use. If this is not the case, they assume that a following removal of the granted access will always succeed, which is not true in case the backend has mapped the granted page between those two operations. As a result the backend can keep access to the memory page of the guest no matter how the page will be used after the frontend I/O has finished. The xenbus driver has a similar problem, as it doesn't check the success of removing the granted access of a shared ring buffer. blkfront: CVE-2022-23036 netfront: CVE-2022-23037 scsifront: CVE-2022-23038 gntalloc: CVE-2022-23039 xenbus: CVE-2022-23040 blkfront, netfront, scsifront, usbfront, dmabuf, xenbus, 9p, kbdfront, and pvcalls are using a functionality to delay freeing a grant reference until it is no longer in use, but the freeing of the related data page is not synchronized with dropping the granted access. As a result the backend can keep access to the memory page even after it has been freed and then re-used for a different purpose. CVE-2022-23041 netfront will fail a BUG_ON() assertion if it fails to revoke access in the rx path. This will result in a Denial of Service (DoS) situation of the guest which can be triggered by the backend. CVE-2022-23042",
+    "cwe_ids": [
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-9484",
+    "description": "When using Apache Tomcat versions 10.0.0-M1 to 10.0.0-M4, 9.0.0.M1 to 9.0.34, 8.5.0 to 8.5.54 and 7.0.0 to 7.0.103 if a) an attacker is able to control the contents and name of a file on the server; and b) the server is configured to use the PersistenceManager with a FileStore; and c) the PersistenceManager is configured with sessionAttributeValueClassNameFilter=\"null\" (the default unless a SecurityManager is used) or a sufficiently lax filter to allow the attacker provided object to be deserialized; and d) the attacker knows the relative file path from the storage location used by FileStore to the file the attacker has control over; then, using a specifically crafted request, the attacker will be able to trigger remote code execution via deserialization of the file under their control. Note that all of conditions a) to d) must be true for the attack to succeed.",
+    "cwe_ids": [
+      "CWE-502"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2020-3770",
+    "description": "Adobe Photoshop CC 2019 versions 20.0.8 and earlier, and Photoshop 2020 versions 21.1 and earlier have a buffer errors vulnerability. Successful exploitation could lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-27159",
+    "description": "Acrobat Reader versions 24.001.30225, 20.005.30748, 25.001.20428 and earlier are affected by a Use After Free vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-38526",
+    "description": "A vulnerability has been identified in Parasolid V34.1 (All versions < V34.1.258), Parasolid V35.0 (All versions < V35.0.254), Parasolid V35.1 (All versions < V35.1.171), Teamcenter Visualization V14.1 (All versions < V14.1.0.11), Teamcenter Visualization V14.2 (All versions < V14.2.0.6), Teamcenter Visualization V14.3 (All versions < V14.3.0.3). The affected applications contain an out of bounds read past the end of an allocated structure while parsing specially crafted X_T files. This could allow an attacker to execute code in the context of the current process.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-7176",
+    "description": "epan/dissectors/packet-h225.c in the H.225 dissector in Wireshark 2.x before 2.0.6 calls snprintf with one of its input buffers as the output buffer, which allows remote attackers to cause a denial of service (copy overlap and application crash) via a crafted packet.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-30092",
+    "description": "Windows Hyper-V Remote Code Execution Vulnerability",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-829"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0393",
+    "description": "In Scanner::LiteralBuffer::NewCapacity of scanner.cc, there is a possible out of bounds write due to an integer overflow. This could lead to remote code execution if an attacker can supply a malicious PAC file, with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-11 Android-8.1 Android-9 Android-10Android ID: A-168041375",
+    "cwe_ids": [
+      "CWE-190",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-20449",
+    "description": "The hidma_chan_stats function in drivers/dma/qcom/hidma_dbg.c in the Linux kernel 4.14.90 allows local users to obtain sensitive address information by reading \"callback=\" lines in a debugfs file.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-6841",
+    "description": "The GraphicsStack::TGraphicsStackElement::~TGraphicsStackElement function in graphicsstack.h in PoDoFo 0.9.5 allows remote attackers to cause a denial of service (NULL pointer dereference) via a crafted file.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-23587",
+    "description": "Tensorflow is an Open Source Machine Learning Framework. Under certain scenarios, Grappler component of TensorFlow is vulnerable to an integer overflow during cost estimation for crop and resize. Since the cropping parameters are user controlled, a malicious person can trigger undefined behavior. The fix will be included in TensorFlow 2.8.0. We will also cherrypick this commit on TensorFlow 2.7.1, TensorFlow 2.6.3, and TensorFlow 2.5.3, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-190",
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14284",
+    "description": "XnView Classic for Windows Version 2.40 allows attackers to cause a denial of service or possibly have unspecified other impact via a crafted .jb2 file, related to \"Data from Faulting Address controls Branch Selection starting at ntdll_77400000!RtlGetCurrentDirectory_U+0x000000000000016c.\"",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-14902",
+    "description": "There is an issue in all samba 4.11.x versions before 4.11.5, all samba 4.10.x versions before 4.10.12 and all samba 4.9.x versions before 4.9.18, where the removal of the right to create or modify a subtree would not automatically be taken away on all domain controllers.",
+    "cwe_ids": [
+      "CWE-284"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-34551",
+    "description": "In certain EZVIZ products, two stack buffer overflows in netClientSetWlanCfg function of the EZVIZ SDK command server can allow an authenticated attacker present on the same local network as the camera to achieve remote code execution. This affects CS-C6N-B0-1G2WF Firmware versions before V5.3.0 build 230215 and CS-C6N-R101-1G2WF Firmware versions before V5.3.0 build 230215 and CS-CV310-A0-1B2WFR Firmware versions before V5.3.0 build 230221 and CS-CV310-A0-1C2WFR-C Firmware versions before V5.3.2 build 230221 and CS-C6N-A0-1C2WFR-MUL Firmware versions before V5.3.2 build 230218 and CS-CV310-A0-3C2WFRL-1080p Firmware versions before V5.2.7 build 230302 and CS-CV310-A0-1C2WFR Wifi IP66 2.8mm 1080p Firmware versions before V5.3.2 build 230214 and CS-CV248-A0-32WMFR Firmware versions before V5.2.3 build 230217 and EZVIZ LC1C Firmware versions before V5.3.4 build 230214. The impact is: execute arbitrary code (remote).",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-32029",
+    "description": "Microsoft Excel Remote Code Execution Vulnerability",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-20542",
+    "description": "There is a heap-based buffer-overflow at generator_spgemm_csc_reader.c (function libxsmm_sparse_csc_reader) in LIBXSMM 1.10, a different vulnerability than CVE-2018-20541 (which is in a different part of the source code and is seen at a different address).",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5680",
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of Foxit Reader before 9.1 and PhantomPDF before 9.1. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the processing of specially crafted pdf files with embedded u3d images. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated object. An attacker can leverage this in conjunction with other vulnerabilities to execute code in the context of the current process, a different vulnerability than CVE-2018-5677 and CVE-2018-5679.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-23278",
+    "description": "NVIDIA Display Driver for Windows and Linux contains a vulnerability where an attacker might cause an improper index validation by issuing a call with crafted parameters. A successful exploit of this vulnerability might lead to data tampering  or denial of service.",
+    "cwe_ids": [
+      "CWE-129"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-29147",
+    "description": "In Malwarebytes EDR 1.0.11 for Linux, it is possible to bypass the detection layers that depend on inode identifiers, because an identifier may be reused when a file is replaced, and because two files on different filesystems can have the same identifier.",
+    "cwe_ids": [
+      "CWE-290"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-2644",
+    "description": "A vulnerability, which was classified as problematic, has been found in DigitalPersona FPSensor 1.0.0.1. This issue affects some unknown processing of the file C:\\Program Files (x86)\\FPSensor\\bin\\DpHost.exe. The manipulation leads to unquoted search path. Attacking locally is a requirement. The identifier VDB-228773 was assigned to this vulnerability.",
+    "cwe_ids": [
+      "CWE-428",
+      "CWE-428"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-26542",
+    "description": "An issue was discovered in the MongoDB Simple LDAP plugin through 2020-10-02 for Percona Server when using the SimpleLDAP authentication in conjunction with Microsoft’s Active Directory, Percona has discovered a flaw that would allow authentication to complete when passing a blank value for the account password, leading to access against the service integrated with which Active Directory is deployed at the level granted to the authenticating account.",
+    "cwe_ids": [
+      "CWE-287"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-7985",
+    "description": "Adobe Photoshop CC versions 19.1.8 and earlier and 20.0.5 and earlier have a heap overflow vulnerability. Successful exploitation could lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-1995",
+    "description": "A NULL pointer dereference vulnerability in Palo Alto Networks PAN-OS allows an authenticated administrator to send a request that causes the rasmgr daemon to crash. Repeated attempts to send this request result in denial of service to all PAN-OS services by restarting the device and putting it into maintenance mode. This issue affects: PAN-OS 9.1 versions earlier than 9.1.2.",
+    "cwe_ids": [
+      "CWE-476",
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-24954",
+    "description": "Foxit PDF Reader before 11.2.1 and Foxit PDF Editor before 11.2.1 have a Stack-Based Buffer Overflow related to XFA, for the 'subform colSpan=\"-2\"' and 'draw colSpan=\"1\"' substrings.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-43472",
+    "description": "Microsoft Edge (Chromium-based) Elevation of Privilege Vulnerability",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4886",
+    "description": "An issue was discovered in Adobe Acrobat Reader 2018.009.20050 and earlier versions, 2017.011.30070 and earlier versions, 2015.006.30394 and earlier versions. This vulnerability occurs as a result of computation that reads data that is past the end of the target buffer; the computation occurs in the image conversion engine when processing Enhanced Metafile Format (EMF) data related to handling of bitmap rectangles. A successful attack can lead to sensitive data exposure.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4953",
+    "description": "Adobe Acrobat and Reader versions 2018.011.20038 and earlier, 2017.011.30079 and earlier, and 2015.006.30417 and earlier have a Type Confusion vulnerability. Successful exploitation could lead to arbitrary code execution in the context of the current user.",
+    "cwe_ids": [
+      "CWE-704"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-8869",
+    "description": "In Lantech IDS 2102 2.0 and prior, nearly all input fields allow for arbitrary input on the device. A CVSS v3 base score of 9.8 has been calculated; the CVSS vector string is (AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-20"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2024-26842",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nscsi: ufs: core: Fix shift issue in ufshcd_clear_cmd()\n\nWhen task_tag >= 32 (in MCQ mode) and sizeof(unsigned int) == 4, 1U <<\ntask_tag will out of bounds for a u32 mask. Fix this up to prevent\nSHIFT_ISSUE (bitwise shifts that are out of bounds for their data type).\n\n[name:debug_monitors&]Unexpected kernel BRK exception at EL1\n[name:traps&]Internal error: BRK handler: 00000000f2005514 [#1] PREEMPT SMP\n[name:mediatek_cpufreq_hw&]cpufreq stop DVFS log done\n[name:mrdump&]Kernel Offset: 0x1ba5800000 from 0xffffffc008000000\n[name:mrdump&]PHYS_OFFSET: 0x80000000\n[name:mrdump&]pstate: 22400005 (nzCv daif +PAN -UAO)\n[name:mrdump&]pc : [0xffffffdbaf52bb2c] ufshcd_clear_cmd+0x280/0x288\n[name:mrdump&]lr : [0xffffffdbaf52a774] ufshcd_wait_for_dev_cmd+0x3e4/0x82c\n[name:mrdump&]sp : ffffffc0081471b0\n<snip>\nWorkqueue: ufs_eh_wq_0 ufshcd_err_handler\nCall trace:\n dump_backtrace+0xf8/0x144\n show_stack+0x18/0x24\n dump_stack_lvl+0x78/0x9c\n dump_stack+0x18/0x44\n mrdump_common_die+0x254/0x480 [mrdump]\n ipanic_die+0x20/0x30 [mrdump]\n notify_die+0x15c/0x204\n die+0x10c/0x5f8\n arm64_notify_die+0x74/0x13c\n do_debug_exception+0x164/0x26c\n el1_dbg+0x64/0x80\n el1h_64_sync_handler+0x3c/0x90\n el1h_64_sync+0x68/0x6c\n ufshcd_clear_cmd+0x280/0x288\n ufshcd_wait_for_dev_cmd+0x3e4/0x82c\n ufshcd_exec_dev_cmd+0x5bc/0x9ac\n ufshcd_verify_dev_init+0x84/0x1c8\n ufshcd_probe_hba+0x724/0x1ce0\n ufshcd_host_reset_and_restore+0x260/0x574\n ufshcd_reset_and_restore+0x138/0xbd0\n ufshcd_err_handler+0x1218/0x2f28\n process_one_work+0x5fc/0x1140\n worker_thread+0x7d8/0xe20\n kthread+0x25c/0x468\n ret_from_fork+0x10/0x20",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-12428",
+    "description": "In ImageMagick 7.0.6-1, a memory leak vulnerability was found in the function ReadWMFImage in coders/wmf.c, which allows attackers to cause a denial of service in CloneDrawInfo in draw.c.",
+    "cwe_ids": [
+      "CWE-772"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1302",
+    "description": "When an HTTP/2 stream was destroyed after being handled, the Apache HTTP Server prior to version 2.4.30 could have written a NULL pointer potentially to an already freed memory. The memory pools maintained by the server make this vulnerability hard to trigger in usual configurations, the reporter and the team could not reproduce it outside debug builds, so it is classified as low risk.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-11031",
+    "description": "Mirasys VMS before V7.6.1 and 8.x before V8.3.2 mishandles the auto-update feature of IDVRUpdateService2 in DVRServer.exe. An attacker can upload files with a Setup-Files action, and then execute these files with SYSTEM privileges.",
+    "cwe_ids": [
+      "CWE-434"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-48487",
+    "description": "FreeScout is a free self-hosted help desk and shared mailbox. Prior to version 1.8.180, when creating a translation of a phrase that appears in a flash-message after a completed action, it is possible to inject a payload to exploit XSS vulnerability. This issue has been patched in version 1.8.180.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2017-7866",
+    "description": "FFmpeg before 2017-01-23 has an out-of-bounds write caused by a stack-based buffer overflow related to the decode_zbuf function in libavcodec/pngdec.c.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-1812",
+    "description": "A vulnerability in the Image Signature Verification feature of Cisco NX-OS Software could allow an authenticated, local attacker with administrator-level credentials to install a malicious software image on an affected device. The vulnerability exists because software digital signatures are not properly verified during CLI command execution. An attacker could exploit this vulnerability to install an unsigned software image on an affected device.",
+    "cwe_ids": [
+      "CWE-347",
+      "CWE-347"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-6430",
+    "description": "Type Confusion in V8 in Google Chrome prior to 81.0.4044.92 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-843"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-12584",
+    "description": "The ConnectionBase::preparseNewBytes function in resip/stack/ConnectionBase.cxx in reSIProcate through 1.10.2 allows remote attackers to cause a denial of service (buffer overflow) or possibly execute arbitrary code when TLS communication is enabled.",
+    "cwe_ids": [
+      "CWE-120"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-5472",
+    "description": "Use after free in Profiles in Google Chrome prior to 118.0.5993.117 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: High)",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-29978",
+    "description": "There is a floating point exception error in sixel_encoder_do_resize, encoder.c:633 in libsixel img2sixel 1.8.6. Remote attackers could leverage this vulnerability to cause a denial-of-service via a crafted JPEG file.",
+    "cwe_ids": [
+      "CWE-682"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-11844",
+    "description": "Microsoft Edge in Microsoft Windows 10 1703, 1709 and Windows Server, version 1709 allows an attacker to obtain information to further compromise the user's system, due to how Microsoft Edge handles objects in memory, aka \"Microsoft Edge Information Disclosure Vulnerability\". This CVE ID is unique from CVE-2017-11803 and CVE-2017-11833.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-12881",
+    "description": "Adobe Acrobat and Reader versions 2018.011.20063 and earlier, 2017.011.30102 and earlier, and 2015.006.30452 and earlier have an integer overflow vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4998",
+    "description": "Adobe Acrobat and Reader versions 2018.009.20050 and earlier, 2017.011.30070 and earlier, and 2015.006.30394 and earlier have a Memory corruption vulnerability. Successful exploitation could lead to arbitrary code execution in the context of the current user.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29328",
+    "description": "OpenSource Moddable v10.5.0 was discovered to contain buffer over-read in the fxDebugThrow function at /moddable/xs/sources/xsDebug.c.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-2309",
+    "description": "On Juniper Networks Junos Space versions prior to 16.1R1 when certificate based authentication is enabled for the Junos Space cluster, some restricted web services are accessible over the network. This represents an information leak risk.",
+    "cwe_ids": [
+      "CWE-200"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2024-33654",
+    "description": "A vulnerability has been identified in Simcenter Femap (All versions < V2406). The affected applications contain an out of bounds read past the end of an allocated structure while parsing specially crafted BMP files. This could allow an attacker to execute code in the context of the current process.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-12346",
+    "description": "A vulnerability has been found in Talentera up to 20241128 and classified as problematic. This vulnerability affects unknown code of the file /app/control/byt_cv_manager. The manipulation of the argument redirect_url leads to cross site scripting. The attack can be initiated remotely. The exploit has been disclosed to the public and may be used. The provided PoC only works in Mozilla Firefox. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-94"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2025-24259",
+    "description": "This issue was addressed with additional entitlement checks. This issue is fixed in macOS Ventura 13.7.5, macOS Sequoia 15.4, macOS Sonoma 14.7.5. An app may be able to retrieve Safari bookmarks without an entitlement check.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-24978",
+    "description": "In NASM 2.15.04rc3, there is a double-free vulnerability in pp_tokline asm/preproc.c. This is fixed in commit 8806c3ca007b84accac21dd88b900fb03614ceb7.",
+    "cwe_ids": [
+      "CWE-415"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14103",
+    "description": "The ReadJNGImage and ReadOneJNGImage functions in coders/png.c in GraphicsMagick 1.3.26 do not properly manage image pointers after certain error conditions, which allows remote attackers to conduct use-after-free attacks via a crafted file, related to a ReadMNGImage out-of-order CloseBlob call. NOTE: this vulnerability exists because of an incomplete fix for CVE-2017-11403.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-9192",
+    "description": "A plaintext recovery of encrypted messages or a Man-in-the-middle (MiTM) attack on RSA PKCS #1 v1.5 encryption may be possible without knowledge of the server's private key. Fortinet FortiOS 5.4.6 to 5.4.9, 6.0.0 and 6.0.1 are vulnerable by such attack under SSL Deep Inspection feature when CPx being used.",
+    "cwe_ids": [
+      "CWE-203"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-37685",
+    "description": "TensorFlow is an end-to-end open source platform for machine learning. In affected versions TFLite's [`expand_dims.cc`](https://github.com/tensorflow/tensorflow/blob/149562d49faa709ea80df1d99fc41d005b81082a/tensorflow/lite/kernels/expand_dims.cc#L36-L50) contains a vulnerability which allows reading one element outside of bounds of heap allocated data. If `axis` is a large negative value (e.g., `-100000`), then after the first `if` it would still be negative. The check following the `if` statement will pass and the `for` loop would read one element before the start of `input_dims.data` (when `i = 0`). We have patched the issue in GitHub commit d94ffe08a65400f898241c0374e9edc6fa8ed257. The fix will be included in TensorFlow 2.6.0. We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-39504",
+    "description": "PDF-XChange Editor OXPS File Parsing Out-Of-Bounds Read Information Disclosure Vulnerability. This vulnerability allows remote attackers to disclose sensitive information on affected installations of PDF-XChange Editor. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of OXPS files. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated object. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of the current process. Was ZDI-CAN-20037.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4218",
+    "description": "An issue was discovered in certain Apple products. iOS before 11.4 is affected. Safari before 11.1.1 is affected. iCloud before 7.5 on Windows is affected. iTunes before 12.7.5 on Windows is affected. tvOS before 11.4 is affected. watchOS before 4.3.1 is affected. The issue involves the \"WebKit\" component. It allows remote attackers to execute arbitrary code or cause a denial of service (memory corruption and application crash) via a crafted web site that triggers an @generatorState use-after-free.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-8036",
+    "description": "In Apache PDFBox 1.8.0 to 1.8.14 and 2.0.0RC1 to 2.0.10, a carefully crafted (or fuzzed) file can trigger an infinite loop which leads to an out of memory exception in Apache PDFBox's AFMParser.",
+    "cwe_ids": [
+      "CWE-835"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2025-27423",
+    "description": "Vim is an open source, command line text editor. Vim is distributed with the tar.vim plugin, that allows easy editing and viewing of (compressed or uncompressed) tar files. Starting with 9.1.0858, the tar.vim plugin uses the \":read\" ex command line to append below the cursor position, however the is not sanitized and is taken literally from the tar archive. This allows to execute shell commands via special crafted tar archives. Whether this really happens, depends on the shell being used ('shell' option, which is set using $SHELL). The issue has been fixed as of Vim patch v9.1.1164",
+    "cwe_ids": [
+      "CWE-77"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7471",
+    "description": "Quick Emulator (Qemu) built with the VirtFS, host directory sharing via Plan 9 File System (9pfs) support, is vulnerable to an improper access control issue. It could occur while accessing files on a shared host directory. A privileged user inside guest could use this flaw to access host file system beyond the shared folder and potentially escalating their privileges on a host.",
+    "cwe_ids": [
+      "CWE-732"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3662",
+    "description": "A vulnerability was found in Axiomatic Bento4. It has been declared as critical. This vulnerability affects the function GetOffset of the file Ap4Sample.h of the component mp42hls. The manipulation leads to use after free. The attack can be initiated remotely. The exploit has been disclosed to the public and may be used. VDB-212002 is the identifier assigned to this vulnerability.",
+    "cwe_ids": [
+      "CWE-119",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-4493",
+    "description": "The demangle_template_value_parm and do_hpacc_template_literal functions in cplus-dem.c in libiberty allow remote attackers to cause a denial of service (out-of-bounds read and crash) via a crafted binary.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-37671",
+    "description": "TensorFlow is an end-to-end open source platform for machine learning. In affected versions an attacker can cause undefined behavior via binding a reference to null pointer in `tf.raw_ops.Map*` and `tf.raw_ops.OrderedMap*` operations. The [implementation](https://github.com/tensorflow/tensorflow/blob/460e000de3a83278fb00b61a16d161b1964f15f4/tensorflow/core/kernels/map_stage_op.cc#L222-L248) has a check in place to ensure that `indices` is in ascending order, but does not check that `indices` is not empty. We have patched the issue in GitHub commit 532f5c5a547126c634fefd43bbad1dc6417678ac. The fix will be included in TensorFlow 2.6.0. We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-824"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-12762",
+    "description": "Adobe Acrobat and Reader 2018.011.20040 and earlier, 2017.011.30080 and earlier, and 2015.006.30418 and earlier versions have an Out-of-bounds read vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-6276",
+    "description": "NVIDIA mediaserver contains a vulnerability where it is possible a use after free malfunction can occur due to an incorrect bounds check which could enable unauthorized code execution and possibly lead to elevation of privileges. This issue is rated as high. Product: Android. Version: N/A. Android: A-63802421. References: N-CVE-2017-6276.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-10472",
+    "description": "An issue was discovered in Xen through 4.10.x allowing x86 HVM guest OS users (in certain configurations) to read arbitrary dom0 files via QMP live insertion of a CDROM, in conjunction with specifying the target file as the backing file of a snapshot.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-21284",
+    "description": "Vulnerability in the Oracle Banking Liquidity Management product of Oracle Financial Services Applications (component: Reports).   The supported version that is affected is 14.5.0.12.0. Difficult to exploit vulnerability allows low privileged attacker with network access via HTTP to compromise Oracle Banking Liquidity Management.  Successful attacks require human interaction from a person other than the attacker. Successful attacks of this vulnerability can result in takeover of Oracle Banking Liquidity Management. CVSS 3.1 Base Score 7.1 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-863"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2020-1688",
+    "description": "On Juniper Networks SRX Series and NFX Series, a local authenticated user with access to the shell may obtain the Web API service private key that is used to provide encrypted communication between the Juniper device and the authenticator services. Exploitation of this vulnerability may allow an attacker to decrypt the communications between the Juniper device and the authenticator service. This Web API service is used for authentication services such as the Juniper Identity Management Service, used to obtain user identity for Integrated User Firewall feature, or the integrated ClearPass authentication and enforcement feature. This issue affects Juniper Networks Junos OS on Networks SRX Series and NFX Series: 12.3X48 versions prior to 12.3X48-D105; 15.1X49 versions prior to 15.1X49-D190; 16.1 versions prior to 16.1R7-S8; 17.2 versions prior to 17.2R3-S4; 17.3 versions prior to 17.3R3-S8; 17.4 versions prior to 17.4R2-S11, 17.4R3; 18.1 versions prior to 18.1R3-S7; 18.2 versions prior to 18.2R3; 18.3 versions prior to 18.3R2-S4, 18.3R3; 18.4 versions prior to 18.4R1-S7, 18.4R2; 19.1 versions prior to 19.1R2; 19.2 versions prior to 19.2R1-S4, 19.2R2.",
+    "cwe_ids": [
+      "CWE-320",
+      "CWE-359",
+      "CWE-522"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-28249",
+    "description": "Acrobat Reader DC version 22.001.2011x (and earlier), 20.005.3033x (and earlier) and 17.012.3022x (and earlier) are affected by an out-of-bounds read vulnerability when parsing a crafted file, which could result in a read past the end of an allocated memory structure. An attacker could leverage this vulnerability to bypass mitigations such as ASLR. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-47416",
+    "description": "A vulnerability exists in the ConsoleFindCommandMatchList function in libsymproc. so imported by ctpd that may lead to unauthorized execution of an attacker-defined file that gets prioritized by the ConsoleFindCommandMatchList.\n\n\n\nA third-party researcher discovered that the ConsoleFindCommandMatchList enumerates the /dev/shm/symproc/c directory in alphabetical order to identify console commands. Permission levels are inferred from the integer values present in each command's file name. \n\n\n\nConfirmed Affected Hardware: TSW-760, TSW-1060 \n\n\n\nConfirmed Affected Firmware: 3.002.1061 \n\n\n\nFixed Firmware: no fixed released (product is discontinued and end of life)\n\n\n\n \n\n\n\nFor x70  \n\n\n\nThe Affected Firmware:- 3.000.0110.001  and versions below \n\n\n\nThe Fixed Firmware:- 3.001.0031.001",
+    "cwe_ids": [
+      "CWE-697"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-21156",
+    "description": "In BuildGetRadioNode of protocolmiscbulider.cpp, there is a possible out of bounds read due to improper input validation. This could lead to local information disclosure from the modem with System execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android kernelAndroid ID: A-264540759References: N/A",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14280",
+    "description": "XnView Classic for Windows Version 2.40 allows attackers to cause a denial of service or possibly have unspecified other impact via a crafted .jb2 file, related to \"Data from Faulting Address controls Branch Selection starting at jbig2dec+0x000000000000571d.\"",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-0150",
+    "description": "A vulnerability in Cisco IOS XE Software could allow an unauthenticated, remote attacker to log in to a device running an affected release of Cisco IOS XE Software with the default username and password that are used at initial boot, aka a Static Credential Vulnerability. The vulnerability is due to an undocumented user account with privilege level 15 that has a default username and password. An attacker could exploit this vulnerability by using this account to remotely connect to an affected device. A successful exploit could allow the attacker to log in to the device with privilege level 15 access. This vulnerability affects Cisco devices that are running a vulnerable release of Cisco IOS XE Software Release 16.x. This vulnerability does not affect Cisco IOS XE Software releases prior to Release 16.x. Cisco Bug IDs: CSCve89880.",
+    "cwe_ids": [
+      "CWE-798",
+      "CWE-798"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-31319",
+    "description": "Telegram Android <7.1.0 (2090), Telegram iOS <7.1, and Telegram macOS <7.1 are affected by an Integer Overflow in the LOTGradient::populate function of their custom fork of the rlottie library. A remote attacker might be able to access heap memory out-of-bounds on a victim device via a malicious animated sticker.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-26615",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet/smc: fix illegal rmb_desc access in SMC-D connection dump\n\nA crash was found when dumping SMC-D connections. It can be reproduced\nby following steps:\n\n- run nginx/wrk test:\n  smc_run nginx\n  smc_run wrk -t 16 -c 1000 -d <duration> -H 'Connection: Close' <URL>\n\n- continuously dump SMC-D connections in parallel:\n  watch -n 1 'smcss -D'\n\n BUG: kernel NULL pointer dereference, address: 0000000000000030\n CPU: 2 PID: 7204 Comm: smcss Kdump: loaded Tainted: G\tE      6.7.0+ #55\n RIP: 0010:__smc_diag_dump.constprop.0+0x5e5/0x620 [smc_diag]\n Call Trace:\n  <TASK>\n  ? __die+0x24/0x70\n  ? page_fault_oops+0x66/0x150\n  ? exc_page_fault+0x69/0x140\n  ? asm_exc_page_fault+0x26/0x30\n  ? __smc_diag_dump.constprop.0+0x5e5/0x620 [smc_diag]\n  ? __kmalloc_node_track_caller+0x35d/0x430\n  ? __alloc_skb+0x77/0x170\n  smc_diag_dump_proto+0xd0/0xf0 [smc_diag]\n  smc_diag_dump+0x26/0x60 [smc_diag]\n  netlink_dump+0x19f/0x320\n  __netlink_dump_start+0x1dc/0x300\n  smc_diag_handler_dump+0x6a/0x80 [smc_diag]\n  ? __pfx_smc_diag_dump+0x10/0x10 [smc_diag]\n  sock_diag_rcv_msg+0x121/0x140\n  ? __pfx_sock_diag_rcv_msg+0x10/0x10\n  netlink_rcv_skb+0x5a/0x110\n  sock_diag_rcv+0x28/0x40\n  netlink_unicast+0x22a/0x330\n  netlink_sendmsg+0x1f8/0x420\n  __sock_sendmsg+0xb0/0xc0\n  ____sys_sendmsg+0x24e/0x300\n  ? copy_msghdr_from_user+0x62/0x80\n  ___sys_sendmsg+0x7c/0xd0\n  ? __do_fault+0x34/0x160\n  ? do_read_fault+0x5f/0x100\n  ? do_fault+0xb0/0x110\n  ? __handle_mm_fault+0x2b0/0x6c0\n  __sys_sendmsg+0x4d/0x80\n  do_syscall_64+0x69/0x180\n  entry_SYSCALL_64_after_hwframe+0x6e/0x76\n\nIt is possible that the connection is in process of being established\nwhen we dump it. Assumed that the connection has been registered in a\nlink group by smc_conn_create() but the rmb_desc has not yet been\ninitialized by smc_buf_create(), thus causing the illegal access to\nconn->rmb_desc. So fix it by checking before dump.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-30999",
+    "description": "The issue was addressed with improved permissions logic. This issue is fixed in iOS 14.6 and iPadOS 14.6. A user may be unable to fully delete browsing history.",
+    "cwe_ids": [
+      "CWE-276"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-35925",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nblock: prevent division by zero in blk_rq_stat_sum()\n\nThe expression dst->nr_samples + src->nr_samples may\nhave zero value on overflow. It is necessary to add\na check to avoid division by zero.\n\nFound by Linux Verification Center (linuxtesting.org) with Svace.",
+    "cwe_ids": [
+      "CWE-369"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14520",
+    "description": "In Poppler 0.59.0, a floating point exception occurs in Splash::scaleImageYuXd() in Splash.cc, which may lead to a potential attack when handling malicious PDF files.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-9970",
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of Foxit Reader 9.0.1.1049. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the XFA execEvent method of Button elements. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to execute code under the context of the current process. Was ZDI-CAN-5580.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-33123",
+    "description": "A vulnerability has been identified in JT2Go (All versions < V14.2.0.3), Teamcenter Visualization V13.2 (All versions < V13.2.0.13), Teamcenter Visualization V13.3 (All versions < V13.3.0.10), Teamcenter Visualization V14.0 (All versions < V14.0.0.6), Teamcenter Visualization V14.1 (All versions < V14.1.0.8), Teamcenter Visualization V14.2 (All versions < V14.2.0.3). The affected applications contain an out of bounds read past the end of an allocated structure while parsing specially crafted CGM files. This could allow an attacker to execute code in the context of the current process.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-6043",
+    "description": "Insufficient data validation in External Protocol Handler in Google Chrome prior to 64.0.3282.119 allowed a remote attacker to potentially execute arbitrary programs on user machine via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-41886",
+    "description": "TensorFlow is an open source platform for machine learning. When `tf.raw_ops.ImageProjectiveTransformV2` is given a large output shape, it overflows. We have patched the issue in GitHub commit 8faa6ea692985dbe6ce10e1a3168e0bd60a723ba. The fix will be included in TensorFlow 2.11. We will also cherrypick this commit on TensorFlow 2.10.1, 2.9.3, and TensorFlow 2.8.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-131"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7659",
+    "description": "A maliciously constructed HTTP/2 request could cause mod_http2 in Apache HTTP Server 2.4.24, 2.4.25 to dereference a NULL pointer and crash the server process.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-8327",
+    "description": "The bmpr_read_uncompressed function in imagew-bmp.c in libimageworsener.a in ImageWorsener before 1.3.1 allows remote attackers to cause a denial of service (memory consumption) via a crafted image.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-9740",
+    "description": "The xps_decode_font_char_imp function in xps/xpsfont.c in Artifex Ghostscript GhostXPS 9.21 allows remote attackers to cause a denial of service (heap-based buffer over-read and application crash) or possibly have unspecified other impact via a crafted document.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14257",
+    "description": "In the SDK in Bento4 1.5.0-616, AP4_AtomSampleTable::GetSample in Core/Ap4AtomSampleTable.cpp contains a Read Memory Access Violation vulnerability. It is possible to exploit this vulnerability by opening a crafted .MP4 file.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-5858",
+    "description": "In an ioctl handler in all Qualcomm products with Android for MSM, Firefox OS for MSM, or QRD Android, if a user supplies a value too large, then an out-of-bounds read occurs.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-8457",
+    "description": "A remote code execution vulnerability exists in the way the scripting engine handles objects in memory in Microsoft browsers, aka \"Scripting Engine Memory Corruption Vulnerability.\" This affects Internet Explorer 11, Microsoft Edge, Internet Explorer 10. This CVE ID is unique from CVE-2018-8354, CVE-2018-8391, CVE-2018-8456, CVE-2018-8459.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-6728",
+    "description": "This vulnerability allows remote attackers to disclose sensitive information on vulnerable installations of Foxit Reader. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the processing of PDF files. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated buffer. An attacker can leverage this in conjunction with other vulnerabilities to execute code in the context of the current process. Was ZDI-CAN-7353.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-14353",
+    "description": "An issue was discovered in Mutt before 1.10.1 and NeoMutt before 2018-07-16. imap_quote_string in imap/util.c has an integer underflow.",
+    "cwe_ids": [
+      "CWE-191"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-14369",
+    "description": "Exiv2::PngImage::readMetadata() in pngimage.cpp in Exiv2 0.27.99.0 allows attackers to cause a denial of service (heap-based buffer over-read) via a crafted image file.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-6791",
+    "description": "A credential disclosure vulnerability in Palo Alto Networks PAN-OS software enables an authenticated read-only administrator to obtain the plaintext credentials of stored external system integrations such as LDAP, SCP, RADIUS, TACACS+, and SNMP from the web interface.",
+    "cwe_ids": [
+      "CWE-701",
+      "CWE-522"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-15990",
+    "description": "Adobe Acrobat and Reader versions 2019.008.20081 and earlier, 2019.008.20080 and earlier, 2019.008.20081 and earlier, 2017.011.30106 and earlier version, 2017.011.30105 and earlier version, 2015.006.30457 and earlier, and 2015.006.30456 and earlier have an use after free vulnerability. Successful exploitation could lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-0068",
+    "description": "The SRX flowd process, responsible for packet forwarding, may crash and restart when processing specific multicast packets. By continuously sending the specific multicast packets, an attacker can repeatedly crash the flowd process causing a sustained Denial of Service. This issue affects Juniper Networks Junos OS on SRX Series: 12.3X48 versions prior to 12.3X48-D90; 15.1X49 versions prior to 15.1X49-D180; 17.3 versions; 17.4 versions prior to 17.4R2-S5, 17.4R3; 18.1 versions prior to 18.1R3-S6; 18.2 versions prior to 18.2R2-S4, 18.2R3; 18.3 versions prior to 18.3R2-S1, 18.3R3; 18.4 versions prior to 18.4R2; 19.1 versions prior to 19.1R1-S1, 19.1R2.",
+    "cwe_ids": [
+      "CWE-754",
+      "CWE-754"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-6867",
+    "description": "A vulnerability was discovered in Siemens SIMATIC WinCC (V7.3 before Upd 11 and V7.4 before SP1), SIMATIC WinCC Runtime Professional (V13 before SP2 and V14 before SP1), SIMATIC WinCC (TIA Portal) Professional (V13 before SP2 and V14 before SP1) that could allow an authenticated, remote attacker who is member of the \"administrators\" group to crash services by sending specially crafted messages to the DCOM interface.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-23242",
+    "description": "A privacy issue was addressed by not logging contents of text fields. This issue is fixed in macOS Sonoma 14.4, iOS 17.4 and iPadOS 17.4. An app may be able to view Mail data.",
+    "cwe_ids": [
+      "CWE-532",
+      "CWE-532"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-0968",
+    "description": "Adobe Flash Player before 18.0.0.329 and 19.x and 20.x before 20.0.0.306 on Windows and OS X and before 11.2.202.569 on Linux, Adobe AIR before 20.0.0.260, Adobe AIR SDK before 20.0.0.260, and Adobe AIR SDK & Compiler before 20.0.0.260 allow attackers to execute arbitrary code or cause a denial of service (memory corruption) via unspecified vectors, a different vulnerability than CVE-2016-0964, CVE-2016-0965, CVE-2016-0966, CVE-2016-0967, CVE-2016-0969, CVE-2016-0970, CVE-2016-0972, CVE-2016-0976, CVE-2016-0977, CVE-2016-0978, CVE-2016-0979, CVE-2016-0980, and CVE-2016-0981.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-5764",
+    "description": "Incorrect pointer management in WebRTC in Google Chrome prior to 72.0.3626.81 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-39836",
+    "description": "Acrobat Reader DC versions 2021.005.20060 (and earlier), 2020.004.30006 (and earlier) and 2017.011.30199 (and earlier) are affected by a use-after-free vulnerability in the processing of the AcroForm buttonGetIcon action that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-18267",
+    "description": "The FoFiType1C::cvtGlyph function in fofi/FoFiType1C.cc in Poppler through 0.64.0 allows remote attackers to cause a denial of service (infinite recursion) via a crafted PDF file, as demonstrated by pdftops.",
+    "cwe_ids": [
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-40926",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/nouveau: don't attempt to schedule hpd_work on headless cards\n\nIf the card doesn't have display hardware, hpd_work and hpd_lock are\nleft uninitialized which causes BUG when attempting to schedule hpd_work\non runtime PM resume.\n\nFix it by adding headless flag to DRM and skip any hpd if it's set.",
+    "cwe_ids": [
+      "CWE-908"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-4351",
+    "description": "Use after free in Network in Google Chrome prior to 116.0.5845.96 allowed a remote attacker who has elicited a browser shutdown to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: High)",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-37371",
+    "description": "In MIT Kerberos 5 (aka krb5) before 1.21.3, an attacker can cause invalid memory reads during GSS message token handling by sending message tokens with invalid length fields.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-31200",
+    "description": "A memory corruption issue was addressed with improved bounds checking. This issue is fixed in tvOS 18.4.1, visionOS 2.4.1, iOS iOS 18.4.1 and iPadOS 18.4.1, macOS Sequoia 15.4.1. Processing an audio stream in a maliciously crafted media file may result in code execution. Apple is aware of a report that this issue may have been exploited in an extremely sophisticated attack against specific targeted individuals on iOS.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-42522",
+    "description": "Certain WithSecure products allow a remote crash of a scanning engine via processing of an import struct in a PE file. This affects WithSecure Client Security 15, WithSecure Server Security 15, WithSecure Email and Server Security 15, WithSecure Elements Endpoint Protection 17 and later, WithSecure Client Security for Mac 15, WithSecure Elements Endpoint Protection for Mac 17 and later, Linux Security 64 12.0 , Linux Protection 12.0, and WithSecure Atlant (formerly F-Secure Atlant) 1.0.35-1.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-47597",
+    "description": "GStreamer is a library for constructing graphs of media-handling components. An OOB-read has been detected in the function qtdemux_parse_samples within qtdemux.c. This issue arises when the function qtdemux_parse_samples reads data beyond the boundaries of the stream->stco buffer. The following code snippet shows the call to qt_atom_parser_get_offset_unchecked, which leads to the OOB-read when parsing the provided GHSL-2024-245_crash1.mp4 file. This issue may lead to read up to 8 bytes out-of-bounds. This vulnerability is fixed in 1.24.10.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-0893",
+    "description": "Microsoft Edge in Windows 10 Gold, 1511, 1607, 1703, 1709, and Windows Server 2016 allows remote code execution, due to how the scripting engine handles objects in memory, aka \"Scripting Engine Memory Corruption Vulnerability\". This CVE ID is unique from CVE-2018-0876, CVE-2018-0889, CVE-2018-0925, and CVE-2018-0935.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-40516",
+    "description": "WeeChat before 3.2.1 allows remote attackers to cause a denial of service (crash) via a crafted WebSocket frame that trigger an out-of-bounds read in plugins/relay/relay-websocket.c in the Relay plugin.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-52373",
+    "description": "Use of hardcoded cryptographic key in BlowFish.cpp in hMailServer 5.8.6 and 5.6.9-beta allows attacker to decrypt passwords used in database connections from hMailServer.ini config file.",
+    "cwe_ids": [
+      "CWE-321"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0251",
+    "description": "A NULL Pointer Dereference vulnerability in the Captive Portal Content Delivery (CPCD) services daemon (cpcd) of Juniper Networks Junos OS on MX Series with MS-PIC, MS-SPC3, MS-MIC or MS-MPC allows an attacker to send malformed HTTP packets to the device thereby causing a Denial of Service (DoS), crashing the Multiservices PIC Management Daemon (mspmand) process thereby denying users the ability to login, while concurrently impacting other mspmand services and traffic through the device. Continued receipt and processing of these malformed packets will create a sustained Denial of Service (DoS) condition. While the Services PIC is restarting, all PIC services will be bypassed until the Services PIC completes its boot process. An attacker sending these malformed HTTP packets to the device who is not part of the Captive Portal experience is not able to exploit this issue. This issue is not applicable to MX RE-based CPCD platforms. This issue affects: Juniper Networks Junos OS on MX Series 17.3 version 17.3R1 and later versions prior to 17.4 versions 17.4R2-S9, 17.4R3-S2; 18.1 versions prior to 18.1R3-S9; 18.2 versions prior to 18.2R3-S3; 18.3 versions prior to 18.3R3-S1; 18.4 versions prior to 18.4R3; 19.1 versions prior to 19.1R2-S2, 19.1R3; 19.2 versions prior to 19.2R2; 19.3 versions prior to 19.3R3. This issue does not affect: Juniper Networks Junos OS versions prior to 17.3R1.",
+    "cwe_ids": [
+      "CWE-476",
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-9807",
+    "description": "The flx_decode_chunks function in gst/flx/gstflxdec.c in GStreamer before 1.10.2 allows remote attackers to cause a denial of service (invalid memory read and crash) via a crafted FLIC file.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-2186",
+    "description": "In GetMBheader of combined_decode.cpp, there is a possible out of bounds write due to a missing bounds check. This could lead to remote code execution with no additional execution privileges needed. User interaction is needed for exploitation.Product: AndroidVersions: Android-7.1.1 Android-7.1.2 Android-8.0 Android-8.1 Android-9 Android-10Android ID: A-136175447",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-17807",
+    "description": "The KEYS subsystem in the Linux kernel before 4.14.6 omitted an access-control check when adding a key to the current task's \"default request-key keyring\" via the request_key() system call, allowing a local user to use a sequence of crafted system calls to add keys to a keyring with only Search permission (not Write permission) to that keyring, related to construct_get_dest_keyring() in security/keys/request_key.c.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-43899",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/amd/display: Fix null pointer deref in dcn20_resource.c\n\nFixes a hang thats triggered when MPV is run on a DCN401 dGPU:\n\nmpv --hwdec=vaapi --vo=gpu --hwdec-codecs=all\n\nand then enabling fullscreen playback (double click on the video)\n\nThe following calltrace will be seen:\n\n[  181.843989] BUG: kernel NULL pointer dereference, address: 0000000000000000\n[  181.843997] #PF: supervisor instruction fetch in kernel mode\n[  181.844003] #PF: error_code(0x0010) - not-present page\n[  181.844009] PGD 0 P4D 0\n[  181.844020] Oops: 0010 [#1] PREEMPT SMP NOPTI\n[  181.844028] CPU: 6 PID: 1892 Comm: gnome-shell Tainted: G        W  OE      6.5.0-41-generic #41~22.04.2-Ubuntu\n[  181.844038] Hardware name: System manufacturer System Product Name/CROSSHAIR VI HERO, BIOS 6302 10/23/2018\n[  181.844044] RIP: 0010:0x0\n[  181.844079] Code: Unable to access opcode bytes at 0xffffffffffffffd6.\n[  181.844084] RSP: 0018:ffffb593c2b8f7b0 EFLAGS: 00010246\n[  181.844093] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000004\n[  181.844099] RDX: ffffb593c2b8f804 RSI: ffffb593c2b8f7e0 RDI: ffff9e3c8e758400\n[  181.844105] RBP: ffffb593c2b8f7b8 R08: ffffb593c2b8f9c8 R09: ffffb593c2b8f96c\n[  181.844110] R10: 0000000000000000 R11: 0000000000000000 R12: ffffb593c2b8f9c8\n[  181.844115] R13: 0000000000000001 R14: ffff9e3c88000000 R15: 0000000000000005\n[  181.844121] FS:  00007c6e323bb5c0(0000) GS:ffff9e3f85f80000(0000) knlGS:0000000000000000\n[  181.844128] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033\n[  181.844134] CR2: ffffffffffffffd6 CR3: 0000000140fbe000 CR4: 00000000003506e0\n[  181.844141] Call Trace:\n[  181.844146]  <TASK>\n[  181.844153]  ? show_regs+0x6d/0x80\n[  181.844167]  ? __die+0x24/0x80\n[  181.844179]  ? page_fault_oops+0x99/0x1b0\n[  181.844192]  ? do_user_addr_fault+0x31d/0x6b0\n[  181.844204]  ? exc_page_fault+0x83/0x1b0\n[  181.844216]  ? asm_exc_page_fault+0x27/0x30\n[  181.844237]  dcn20_get_dcc_compression_cap+0x23/0x30 [amdgpu]\n[  181.845115]  amdgpu_dm_plane_validate_dcc.constprop.0+0xe5/0x180 [amdgpu]\n[  181.845985]  amdgpu_dm_plane_fill_plane_buffer_attributes+0x300/0x580 [amdgpu]\n[  181.846848]  fill_dc_plane_info_and_addr+0x258/0x350 [amdgpu]\n[  181.847734]  fill_dc_plane_attributes+0x162/0x350 [amdgpu]\n[  181.848748]  dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]\n[  181.849791]  ? dm_update_plane_state.constprop.0+0x4e3/0x6b0 [amdgpu]\n[  181.850840]  amdgpu_dm_atomic_check+0xdfe/0x1760 [amdgpu]",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-18899",
+    "description": "An uncontrolled memory allocation in DataBufdata(subBox.length-sizeof(box)) function of Exiv2 0.27 allows attackers to cause a denial of service (DOS) via a crafted input.",
+    "cwe_ids": [
+      "CWE-770",
+      "CWE-770"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-11024",
+    "description": "In Moonlight iOS/tvOS before 4.0.1, the pairing process is vulnerable to a man-in-the-middle attack. The bug has been fixed in Moonlight v4.0.1 for iOS and tvOS.",
+    "cwe_ids": [
+      "CWE-300",
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-14385",
+    "description": "A flaw was found in the Linux kernel before 5.9-rc4. A failure of the file system metadata validator in XFS can cause an inode with a valid, user-creatable extended attribute to be flagged as corrupt. This can lead to the filesystem being shutdown, or otherwise rendered inaccessible until it is remounted, leading to a denial of service. The highest threat from this vulnerability is to system availability.",
+    "cwe_ids": [
+      "CWE-131",
+      "CWE-131"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-21697",
+    "description": "A heap-use-after-free in the mpeg_mux_write_packet function in libavformat/mpegenc.c of FFmpeg 4.2 allows to cause a denial of service (DOS) via a crafted avi file.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-13102",
+    "description": "Gameloft Asphalt Xtreme: Offroad Rally Racing, 1.6.0, 2017-08-13, iOS application uses a hard-coded key for encryption. Data stored using this key can be decrypted by anyone able to access this key.",
+    "cwe_ids": [
+      "CWE-798",
+      "CWE-798"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-0196",
+    "description": "A vulnerability in the web-based user interface (web UI) of Cisco IOS XE Software could allow an authenticated, remote attacker to write arbitrary files to the operating system of an affected device. The vulnerability is due to insufficient input validation of HTTP requests that are sent to the web UI of the affected software. An attacker could exploit this vulnerability by sending a malicious HTTP request to the web UI of the affected software. A successful exploit could allow the attacker to write arbitrary files to the operating system of an affected device. Cisco Bug IDs: CSCvb22645.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-16002",
+    "description": "Adobe Acrobat and Reader versions 2019.008.20081 and earlier, 2019.008.20080 and earlier, 2019.008.20081 and earlier, 2017.011.30106 and earlier version, 2017.011.30105 and earlier version, 2015.006.30457 and earlier, and 2015.006.30456 and earlier have an out-of-bounds read vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-1621",
+    "description": "A vulnerability in the Layer 2 punt code of Cisco IOS XE Software could allow an unauthenticated, adjacent attacker to cause a queue wedge on an interface that receives specific Layer 2 frames, resulting in a denial of service (DoS) condition. This vulnerability is due to improper handling of certain Layer 2 frames. An attacker could exploit this vulnerability by sending specific Layer 2 frames on the segment the router is connected to. A successful exploit could allow the attacker to cause a queue wedge on the interface, resulting in a DoS condition.",
+    "cwe_ids": [
+      "CWE-399"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1565",
+    "description": "IBM DB2 for Linux, UNIX and Windows (includes DB2 Connect Server) 9.7, 10.1, 10.5, and 11.1 could allow a local user to overflow a buffer which may result in a privilege escalation to the DB2 instance owner. IBM X-Force ID: 143022.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-4929",
+    "description": "VMware NSX Edge (6.2.x before 6.2.9 and 6.3.x before 6.3.5) contains a moderate Cross-Site Scripting (XSS) issue which may lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2017-2940",
+    "description": "Adobe Acrobat Reader versions 15.020.20042 and earlier, 15.006.30244 and earlier, 11.0.18 and earlier have an exploitable memory corruption vulnerability when processing JPEG 2000 files. Successful exploitation could lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-6520",
+    "description": "Buffer overflow in Skia in Google Chrome prior to 84.0.4147.89 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-5468",
+    "description": "An issue with incorrect ownership model of \"privateBrowsing\" information exposed through developer tools. This can result in a non-exploitable crash when manually triggered during debugging. This vulnerability affects Firefox < 53.",
+    "cwe_ids": [
+      "CWE-665"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-48779",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: mscc: ocelot: fix use-after-free in ocelot_vlan_del()\n\nocelot_vlan_member_del() will free the struct ocelot_bridge_vlan, so if\nthis is the same as the port's pvid_vlan which we access afterwards,\nwhat we're accessing is freed memory.\n\nFix the bug by determining whether to clear ocelot_port->pvid_vlan prior\nto calling ocelot_vlan_member_del().",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-40824",
+    "description": "This issue was addressed through improved state management. This issue is fixed in watchOS 10.6, macOS Sonoma 14.6, iOS 17.6 and iPadOS 17.6, tvOS 17.6. An app may be able to bypass Privacy preferences.",
+    "cwe_ids": [
+      "CWE-281"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0207",
+    "description": "An improper interpretation conflict of certain data between certain software components within the Juniper Networks Junos OS devices does not allow certain traffic to pass through the device upon receipt from an ingress interface filtering certain specific types of traffic which is then being redirected to an egress interface on a different VLAN. This causes a Denial of Service (DoS) to those clients sending these particular types of traffic. Such traffic being sent by a client may appear genuine, but is non-standard in nature and should be considered as potentially malicious, and can be targeted to the device, or destined through it for the issue to occur. This issues affects IPv4 and IPv6 traffic. An indicator of compromise may be found by checking log files. You may find that traffic on the input interface has 100% of traffic flowing into the device, yet the egress interface shows 0 pps leaving the device. For example: [show interfaces \"interface\" statistics detail] Output between two interfaces would reveal something similar to: Ingress, first interface: -------------------- Interface Link Input packets (pps) Output packets (pps) et-0/0/0 Up 9999999999 (9999) 1 (0) -------------------- Egress, second interface: -------------------- Interface Link Input packets (pps) Output packets (pps) et-0/0/1 Up 0 (0) 9999999999 (0) -------------------- Dropped packets will not show up in DDoS monitoring/protection counters as issue is not caused by anti-DDoS protection mechanisms. This issue affects: Juniper Networks Junos OS: 17.3 versions prior to 17.3R3-S7 on NFX250, QFX5K Series, EX4600; 17.4 versions prior to 17.4R2-S11, 17.4R3-S3 on NFX250, QFX5K Series, EX4600; 18.1 versions prior to 18.1R3-S9 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4600; 18.2 versions prior to 18.2R3-S3 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600; 18.3 versions prior to 18.3R3-S1 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series; 18.4 versions prior to 18.4R1-S5, 18.4R2-S3, 18.4R3 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series; 19.1 versions prior to 19.1R1-S5, 19.1R2-S1, 19.1R3 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series; 19.2 versions prior to 19.2R1-S5, 19.2R2 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series; 19.3 versions prior to 19.3R2-S3, 19.3R3 on NFX250, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series; 19.4 versions prior to 19.4R1-S2, 19.4R2 on NFX250, NFX350, QFX5K Series, EX2300 Series, EX3400 Series, EX4300 Multigigabit, EX4600 Series. This issue does not affect Junos OS releases prior to 17.2R2.",
+    "cwe_ids": [
+      "CWE-115",
+      "CWE-436",
+      "CWE-436"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-47274",
+    "description": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to the ordering of code used to start an MCP server container, versions of ToolHive prior to 0.0.33 inadvertently store secrets in the run config files which are used to restart stopped containers. This means that an attacker who has access to the home folder of the user who starts the MCP server can read secrets without needing access to the secrets store itself. This only applies to secrets which were used in containers whose run configs exist at a point in time - other secrets remaining inaccessible. ToolHive 0.0.33 fixes the issue. Some workarounds are available. Stop and delete any running MCP servers, or manually remove any runconfigs from `$HOME/Library/Application Support/toolhive/runconfigs/` (macOS) or `$HOME/.state/toolhive/runconfigs/` (Linux).",
+    "cwe_ids": [
+      "CWE-311"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2025-5244",
+    "description": "A vulnerability was found in GNU Binutils up to 2.44. It has been rated as critical. Affected by this issue is the function elf_gc_sweep of the file bfd/elflink.c of the component ld. The manipulation leads to memory corruption. An attack has to be approached locally. The exploit has been disclosed to the public and may be used. Upgrading to version 2.45 is able to address this issue. It is recommended to upgrade the affected component.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-4544",
+    "description": "The exif_process_TIFF_in_JPEG function in ext/exif/exif.c in PHP before 5.5.35, 5.6.x before 5.6.21, and 7.x before 7.0.6 does not validate TIFF start data, which allows remote attackers to cause a denial of service (out-of-bounds read) or possibly have unspecified other impact via crafted header data.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-7289",
+    "description": "An issue was discovered in armadito-windows-driver/src/communication.c in Armadito 0.12.7.2. Malware with filenames containing pure UTF-16 characters can bypass detection. The user-mode service will fail to open the file for scanning after the conversion is done from Unicode to ANSI. This happens because characters that cannot be converted from Unicode are replaced with '?' characters.",
+    "cwe_ids": [
+      "CWE-172"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-47219",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nscsi: scsi_debug: Fix out-of-bound read in resp_report_tgtpgs()\n\nThe following issue was observed running syzkaller:\n\nBUG: KASAN: slab-out-of-bounds in memcpy include/linux/string.h:377 [inline]\nBUG: KASAN: slab-out-of-bounds in sg_copy_buffer+0x150/0x1c0 lib/scatterlist.c:831\nRead of size 2132 at addr ffff8880aea95dc8 by task syz-executor.0/9815\n\nCPU: 0 PID: 9815 Comm: syz-executor.0 Not tainted 4.19.202-00874-gfc0fe04215a9 #2\nHardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1 04/01/2014\nCall Trace:\n __dump_stack lib/dump_stack.c:77 [inline]\n dump_stack+0xe4/0x14a lib/dump_stack.c:118\n print_address_description+0x73/0x280 mm/kasan/report.c:253\n kasan_report_error mm/kasan/report.c:352 [inline]\n kasan_report+0x272/0x370 mm/kasan/report.c:410\n memcpy+0x1f/0x50 mm/kasan/kasan.c:302\n memcpy include/linux/string.h:377 [inline]\n sg_copy_buffer+0x150/0x1c0 lib/scatterlist.c:831\n fill_from_dev_buffer+0x14f/0x340 drivers/scsi/scsi_debug.c:1021\n resp_report_tgtpgs+0x5aa/0x770 drivers/scsi/scsi_debug.c:1772\n schedule_resp+0x464/0x12f0 drivers/scsi/scsi_debug.c:4429\n scsi_debug_queuecommand+0x467/0x1390 drivers/scsi/scsi_debug.c:5835\n scsi_dispatch_cmd+0x3fc/0x9b0 drivers/scsi/scsi_lib.c:1896\n scsi_request_fn+0x1042/0x1810 drivers/scsi/scsi_lib.c:2034\n __blk_run_queue_uncond block/blk-core.c:464 [inline]\n __blk_run_queue+0x1a4/0x380 block/blk-core.c:484\n blk_execute_rq_nowait+0x1c2/0x2d0 block/blk-exec.c:78\n sg_common_write.isra.19+0xd74/0x1dc0 drivers/scsi/sg.c:847\n sg_write.part.23+0x6e0/0xd00 drivers/scsi/sg.c:716\n sg_write+0x64/0xa0 drivers/scsi/sg.c:622\n __vfs_write+0xed/0x690 fs/read_write.c:485\nkill_bdev:block_device:00000000e138492c\n vfs_write+0x184/0x4c0 fs/read_write.c:549\n ksys_write+0x107/0x240 fs/read_write.c:599\n do_syscall_64+0xc2/0x560 arch/x86/entry/common.c:293\n entry_SYSCALL_64_after_hwframe+0x49/0xbe\n\nWe get 'alen' from command its type is int. If userspace passes a large\nlength we will get a negative 'alen'.\n\nSwitch n, alen, and rlen to u32.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-39107",
+    "description": "An arbitrary file overwrite vulnerability in NoMachine Free Edition and Enterprise Client for macOS before v8.8.1 allows attackers to overwrite root-owned files by using hardlinks.",
+    "cwe_ids": [
+      "CWE-59"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-38227",
+    "description": "Adobe Acrobat Reader versions 23.003.20244 (and earlier) and 20.005.30467 (and earlier) are affected by a Use After Free vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-21986",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: switchdev: Convert blocking notification chain to a raw one\n\nA blocking notification chain uses a read-write semaphore to protect the\nintegrity of the chain. The semaphore is acquired for writing when\nadding / removing notifiers to / from the chain and acquired for reading\nwhen traversing the chain and informing notifiers about an event.\n\nIn case of the blocking switchdev notification chain, recursive\nnotifications are possible which leads to the semaphore being acquired\ntwice for reading and to lockdep warnings being generated [1].\n\nSpecifically, this can happen when the bridge driver processes a\nSWITCHDEV_BRPORT_UNOFFLOADED event which causes it to emit notifications\nabout deferred events when calling switchdev_deferred_process().\n\nFix this by converting the notification chain to a raw notification\nchain in a similar fashion to the netdev notification chain. Protect\nthe chain using the RTNL mutex by acquiring it when modifying the chain.\nEvents are always informed under the RTNL mutex, but add an assertion in\ncall_switchdev_blocking_notifiers() to make sure this is not violated in\nthe future.\n\nMaintain the \"blocking\" prefix as events are always emitted from process\ncontext and listeners are allowed to block.\n\n[1]:\nWARNING: possible recursive locking detected\n6.14.0-rc4-custom-g079270089484 #1 Not tainted\n--------------------------------------------\nip/52731 is trying to acquire lock:\nffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0\n\nbut task is already holding lock:\nffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0\n\nother info that might help us debug this:\nPossible unsafe locking scenario:\nCPU0\n----\nlock((switchdev_blocking_notif_chain).rwsem);\nlock((switchdev_blocking_notif_chain).rwsem);\n\n*** DEADLOCK ***\nMay be due to missing lock nesting notation\n3 locks held by ip/52731:\n #0: ffffffff84f795b0 (rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x727/0x1dc0\n #1: ffffffff8731f628 (&net->rtnl_mutex){+.+.}-{4:4}, at: rtnl_newlink+0x790/0x1dc0\n #2: ffffffff850918d8 ((switchdev_blocking_notif_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x58/0xa0\n\nstack backtrace:\n...\n? __pfx_down_read+0x10/0x10\n? __pfx_mark_lock+0x10/0x10\n? __pfx_switchdev_port_attr_set_deferred+0x10/0x10\nblocking_notifier_call_chain+0x58/0xa0\nswitchdev_port_attr_notify.constprop.0+0xb3/0x1b0\n? __pfx_switchdev_port_attr_notify.constprop.0+0x10/0x10\n? mark_held_locks+0x94/0xe0\n? switchdev_deferred_process+0x11a/0x340\nswitchdev_port_attr_set_deferred+0x27/0xd0\nswitchdev_deferred_process+0x164/0x340\nbr_switchdev_port_unoffload+0xc8/0x100 [bridge]\nbr_switchdev_blocking_event+0x29f/0x580 [bridge]\nnotifier_call_chain+0xa2/0x440\nblocking_notifier_call_chain+0x6e/0xa0\nswitchdev_bridge_port_unoffload+0xde/0x1a0\n...",
+    "cwe_ids": [
+      "CWE-667"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-3629",
+    "description": "Vulnerability in the Solaris component of Oracle Sun Systems Products Suite (subcomponent: Kernel). Supported versions that are affected are 10 and 11. Easily exploitable vulnerability allows low privileged attacker with logon to the infrastructure where Solaris executes to compromise Solaris. Successful attacks of this vulnerability can result in takeover of Solaris. CVSS 3.0 Base Score 7.8 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5151",
+    "description": "Memory safety bugs were reported in Firefox 59. Some of these bugs showed evidence of memory corruption and we presume that with enough effort that some of these could be exploited to run arbitrary code. This vulnerability affects Firefox < 60.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-40469",
+    "description": "PDF-XChange Editor XPS File Parsing Out-Of-Bounds Read Information Disclosure Vulnerability. This vulnerability allows remote attackers to disclose sensitive information on affected installations of PDF-XChange Editor. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the parsing of XPS files. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated object. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of the current process. Was ZDI-CAN-20621.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-50565",
+    "description": "A improper restriction of communication channel to intended endpoints vulnerability [CWE-923] in Fortinet FortiOS version 7.4.0 through 7.4.3, 7.2.0 through 7.2.7, 7.0.0 through 7.0.14, 6.4.0 through 6.4.15 and 6.2.0 through 6.2.16, Fortinet FortiProxy version 7.4.0 through 7.4.2, 7.2.0 through 7.2.9, 7.0.0 through 7.0.15 and 2.0.0 through 2.0.14, Fortinet FortiManager version 7.4.0 through 7.4.2, 7.2.0 through 7.2.4, 7.0.0 through 7.0.11, 6.4.0 through 6.4.14 and 6.2.0 through 6.2.13, Fortinet FortiAnalyzer version 7.4.0 through 7.4.2, 7.2.0 through 7.2.4, 7.0.0 through 7.0.11, 6.4.0 through 6.4.14 and 6.2.0 through 6.2.13, Fortinet FortiVoice version 7.0.0 through 7.0.2, 6.4.0 through 6.4.8 and 6.0.0 through 6.0.12 and Fortinet FortiWeb version 7.4.0 through 7.4.2, 7.2.0 through 7.2.10, 7.0.0 through 7.0.10 allows an unauthenticated attacker in a man-in-the-middle position to impersonate the management device (FortiCloud server or/and in certain conditions, FortiManager), via intercepting the FGFM authentication request between the management device and the managed device",
+    "cwe_ids": [
+      "CWE-300"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1000209",
+    "description": "Sensu, Inc. Sensu Core version Before version 1.4.2-3 contains a Insecure Permissions vulnerability in Sensu Core on Windows platforms that can result in Unprivileged users may execute code in context of Sensu service account. This attack appear to be exploitable via Unprivileged user may place an arbitrary DLL in the c:\\opt\\sensu\\embedded\\bin directory in order to exploit standard Windows DLL load order behavior. This vulnerability appears to have been fixed in 1.4.2-3 and later.",
+    "cwe_ids": [
+      "CWE-732"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2016-1970",
+    "description": "Integer underflow in the srtp_unprotect function in the WebRTC implementation in Mozilla Firefox before 45.0 on Windows might allow remote attackers to cause a denial of service (memory corruption) or possibly have unspecified other impact via unknown vectors.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-34344",
+    "description": "A stack buffer overflow vulnerability has been reported to affect QNAP device running QUSBCam2. If exploited, this vulnerability allows attackers to execute arbitrary code. We have already fixed this vulnerability in the following versions of QUSBCam2: QTS 4.5.4: QUSBCam2 1.1.4 ( 2021/07/30 ) and later QTS 5.0: QUSBCam2 2.0.1 ( 2021/08/03 ) and later QTS 4.3.6: QUSBCam2 1.1.4 ( 2021/07/30 ) and later QTS 4.3.3: QUSBCam2 1.1.4 ( 2021/08/06 ) and later QuTS hero 4.5.3: QUSBCam2 1.1.4 ( 2021/07/30 ) and later",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-47751",
+    "description": "V-SFT v6.2.5.0 and earlier contains an issue with out-of-bounds write in VS6EditData!CDataRomErrorCheck::MacroCommandCheck function. Opening specially crafted V7 or V8 files may lead to crash, information disclosure, and arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-10880",
+    "description": "Within multiple XEROX products a vulnerability allows remote command execution on the Linux system, as the \"nobody\" user through a crafted \"HTTP\" request (OS Command Injection vulnerability in the HTTP interface). Depending upon configuration authentication may not be necessary.",
+    "cwe_ids": [
+      "CWE-78",
+      "CWE-78"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-47004",
+    "description": "Buffer Overflow vulnerability in Redis RedisGraph v.2.x through v.2.12.8 and fixed in v.2.12.9 allows an attacker to execute arbitrary code via the code logic after valid authentication.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-120",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-39792",
+    "description": "When the NGINX Plus is configured to use the MQTT pre-read module, undisclosed requests can cause an increase in memory resource utilization.  Note: Software versions which have reached End of Technical Support (EoTS) are not evaluated.",
+    "cwe_ids": [
+      "CWE-825",
+      "CWE-672"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-46586",
+    "description": "cgi.c in weborf .0.17, 0.18, 0.19, and 0.20 (before 1.0) lacks '\\0' termination of the path for CGI scripts because strncpy is misused.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-32867",
+    "description": "Suricata is a network Intrusion Detection System, Intrusion Prevention System and Network Security Monitoring engine. Prior to 7.0.5 and 6.0.19, various problems in handling of fragmentation anomalies can lead to mis-detection of rules and policy. This vulnerability is fixed in 7.0.5 or 6.0.19.",
+    "cwe_ids": [
+      "CWE-754",
+      "CWE-754"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-35856",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nBluetooth: btusb: mediatek: Fix double free of skb in coredump\n\nhci_devcd_append() would free the skb on error so the caller don't\nhave to free it again otherwise it would cause the double free of skb.\n\nReported-by : Dan Carpenter <dan.carpenter@linaro.org>",
+    "cwe_ids": [
+      "CWE-415"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-5817",
+    "description": "Heap buffer overflow in ANGLE in Google Chrome on Windows prior to 74.0.3729.108 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14059",
+    "description": "In FFmpeg 3.3.3, a DoS in cine_read_header() due to lack of an EOF check might cause huge CPU and memory consumption. When a crafted CINE file, which claims a large \"duration\" field in the header but does not contain sufficient backing data, is provided, the image-offset parsing loop would consume huge CPU and memory resources, since there is no EOF check inside the loop.",
+    "cwe_ids": [
+      "CWE-834"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-3932",
+    "description": "mediaserver in Android before 2016-10-05 allows attackers to gain privileges via a crafted application, aka Android internal bug 29161895 and MediaTek internal bug ALPS02770870.",
+    "cwe_ids": [
+      "CWE-264"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-2455",
+    "description": "An issue was discovered in certain Apple products. iOS before 10.3 is affected. Safari before 10.1 is affected. tvOS before 10.2 is affected. The issue involves the \"WebKit\" component. It allows remote attackers to execute arbitrary code or cause a denial of service (memory corruption and application crash) via a crafted web site.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-12669",
+    "description": "ImageMagick 7.0.6-2 has a memory leak vulnerability in WriteCALSImage in coders/cals.c.",
+    "cwe_ids": [
+      "CWE-772"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-10193",
+    "description": "A stack-buffer overflow vulnerability was found in the Redis hyperloglog data structure versions 3.x before 3.2.13, 4.x before 4.0.14 and 5.x before 5.0.4. By corrupting a hyperloglog using the SETRANGE command, an attacker could cause Redis to perform controlled increments of up to 12 bytes past the end of a stack-allocated buffer.",
+    "cwe_ids": [
+      "CWE-121",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29578",
+    "description": "TensorFlow is an end-to-end open source platform for machine learning. The implementation of `tf.raw_ops.FractionalAvgPoolGrad` is vulnerable to a heap buffer overflow. The implementation(https://github.com/tensorflow/tensorflow/blob/dcba796a28364d6d7f003f6fe733d82726dda713/tensorflow/core/kernels/fractional_avg_pool_op.cc#L216) fails to validate that the pooling sequence arguments have enough elements as required by the `out_backprop` tensor shape. The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-119",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-8544",
+    "description": "A memory corruption issue was addressed with improved memory handling. This issue is fixed in iOS 12.2, tvOS 12.2, watchOS 5.2, Safari 12.1, iTunes 12.9.4 for Windows, iCloud for Windows 7.11. Processing maliciously crafted web content may lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5180",
+    "description": "A use-after-free vulnerability can occur during WebGL operations. While this results in a potentially exploitable crash, the vulnerability is limited because the memory is freed and reused in a brief window of time during the freeing of the same callstack. This vulnerability affects Firefox < 60.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-25699",
+    "description": "The OpenSSL component of the Teradici PCoIP Software Client prior to version 21.07.0 was compiled without the no-autoload-config option, which allowed an attacker to elevate to the privileges of the running process via placing a specially crafted dll in a build configuration directory.",
+    "cwe_ids": [
+      "CWE-426",
+      "CWE-426"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-5917",
+    "description": "A server-side request forgery in PAN-OS software enables an authenticated attacker with administrative privileges to use the administrative web interface as a proxy, which enables the attacker to view internal network resources not otherwise accessible.",
+    "cwe_ids": [
+      "CWE-918",
+      "CWE-918"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2016-5405",
+    "description": "389 Directory Server in Red Hat Enterprise Linux Desktop 6 through 7, Red Hat Enterprise Linux HPC Node 6 through 7, Red Hat Enterprise Linux Server 6 through 7, and Red Hat Enterprise Linux Workstation 6 through 7 allows remote attackers to obtain user passwords.",
+    "cwe_ids": [
+      "CWE-199"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-49125",
+    "description": "Windows Routing and Remote Access Service (RRAS) Remote Code Execution Vulnerability",
+    "cwe_ids": [
+      "CWE-122"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-19711",
+    "description": "Adobe Acrobat and Reader versions 2019.008.20081 and earlier, 2019.008.20080 and earlier, 2019.008.20081 and earlier, 2017.011.30106 and earlier version, 2017.011.30105 and earlier version, 2015.006.30457 and earlier, and 2015.006.30456 and earlier have an out-of-bounds read vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-33068",
+    "description": "An integer overflow in the component hb-ot-shape-fallback.cc of Harfbuzz v4.3.0 allows attackers to cause a Denial of Service (DoS) via unspecified vectors.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-43781",
+    "description": "A vulnerability has been identified in SINUMERIK 828D V4 (All versions < V4.95 SP3), SINUMERIK 840D sl V4 (All versions < V4.95 SP3 in connection with using Create MyConfig (CMC) <= V4.8 SP1 HF6), SINUMERIK ONE (All versions < V6.23 in connection with using Create MyConfig (CMC) <= V6.6), SINUMERIK ONE (All versions < V6.15 SP4 in connection with using Create MyConfig (CMC) <= V6.6). Affected systems, that have been provisioned with Create MyConfig (CMC), contain a Insertion of Sensitive Information into Log File vulnerability. This could allow a local authenticated user with low privileges to read sensitive information and thus circumvent access restrictions.",
+    "cwe_ids": [
+      "CWE-532"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-9027",
+    "description": "An issue was discovered in libmatio.a in matio (aka MAT File I/O Library) 1.5.13. There is a heap-based buffer overflow problem in the function ReadNextCell() in mat5.c.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-13949",
+    "description": "In Apache Thrift 0.9.3 to 0.13.0, malicious RPC clients could send short messages which would result in a large memory allocation, potentially leading to denial of service.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-22171",
+    "description": "An Improper Check for Unusual or Exceptional Conditions vulnerability in the Packet Forwarding Engine (PFE) of Juniper Networks Junos OS allows an unauthenticated networked attacker to cause a Denial of Service (DoS) by sending specific packets over VXLAN which cause the PFE to reset. This issue affects: Juniper Networks Junos OS 19.4 versions prior to 19.4R3-S7; 20.1 versions prior to 20.1R3-S3; 20.2 versions prior to 20.2R3-S3; 20.3 versions prior to 20.3R3-S2; 20.4 versions prior to 20.4R3-S1; 21.1 versions prior to 21.1R3; 21.2 versions prior to 21.2R2; 21.3 versions prior to 21.3R1-S1, 21.3R2. This issue does not affect versions of Junos OS prior to 19.4R1.",
+    "cwe_ids": [
+      "CWE-754"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-2838",
+    "description": "Heap-based buffer overflow in the nsBidi::BracketData::AddOpening function in Mozilla Firefox before 48.0 and Firefox ESR 45.x before 45.3 allows remote attackers to execute arbitrary code via directional content in an SVG document.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-49874",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nHID: hyperv: fix possible memory leak in mousevsc_probe()\n\nIf hid_add_device() returns error, it should call hid_destroy_device()\nto free hid_dev which is allocated in hid_allocate_device().",
+    "cwe_ids": [
+      "CWE-401",
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-26950",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nwireguard: netlink: access device through ctx instead of peer\n\nThe previous commit fixed a bug that led to a NULL peer->device being\ndereferenced. It's actually easier and faster performance-wise to\ninstead get the device from ctx->wg. This semantically makes more sense\ntoo, since ctx->wg->peer_allowedips.seq is compared with\nctx->allowedips_seq, basing them both in ctx. This also acts as a\ndefence in depth provision against freed peers.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-60002",
+    "description": "An Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Juniper Networks Junos Space allows an attacker to inject script tags in the Template Definitions page that, when visited by another user, enables the attacker to execute commands with the target's permissions, including an administrator.\nThis issue affects all versions of Junos Space before 24.1R4.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2020-12402",
+    "description": "During RSA key generation, bignum implementations used a variation of the Binary Extended Euclidean Algorithm which entailed significantly input-dependent flow. This allowed an attacker able to perform electromagnetic-based side channel attacks to record traces leading to the recovery of the secret primes. *Note:* An unmodified Firefox browser does not generate RSA keys in normal operation and is not affected, but products built on top of it might. This vulnerability affects Firefox < 78.",
+    "cwe_ids": [
+      "CWE-203"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-4194",
+    "description": "Adobe Reader and Acrobat before 11.0.17, Acrobat and Acrobat Reader DC Classic before 15.006.30198, and Acrobat and Acrobat Reader DC Continuous before 15.017.20050 on Windows and OS X allow attackers to execute arbitrary code or cause a denial of service (memory corruption) via unspecified vectors, a different vulnerability than CVE-2016-4191, CVE-2016-4192, CVE-2016-4193, CVE-2016-4195, CVE-2016-4196, CVE-2016-4197, CVE-2016-4198, CVE-2016-4199, CVE-2016-4200, CVE-2016-4201, CVE-2016-4202, CVE-2016-4203, CVE-2016-4204, CVE-2016-4205, CVE-2016-4206, CVE-2016-4207, CVE-2016-4208, CVE-2016-4211, CVE-2016-4212, CVE-2016-4213, CVE-2016-4214, CVE-2016-4250, CVE-2016-4251, CVE-2016-4252, and CVE-2016-4254.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-23932",
+    "description": "OpenDDS is an open source C++ implementation of the Object Management Group (OMG) Data Distribution Service (DDS). OpenDDS applications that are exposed to untrusted RTPS network traffic may crash when parsing badly-formed input. This issue has been patched in version 3.23.1.",
+    "cwe_ids": [
+      "CWE-248"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-7156",
+    "description": "In libdoc through 2019-01-28, calcFileBlockOffset in ole.c allows division by zero.",
+    "cwe_ids": [
+      "CWE-369"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-22077",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRevert \"smb: client: fix TCP timers deadlock after rmmod\"\n\nThis reverts commit e9f2517a3e18a54a3943c098d2226b245d488801.\n\nCommit e9f2517a3e18 (\"smb: client: fix TCP timers deadlock after\nrmmod\") is intended to fix a null-ptr-deref in LOCKDEP, which is\nmentioned as CVE-2024-54680, but is actually did not fix anything;\nThe issue can be reproduced on top of it. [0]\n\nAlso, it reverted the change by commit ef7134c7fc48 (\"smb: client:\nFix use-after-free of network namespace.\") and introduced a real\nissue by reviving the kernel TCP socket.\n\nWhen a reconnect happens for a CIFS connection, the socket state\ntransitions to FIN_WAIT_1.  Then, inet_csk_clear_xmit_timers_sync()\nin tcp_close() stops all timers for the socket.\n\nIf an incoming FIN packet is lost, the socket will stay at FIN_WAIT_1\nforever, and such sockets could be leaked up to net.ipv4.tcp_max_orphans.\n\nUsually, FIN can be retransmitted by the peer, but if the peer aborts\nthe connection, the issue comes into reality.\n\nI warned about this privately by pointing out the exact report [1],\nbut the bogus fix was finally merged.\n\nSo, we should not stop the timers to finally kill the connection on\nour side in that case, meaning we must not use a kernel socket for\nTCP whose sk->sk_net_refcnt is 0.\n\nThe kernel socket does not have a reference to its netns to make it\npossible to tear down netns without cleaning up every resource in it.\n\nFor example, tunnel devices use a UDP socket internally, but we can\ndestroy netns without removing such devices and let it complete\nduring exit.  Otherwise, netns would be leaked when the last application\ndied.\n\nHowever, this is problematic for TCP sockets because TCP has timers to\nclose the connection gracefully even after the socket is close()d.  The\nlifetime of the socket and its netns is different from the lifetime of\nthe underlying connection.\n\nIf the socket user does not maintain the netns lifetime, the timer could\nbe fired after the socket is close()d and its netns is freed up, resulting\nin use-after-free.\n\nActually, we have seen so many similar issues and converted such sockets\nto have a reference to netns.\n\nThat's why I converted the CIFS client socket to have a reference to\nnetns (sk->sk_net_refcnt == 1), which is somehow mentioned as out-of-scope\nof CIFS and technically wrong in e9f2517a3e18, but **is in-scope and right\nfix**.\n\nRegarding the LOCKDEP issue, we can prevent the module unload by\nbumping the module refcount when switching the LOCKDDEP key in\nsock_lock_init_class_and_name(). [2]\n\nFor a while, let's revert the bogus fix.\n\nNote that now we can use sk_net_refcnt_upgrade() for the socket\nconversion, but I'll do so later separately to make backport easy.",
+    "cwe_ids": [
+      "CWE-667"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-10610",
+    "description": "On SRX Series devices, a crafted ICMP packet embedded within a NAT64 IPv6 to IPv4 tunnel may cause the flowd process to crash. Repeated crashes of the flowd process constitutes an extended denial of service condition for the SRX Series device. This issue only occurs if NAT64 is configured. Affected releases are Juniper Networks Junos OS 12.1X46 prior to 12.1X46-D71, 12.3X48 prior to 12.3X48-D55, 15.1X49 prior to 15.1X49-D100 on SRX Series. No other Juniper Networks products or platforms are affected by this issue.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-10317",
+    "description": "Vulnerability in the Oracle Hospitality Suite8 component of Oracle Hospitality Applications (subcomponent: WebConnect). Supported versions that are affected are 8.10.1 and 8.10.2. Easily exploitable vulnerability allows unauthenticated attacker with logon to the infrastructure where Oracle Hospitality Suite8 executes to compromise Oracle Hospitality Suite8. Successful attacks of this vulnerability can result in unauthorized read access to a subset of Oracle Hospitality Suite8 accessible data. CVSS 3.0 Base Score 4.0 (Confidentiality impacts). CVSS Vector: (CVSS:3.0/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N).",
+    "cwe_ids": [
+      "CWE-200"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2021-28373",
+    "description": "The auth_internal plugin in Tiny Tiny RSS (aka tt-rss) before 2021-03-12 allows an attacker to log in via the OTP code without a valid password. NOTE: this issue only affected the git master branch for a short time. However, all end users are explicitly directed to use the git master branch in production. Semantic version numbers such as 21.03 appear to exist, but are automatically generated from the year and month. They are not releases.",
+    "cwe_ids": [
+      "CWE-863"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2024-43577",
+    "description": "Microsoft Edge (Chromium-based) Spoofing Vulnerability",
+    "cwe_ids": [
+      "CWE-449"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-21066",
+    "description": "An issue was discovered in Bento4 v1.5.1.0. There is a heap-buffer-overflow in AP4_Dec3Atom::AP4_Dec3Atom at Ap4Dec3Atom.cpp, leading to a denial of service (program crash), as demonstrated by mp42aac.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-22721",
+    "description": "If LimitXMLRequestBody is set to allow request bodies larger than 350MB (defaults to 1M) on 32 bit systems an integer overflow happens which later causes out of bounds writes. This issue affects Apache HTTP Server 2.4.52 and earlier.",
+    "cwe_ids": [
+      "CWE-190",
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31615",
+    "description": "NVIDIA GPU Display Driver for Linux contains a vulnerability in the kernel mode layer, where a local user with basic capabilities can cause a null-pointer dereference, which may lead to denial of service.",
+    "cwe_ids": [
+      "CWE-476",
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-41993",
+    "description": "The issue was addressed with improved checks. This issue is fixed in macOS Sonoma 14. Processing web content may lead to arbitrary code execution. Apple is aware of a report that this issue may have been actively exploited against versions of iOS before iOS 16.7.",
+    "cwe_ids": [
+      "CWE-754",
+      "CWE-754"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-24370",
+    "description": "ldebug.c in Lua 5.4.0 allows a negation overflow and segmentation fault in getlocal and setlocal, as demonstrated by getlocal(3,2^31).",
+    "cwe_ids": [
+      "CWE-191"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29265",
+    "description": "An issue was discovered in the Linux kernel before 5.11.7. usbip_sockfd_store in drivers/usb/usbip/stub_dev.c allows attackers to cause a denial of service (GPF) because the stub-up sequence has race conditions during an update of the local and shared status, aka CID-9380afd6df70.",
+    "cwe_ids": [
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-32040",
+    "description": "It may be possible to have an extremely long aggregation pipeline in conjunction with a specific stage/operator and cause a stack overflow due to the size of the stack frames used by that stage. If an attacker could cause such an aggregation to occur, they could maliciously crash MongoDB in a DoS attack. This vulnerability affects MongoDB Server v4.4 versions prior to and including 4.4.28, MongoDB Server v5.0 versions prior to 5.0.4 and MongoDB Server v4.2 versions prior to 4.2.16.\n\nWorkaround: >= v4.2.16 users and all v4.4 users can add the --setParameter internalPipelineLengthLimit=50 instead of the default 1000 to mongod at startup to prevent a crash.",
+    "cwe_ids": [
+      "CWE-121",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-10280",
+    "description": "Vulnerability in the PeopleSoft Enterprise PeopleTools component of Oracle PeopleSoft Products (subcomponent: Test Framework). Supported versions that are affected are 8.54, 8.55 and 8.56. Easily exploitable vulnerability allows low privileged attacker with network access via HTTP to compromise PeopleSoft Enterprise PeopleTools. Successful attacks of this vulnerability can result in unauthorized access to critical data or complete access to all PeopleSoft Enterprise PeopleTools accessible data. CVSS 3.0 Base Score 6.5 (Confidentiality impacts). CVSS Vector: (CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N).",
+    "cwe_ids": [
+      "CWE-200"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2021-3735",
+    "description": "A deadlock issue was found in the AHCI controller device of QEMU. It occurs on a software reset (ahci_reset_port) while handling a host-to-device Register FIS (Frame Information Structure) packet from the guest. A privileged user inside the guest could use this flaw to hang the QEMU process on the host, resulting in a denial of service condition. The highest threat from this vulnerability is to system availability.",
+    "cwe_ids": [
+      "CWE-667",
+      "CWE-400",
+      "CWE-667"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-46988",
+    "description": "Path Traversal vulnerability in ONLYOFFICE Document Server before v8.0.1 allows a remote attacker to copy arbitrary files by manipulating the fileExt parameter in the /example/editor endpoint, leading to unauthorized access to sensitive files and potential Denial of Service (DoS).",
+    "cwe_ids": [
+      "CWE-22"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2019-13762",
+    "description": "Insufficient policy enforcement in downloads in Google Chrome on Windows prior to 79.0.3945.79 allowed a local attacker to spoof downloaded files via local code.",
+    "cwe_ids": [
+      "CWE-667"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-9791",
+    "description": "The Struts 1 plugin in Apache Struts 2.1.x and 2.3.x might allow remote code execution via a malicious field value passed in a raw message to the ActionMessage.",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-20"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2022-48670",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npeci: cpu: Fix use-after-free in adev_release()\n\nWhen auxiliary_device_add() returns an error, auxiliary_device_uninit()\nis called, which causes refcount for device to be decremented and\n.release callback will be triggered.\n\nBecause adev_release() re-calls auxiliary_device_uninit(), it will cause\nuse-after-free:\n[ 1269.455172] WARNING: CPU: 0 PID: 14267 at lib/refcount.c:28 refcount_warn_saturate+0x110/0x15\n[ 1269.464007] refcount_t: underflow; use-after-free.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-2544",
+    "description": "An issue was discovered in certain Apple products. iOS before 10.3.2 is affected. Safari before 10.1.1 is affected. The issue involves the \"WebKit\" component. It allows remote attackers to execute arbitrary code or cause a denial of service (memory corruption and application crash) via a crafted web site.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7151",
+    "description": "A race condition was addressed with additional validation. This issue affected versions prior to iOS 11.2, macOS High Sierra 10.13.2, tvOS 11.2, watchOS 4.2, iTunes 12.7.2 for Windows, macOS High Sierra 10.13.4.",
+    "cwe_ids": [
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-22636",
+    "description": "An out-of-bounds write issue was addressed with improved bounds checking. This issue is fixed in tvOS 15.4, iOS 15.4 and iPadOS 15.4. An application may be able to execute arbitrary code with kernel privileges.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-16375",
+    "description": "An issue was discovered in OpenJPEG 2.3.0. Missing checks for header_info.height and header_info.width in the function pnmtoimage in bin/jpwl/convert.c can lead to a heap-based buffer overflow.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-13441",
+    "description": "qh_help in Nagios Core version 4.4.1 and earlier is prone to a NULL pointer dereference vulnerability, which allows attacker to cause a local denial-of-service condition by sending a crafted payload to the listening UNIX socket.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-10898",
+    "description": "In Wireshark 3.0.0, the GSUP dissector could go into an infinite loop. This was addressed in epan/dissectors/packet-gsm_gsup.c by rejecting an invalid Information Element length.",
+    "cwe_ids": [
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0221",
+    "description": "In an EVPN/VXLAN scenario, if an IRB interface with a virtual gateway address (VGA) is configured on a PE, a traffic loop may occur upon receipt of specific IP multicast traffic. The traffic loop will cause interface traffic to increase abnormally, ultimately leading to a Denial of Service (DoS) in packet processing. The following command could be used to monitor the interface traffic: user@junos> monitor interface traffic Interface Link Input packets (pps) Output packets (pps) et-0/0/1 Up 6492089274364 (70994959) 6492089235319 (70994956) et-0/0/25 Up 343458103 (1) 156844 (0) ae0 Up 9132519197257 (70994959) 9132519139454 (70994956) This issue affects Juniper Networks Junos OS on QFX Series: all versions prior to 17.3R3-S10; 17.4 versions prior to 17.4R2-S12, 17.4R3-S3; 18.1 versions prior to 18.1R3-S11; 18.2 versions prior to 18.2R3-S6; 18.3 versions prior to 18.3R3-S4; 18.4 versions prior to 18.4R2-S5, 18.4R3-S5; 19.1 versions prior to 19.1R1-S6, 19.1R2-S2, 19.1R3-S3; 19.2 versions prior to 19.2R1-S5, 19.2R3-S1; 19.3 versions prior to 19.3R2-S5, 19.3R3; 19.4 versions prior to 19.4R2-S2, 19.4R3; 20.1 versions prior to 20.1R2; 20.2 versions prior to 20.2R1-S2, 20.2R2.",
+    "cwe_ids": [
+      "CWE-703",
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7864",
+    "description": "FreeType 2 before 2017-02-02 has an out-of-bounds write caused by a heap-based buffer overflow related to the tt_size_reset function in truetype/ttobjs.c.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-31204",
+    "description": "The issue was addressed with improved memory handling. This issue is fixed in watchOS 11.5, tvOS 18.5, iOS 18.5 and iPadOS 18.5, macOS Sequoia 15.5, visionOS 2.5, Safari 18.5. Processing maliciously crafted web content may lead to memory corruption.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-24544",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Alexandros Georgiou Bitcoin and Altcoin Wallets allows Reflected XSS. This issue affects Bitcoin and Altcoin Wallets: from n/a through 6.3.1.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2022-42866",
+    "description": "The issue was addressed with improved handling of caches. This issue is fixed in iOS 16.2 and iPadOS 16.2, macOS Ventura 13.1, tvOS 16.2, watchOS 9.2. An app may be able to read sensitive location information.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-3031",
+    "description": "Adobe Acrobat Reader versions 11.0.19 and earlier, 15.006.30280 and earlier, 15.023.20070 and earlier have a memory address leak vulnerability in the XSLT engine.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7177",
+    "description": "Suricata before 3.2.1 has an IPv4 defragmentation evasion issue caused by lack of a check for the IP protocol during fragment matching.",
+    "cwe_ids": [
+      "CWE-358"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-14290",
+    "description": "An issue was discovered in Xpdf 4.01.01. There is an out of bounds read in the function GfxPatchMeshShading::parse at GfxState.cc for typeA==6 case 2.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-1043",
+    "description": "A remote code execution vulnerability exists when Hyper-V RemoteFX vGPU on a host server fails to properly validate input from an authenticated user on a guest operating system, aka 'Hyper-V RemoteFX vGPU Remote Code Execution Vulnerability'. This CVE ID is unique from CVE-2020-1032, CVE-2020-1036, CVE-2020-1040, CVE-2020-1041, CVE-2020-1042.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-15847",
+    "description": "In Android for MSM, Firefox OS for MSM, QRD Android, with all Android releases from CAF using the Linux kernel, in the SPCom kernel driver, a race condition exists when creating a channel.",
+    "cwe_ids": [
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-41769",
+    "description": "A vulnerability has been identified in SIPROTEC 5 6MD85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 6MD86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 6MD89 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 6MU85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7KE85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SA82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SA86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SA87 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SD82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SD86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SD87 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SJ81 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SJ82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SJ85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SJ86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SK82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SK85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SL82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7SL86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SL87 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SS85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7ST85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7SX85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7UM85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7UT82 devices (CPU variant CP100) (All versions < V8.83), SIPROTEC 5 7UT85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7UT86 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7UT87 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7VE85 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 7VK87 devices (CPU variant CP300) (All versions < V8.83), SIPROTEC 5 Compact 7SX800 devices (CPU variant CP050) (All versions < V8.83). An improper input validation vulnerability in the web server could allow an unauthenticated user to access device information.",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-5099",
+    "description": "Insufficient validation of untrusted input in PPAPI Plugins in Google Chrome prior to 60.0.3112.78 for Mac allowed a remote attacker to potentially gain privilege elevation via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-12295",
+    "description": "In Wireshark 3.0.0 to 3.0.1, 2.6.0 to 2.6.8, and 2.4.0 to 2.4.14, the dissection engine could crash. This was addressed in epan/packet.c by restricting the number of layers and consequently limiting recursion.",
+    "cwe_ids": [
+      "CWE-674"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-39208",
+    "description": "SharpCompress is a fully managed C# library to deal with many compression types and formats. Versions prior to 0.29.0 are vulnerable to partial path traversal. SharpCompress recreates a hierarchy of directories under destinationDirectory if ExtractFullPath is set to true in options. In order to prevent extraction outside the destination directory the destinationFileName path is verified to begin with fullDestinationDirectoryPath. However, prior to version 0.29.0, it is not enforced that fullDestinationDirectoryPath ends with slash. If the destinationDirectory is not slash terminated like `/home/user/dir` it is possible to create a file with a name thats begins as the destination directory one level up from the directory, i.e. `/home/user/dir.sh`. Because of the file name and destination directory constraints the arbitrary file creation impact is limited and depends on the use case. This issue is fixed in SharpCompress version 0.29.0.",
+    "cwe_ids": [
+      "CWE-22"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2023-1216",
+    "description": "Use after free in DevTools in Google Chrome prior to 111.0.5563.64 allowed a remote attacker who had convienced the user to engage in direct UI interaction to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: High)",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-23241",
+    "description": "Integer overflow or wraparound in the Linux kernel-mode driver for some Intel(R) 800 Series Ethernet before version 1.17.2 may allow an authenticated user to potentially enable denial of service via local access.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-11142",
+    "description": "In PHP before 5.6.31, 7.x before 7.0.17, and 7.1.x before 7.1.3, remote attackers could cause a CPU consumption denial of service attack by injecting long form variables, related to main/php_variables.c.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-45034",
+    "description": "A vulnerability has been identified in CP-8000 MASTER MODULE WITH I/O -25/+70°C (All versions < V16.20), CP-8000 MASTER MODULE WITH I/O -40/+70°C (All versions < V16.20), CP-8021 MASTER MODULE (All versions < V16.20), CP-8022 MASTER MODULE WITH GPRS (All versions < V16.20). The web server of the affected system allows access to logfiles and diagnostic data generated by a privileged user. An unauthenticated attacker could access the files by knowing the corresponding download links.",
+    "cwe_ids": [
+      "CWE-284",
+      "CWE-532"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-20196",
+    "description": "A vulnerability in the Cisco IOx application hosting environment of Cisco IOS Software and Cisco IOS XE Software could allow an unauthenticated, remote attacker to cause the Cisco IOx application hosting environment to stop responding, resulting in a denial of service (DoS) condition.\r\n\r This vulnerability is due to the improper handling of HTTP requests. An attacker could exploit this vulnerability by sending crafted HTTP requests to an affected device. A successful exploit could allow the attacker to cause the Cisco IOx application hosting environment to stop responding. The IOx process will need to be manually restarted to recover services.",
+    "cwe_ids": [
+      "CWE-307"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-47148",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nocteontx2-pf: fix a buffer overflow in otx2_set_rxfh_context()\n\nThis function is called from ethtool_set_rxfh() and \"*rss_context\"\ncomes from the user.  Add some bounds checking to prevent memory\ncorruption.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-24754",
+    "description": "libde265 v1.0.10 was discovered to contain a NULL pointer dereference in the ff_hevc_put_weighted_pred_avg_8_sse function at sse-motion.cc. This vulnerability allows attackers to cause a Denial of Service (DoS) via a crafted input file.",
+    "cwe_ids": [
+      "CWE-476",
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-16580",
+    "description": "This vulnerability allows remote attackers to disclose sensitive information on vulnerable installations of Foxit Reader 8.3.2.25013. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the ImageField node of XFA forms. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated object. An attacker can leverage this in conjunction with other vulnerabilities to execute code in the context of the current process. Was ZDI-CAN-5281.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125",
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-26553",
+    "description": "mstolfp in libntp/mstolfp.c in NTP 4.2.8p15 has an out-of-bounds write when copying the trailing number. An adversary may be able to attack a client ntpq process, but cannot attack ntpd.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5156",
+    "description": "A vulnerability can occur when capturing a media stream when the media source type is changed as the capture is occurring. This can result in stream data being cast to the wrong type causing a potentially exploitable crash. This vulnerability affects Thunderbird < 60, Firefox ESR < 60.1, Firefox ESR < 52.9, and Firefox < 61.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-41991",
+    "description": "A certificate validation issue was addressed. This issue is fixed in macOS Ventura 13.6, iOS 16.7 and iPadOS 16.7. A malicious app may be able to bypass signature validation. Apple is aware of a report that this issue may have been actively exploited against versions of iOS before iOS 16.7.",
+    "cwe_ids": [
+      "CWE-295",
+      "CWE-295"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-54014",
+    "description": "Improper authorization in handler for custom URL scheme issue in 'Skylark' App for Android 6.2.13 and earlier and 'Skylark' App for iOS 6.2.13 and earlier allows an attacker to lead the application to access an arbitrary web site via another application installed on the user's device.",
+    "cwe_ids": [
+      "CWE-939"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2018-14313",
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of Foxit Reader 9.0.1.5096. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the handling of PDF files. The issue results from the lack of proper validation of user-supplied data, which can result in a type confusion condition. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-6362.",
+    "cwe_ids": [
+      "CWE-843",
+      "CWE-704"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-10921",
+    "description": "This vulnerability allows remote attackers to issue commands on affected installations of C-MORE HMI EA9 Firmware version 6.52 touch screen panels. Authentication is not required to exploit this vulnerability. The specific flaw exists within the EA-HTTP.exe process. The issue results from the lack of authentication prior to allowing alterations to the system configuration. An attacker can leverage this vulnerability to issue commands to the physical equipment controlled by the device. Was ZDI-CAN-10482.",
+    "cwe_ids": [
+      "CWE-306"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-31273",
+    "description": "The issue was addressed with improved memory handling. This issue is fixed in Safari 18.6, macOS Sequoia 15.6, iOS 18.6 and iPadOS 18.6, tvOS 18.6, watchOS 11.6, visionOS 2.6. Processing maliciously crafted web content may lead to memory corruption.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-13454",
+    "description": "ImageMagick 7.0.1-0 to 7.0.8-54 Q16 allows Division by Zero in RemoveDuplicateLayers in MagickCore/layer.c.",
+    "cwe_ids": [
+      "CWE-369"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-2998",
+    "description": "Use after free in Browser Creation in Google Chrome prior to 104.0.5112.101 allowed a remote attacker who had convinced a user to engage in a specific UI interaction to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-0735",
+    "description": "Apache Ranger 0.5.x before 0.5.2 allows remote authenticated users to bypass intended parent resource-level access restrictions by leveraging mishandling of a resource-level exclude policy.",
+    "cwe_ids": [
+      "CWE-264"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2019-8506",
+    "description": "A type confusion issue was addressed with improved memory handling. This issue is fixed in iOS 12.2, tvOS 12.2, watchOS 5.2, Safari 12.1, iTunes 12.9.4 for Windows, iCloud for Windows 7.11. Processing maliciously crafted web content may lead to arbitrary code execution.",
+    "cwe_ids": [
+      "CWE-843",
+      "CWE-843"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-52507",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnfc: nci: assert requested protocol is valid\n\nThe protocol is used in a bit mask to determine if the protocol is\nsupported. Assert the provided protocol is less than the maximum\ndefined so it doesn't potentially perform a shift-out-of-bounds and\nprovide a clearer error for undefined protocols vs unsupported ones.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-30911",
+    "description": "An out-of-bounds read was addressed with improved bounds checking. This issue is fixed in macOS Monterey 12.0.1, Security Update 2021-007 Catalina, iOS 15.1 and iPadOS 15.1, macOS Big Sur 11.6.1. Processing a maliciously crafted USD file may disclose memory contents.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-17435",
+    "description": "A heap-based buffer over-read in H5O_attr_decode() in H5Oattr.c in the HDF HDF5 through 1.10.3 library allows attackers to cause a denial of service via a crafted HDF5 file. This issue was triggered while converting an HDF file to GIF file.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-8246",
+    "description": "An information disclosure vulnerability exists when Microsoft Excel improperly discloses the contents of its memory, aka \"Microsoft Excel Information Disclosure Vulnerability.\" This affects Microsoft Excel Viewer, Microsoft Office, Microsoft Excel.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-43112",
+    "description": "Long pressing on a download link could potentially provide a means for cross-site scripting This vulnerability affects Firefox for iOS < 129.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-58069",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrtc: pcf85063: fix potential OOB write in PCF85063 NVMEM read\n\nThe nvmem interface supports variable buffer sizes, while the regmap\ninterface operates with fixed-size storage. If an nvmem client uses a\nbuffer size less than 4 bytes, regmap_read will write out of bounds\nas it expects the buffer to point at an unsigned int.\n\nFix this by using an intermediary unsigned int to hold the value.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-6976",
+    "description": "The VMware Content Locker for iOS prior to 4.14 contains a data protection vulnerability in the SQLite database. This vulnerability relates to unencrypted filenames and associated metadata in SQLite database for the Content Locker.",
+    "cwe_ids": [
+      "CWE-311"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-15986",
+    "description": "Adobe Acrobat and Reader versions 2019.008.20081 and earlier, 2019.008.20080 and earlier, 2019.008.20081 and earlier, 2017.011.30106 and earlier version, 2017.011.30105 and earlier version, 2015.006.30457 and earlier, and 2015.006.30456 and earlier have an integer overflow vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-22126",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmd: fix mddev uaf while iterating all_mddevs list\n\nWhile iterating all_mddevs list from md_notify_reboot() and md_exit(),\nlist_for_each_entry_safe is used, and this can race with deletint the\nnext mddev, causing UAF:\n\nt1:\nspin_lock\n//list_for_each_entry_safe(mddev, n, ...)\n mddev_get(mddev1)\n // assume mddev2 is the next entry\n spin_unlock\n            t2:\n            //remove mddev2\n            ...\n            mddev_free\n            spin_lock\n            list_del\n            spin_unlock\n            kfree(mddev2)\n mddev_put(mddev1)\n spin_lock\n //continue dereference mddev2->all_mddevs\n\nThe old helper for_each_mddev() actually grab the reference of mddev2\nwhile holding the lock, to prevent from being freed. This problem can be\nfixed the same way, however, the code will be complex.\n\nHence switch to use list_for_each_entry, in this case mddev_put() can free\nthe mddev1 and it's not safe as well. Refer to md_seq_show(), also factor\nout a helper mddev_put_locked() to fix this problem.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-15159",
+    "description": "The libesedb_page_read_tags function in libesedb_page.c in libesedb through 2018-04-01 allows remote attackers to cause a heap-based buffer over-read via a crafted esedb file. NOTE: the vendor has disputed this as described in the GitHub issue comments",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-2224",
+    "description": "The __decode_dotted function in libc/inet/resolv.c in uClibc-ng before 1.0.12 allows remote DNS servers to cause a denial of service (infinite loop) via vectors involving compressed items in a reply.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-50041",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ni40e: Fix macvlan leak by synchronizing access to mac_filter_hash\n\nThis patch addresses a macvlan leak issue in the i40e driver caused by\nconcurrent access to vsi->mac_filter_hash. The leak occurs when multiple\nthreads attempt to modify the mac_filter_hash simultaneously, leading to\ninconsistent state and potential memory leaks.\n\nTo fix this, we now wrap the calls to i40e_del_mac_filter() and zeroing\nvf->default_lan_addr.addr with spin_lock/unlock_bh(&vsi->mac_filter_hash_lock),\nensuring atomic operations and preventing concurrent access.\n\nAdditionally, we add lockdep_assert_held(&vsi->mac_filter_hash_lock) in\ni40e_add_mac_filter() to help catch similar issues in the future.\n\nReproduction steps:\n1. Spawn VFs and configure port vlan on them.\n2. Trigger concurrent macvlan operations (e.g., adding and deleting\n\tportvlan and/or mac filters).\n3. Observe the potential memory leak and inconsistent state in the\n\tmac_filter_hash.\n\nThis synchronization ensures the integrity of the mac_filter_hash and prevents\nthe described leak.",
+    "cwe_ids": [
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-14648",
+    "description": "A global buffer overflow was discovered in the iteration_loop function in loop.c in BladeEnc version 0.94.2. The vulnerability causes an out-of-bounds write, which leads to remote denial of service or possibly code execution.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-42096",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nx86: stop playing stack games in profile_pc()\n\nThe 'profile_pc()' function is used for timer-based profiling, which\nisn't really all that relevant any more to begin with, but it also ends\nup making assumptions based on the stack layout that aren't necessarily\nvalid.\n\nBasically, the code tries to account the time spent in spinlocks to the\ncaller rather than the spinlock, and while I support that as a concept,\nit's not worth the code complexity or the KASAN warnings when no serious\nprofiling is done using timers anyway these days.\n\nAnd the code really does depend on stack layout that is only true in the\nsimplest of cases.  We've lost the comment at some point (I think when\nthe 32-bit and 64-bit code was unified), but it used to say:\n\n\tAssume the lock function has either no stack frame or a copy\n\tof eflags from PUSHF.\n\nwhich explains why it just blindly loads a word or two straight off the\nstack pointer and then takes a minimal look at the values to just check\nif they might be eflags or the return pc:\n\n\tEflags always has bits 22 and up cleared unlike kernel addresses\n\nbut that basic stack layout assumption assumes that there isn't any lock\ndebugging etc going on that would complicate the code and cause a stack\nframe.\n\nIt causes KASAN unhappiness reported for years by syzkaller [1] and\nothers [2].\n\nWith no real practical reason for this any more, just remove the code.\n\nJust for historical interest, here's some background commits relating to\nthis code from 2006:\n\n  0cb91a229364 (\"i386: Account spinlocks to the caller during profiling for !FP kernels\")\n  31679f38d886 (\"Simplify profile_pc on x86-64\")\n\nand a code unification from 2009:\n\n  ef4512882dbe (\"x86: time_32/64.c unify profile_pc\")\n\nbut the basics of this thing actually goes back to before the git tree.",
+    "cwe_ids": [
+      "CWE-908"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-42316",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmm/mglru: fix div-by-zero in vmpressure_calc_level()\n\nevict_folios() uses a second pass to reclaim folios that have gone through\npage writeback and become clean before it finishes the first pass, since\nfolio_rotate_reclaimable() cannot handle those folios due to the\nisolation.\n\nThe second pass tries to avoid potential double counting by deducting\nscan_control->nr_scanned.  However, this can result in underflow of\nnr_scanned, under a condition where shrink_folio_list() does not increment\nnr_scanned, i.e., when folio_trylock() fails.\n\nThe underflow can cause the divisor, i.e., scale=scanned+reclaimed in\nvmpressure_calc_level(), to become zero, resulting in the following crash:\n\n  [exception RIP: vmpressure_work_fn+101]\n  process_one_work at ffffffffa3313f2b\n\nSince scan_control->nr_scanned has no established semantics, the potential\ndouble counting has minimal risks.  Therefore, fix the problem by not\ndeducting scan_control->nr_scanned in evict_folios().",
+    "cwe_ids": [
+      "CWE-369"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-37655",
+    "description": "TensorFlow is an end-to-end open source platform for machine learning. In affected versions an attacker can trigger a read from outside of bounds of heap allocated data by sending invalid arguments to `tf.raw_ops.ResourceScatterUpdate`. The [implementation](https://github.com/tensorflow/tensorflow/blob/f24faa153ad31a4b51578f8181d3aaab77a1ddeb/tensorflow/core/kernels/resource_variable_ops.cc#L919-L923) has an incomplete validation of the relationship between the shapes of `indices` and `updates`: instead of checking that the shape of `indices` is a prefix of the shape of `updates` (so that broadcasting can happen), code only checks that the number of elements in these two tensors are in a divisibility relationship. We have patched the issue in GitHub commit 01cff3f986259d661103412a20745928c727326f. The fix will be included in TensorFlow 2.6.0. We will also cherrypick this commit on TensorFlow 2.5.1, TensorFlow 2.4.3, and TensorFlow 2.3.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-39546",
+    "description": "An issue was discovered in sela through 20200412. rice::RiceDecoder::process() in rice_decoder.cpp has a heap-based buffer overflow.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-8703",
+    "description": "The Microsoft Windows Subsystem for Linux on Microsoft Windows 10 1703 allows a denial of service vulnerability when it improperly handles objects in memory, aka \"Windows Subsystem for Linux Denial of Service Vulnerability\".",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-3833",
+    "description": "Object corruption in WebAssembly in Google Chrome prior to 124.0.6367.60 allowed a remote attacker to potentially exploit object corruption via a crafted HTML page. (Chromium security severity: High)",
+    "cwe_ids": [
+      "CWE-374"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-53072",
+    "description": "Vulnerability in the Oracle Marketing product of Oracle E-Business Suite (component: Marketing Administration).  Supported versions that are affected are 12.2.3-12.2.14. Easily exploitable vulnerability allows unauthenticated attacker with network access via HTTP to compromise Oracle Marketing.  Successful attacks of this vulnerability can result in takeover of Oracle Marketing. CVSS 3.1 Base Score 9.8 (Confidentiality, Integrity and Availability impacts).  CVSS Vector: (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-306"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2018-14614",
+    "description": "An issue was discovered in the Linux kernel through 4.17.10. There is an out-of-bounds access in __remove_dirty_segment() in fs/f2fs/segment.c when mounting an f2fs image.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2908",
+    "description": "Vulnerability in the Oracle VM VirtualBox product of Oracle Virtualization (component: Core). Supported versions that are affected are Prior to 5.2.40, prior to 6.0.20 and prior to 6.1.6. Easily exploitable vulnerability allows high privileged attacker with logon to the infrastructure where Oracle VM VirtualBox executes to compromise Oracle VM VirtualBox. While the vulnerability is in Oracle VM VirtualBox, attacks may significantly impact additional products. Successful attacks of this vulnerability can result in takeover of Oracle VM VirtualBox. CVSS 3.0 Base Score 8.2 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.0/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-681",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-38245",
+    "description": "Adobe Acrobat Reader versions 23.003.20244 (and earlier) and 20.005.30467 (and earlier) are affected by an Information Disclosure vulnerability. An unauthenticated attacker could leverage this vulnerability to obtain NTLMv2 credentials. Exploitation of this issue requires user interaction in that a victim must open a maliciously crafted Microsoft Office file, or visit an attacker controlled web page.",
+    "cwe_ids": [
+      "CWE-200",
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-6039",
+    "description": "Insufficient data validation in DevTools in Google Chrome prior to 64.0.3282.119 allowed a remote attacker to potentially leak user cross-origin data via a crafted Chrome Extension.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-6430",
+    "description": "The compile_tree function in ef_compiler.c in the Etterfilter utility in Ettercap 0.8.2 and earlier allows remote attackers to cause a denial of service (out-of-bounds read) via a crafted filter.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-8836",
+    "description": "A memory corruption issue was addressed with improved memory handling. This issue is fixed in watchOS 6.1.2, iOS 13.3.1 and iPadOS 13.3.1, tvOS 13.3.1. An application may be able to execute arbitrary code with kernel privileges.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-4337",
+    "description": "A memory corruption issue was addressed with improved memory handling. This issue affected versions prior to iOS 12, macOS Mojave 10.14, tvOS 12, watchOS 5.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-34188",
+    "description": "Vasion Print (formerly PrinterLogic) Virtual Appliance Host versions prior to 1.0.735 and Application prior to 20.0.1330 (macOS/Linux client deployments) contain a vulnerability in the local logging mechanism. Authentication session tokens, including PHPSESSID, XSRF-TOKEN, and laravel_session, are stored in cleartext within world-readable log files. Any local user with access to the machine can extract these session tokens and use them to authenticate remotely to the SaaS environment, bypassing normal login credentials, potentially leading to unauthorized system access and exposure of sensitive information. This vulnerability has been identified by the vendor as: V-2022-008 — Secrets Leaked in Logs.",
+    "cwe_ids": [
+      "CWE-532"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2020-10016",
+    "description": "A memory corruption issue was addressed with improved state management. This issue is fixed in macOS Big Sur 11.0.1, iOS 14.2 and iPadOS 14.2, tvOS 14.2, watchOS 7.1. An application may be able to execute arbitrary code with kernel privileges.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-43379",
+    "description": "This issue was addressed with improved validation of symlinks. This issue is fixed in visionOS 26.1, macOS Sonoma 14.8.2, macOS Sequoia 15.7.2, watchOS 26.1, iOS 26.1 and iPadOS 26.1, tvOS 26.1. An app may be able to access protected user data.",
+    "cwe_ids": [
+      "CWE-59"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-25637",
+    "description": "A double free memory issue was found to occur in the libvirt API, in versions before 6.8.0, responsible for requesting information about network interfaces of a running QEMU domain. This flaw affects the polkit access control driver. Specifically, clients connecting to the read-write socket with limited ACL permissions could use this flaw to crash the libvirt daemon, resulting in a denial of service, or potentially escalate their privileges on the system. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.",
+    "cwe_ids": [
+      "CWE-415",
+      "CWE-415"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-8019",
+    "description": "A UNIX Symbolic Link (Symlink) Following vulnerability in the packaging of syslog-ng of SUSE Linux Enterprise Debuginfo 11-SP3, SUSE Linux Enterprise Debuginfo 11-SP4, SUSE Linux Enterprise Module for Legacy Software 12, SUSE Linux Enterprise Point of Sale 11-SP3, SUSE Linux Enterprise Server 11-SP4-LTSS, SUSE Linux Enterprise Server for SAP 12-SP1; openSUSE Backports SLE-15-SP1, openSUSE Leap 15.1 allowed local attackers controlling the user news to escalate their privileges to root. This issue affects: SUSE Linux Enterprise Debuginfo 11-SP3 syslog-ng versions prior to 2.0.9-27.34.40.5.1. SUSE Linux Enterprise Debuginfo 11-SP4 syslog-ng versions prior to 2.0.9-27.34.40.5.1. SUSE Linux Enterprise Module for Legacy Software 12 syslog-ng versions prior to 3.6.4-12.8.1. SUSE Linux Enterprise Point of Sale 11-SP3 syslog-ng versions prior to 2.0.9-27.34.40.5.1. SUSE Linux Enterprise Server 11-SP4-LTSS syslog-ng versions prior to 2.0.9-27.34.40.5.1. SUSE Linux Enterprise Server for SAP 12-SP1 syslog-ng versions prior to 3.6.4-12.8.1. openSUSE Backports SLE-15-SP1 syslog-ng versions prior to 3.19.1-bp151.4.6.1. openSUSE Leap 15.1 syslog-ng versions prior to 3.19.1-lp151.3.6.1.",
+    "cwe_ids": [
+      "CWE-61"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-4357",
+    "description": "Insufficient validation of untrusted input in XML in Google Chrome prior to 116.0.5845.96 allowed a remote attacker to bypass file access restrictions via a crafted HTML page. (Chromium security severity: Medium)",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-9247",
+    "description": "Foxit PDF Reader Annotation Out-Of-Bounds Write Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Foxit PDF Reader. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the handling of Annotation objects. The issue results from the lack of proper validation of user-supplied data, which can result in a write before the start of an allocated object. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-24173.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-46104",
+    "description": "Uncontrolled resource consumption can be triggered by authenticated attacker that uploads a malicious ZIP to import database, dashboards or datasets.  \nThis vulnerability exists in Apache Superset versions up to and including 2.1.2 and versions 3.0.0, 3.0.1.",
+    "cwe_ids": [
+      "CWE-400"
+    ] "Python"
+  },
+  {
+    "cve_id": "CVE-2017-9166",
+    "description": "libautotrace.a in AutoTrace 0.31.1 has a heap-based buffer over-read in the GET_COLOR function in color.c:18:11.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-49975",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nuprobes: fix kernel info leak via \"[uprobes]\" vma\n\nxol_add_vma() maps the uninitialized page allocated by __create_xol_area()\ninto userspace. On some architectures (x86) this memory is readable even\nwithout VM_READ, VM_EXEC results in the same pgprot_t as VM_EXEC|VM_READ,\nalthough this doesn't really matter, debugger can read this memory anyway.",
+    "cwe_ids": [
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-2730",
+    "description": "HUAWEI HiLink APP (for IOS) versions earlier before 5.0.25.306 and HUAWEI Tech Support APP (for IOS) versions earlier before 5.0.0 have an information leak vulnerability. When an iPhone with these APPs installed access the Wi-Fi hotpot built by attacker, the attacker can collect the information of iPhone mode and firmware version.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-26611",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nxsk: fix usage of multi-buffer BPF helpers for ZC XDP\n\nCurrently when packet is shrunk via bpf_xdp_adjust_tail() and memory\ntype is set to MEM_TYPE_XSK_BUFF_POOL, null ptr dereference happens:\n\n[1136314.192256] BUG: kernel NULL pointer dereference, address:\n0000000000000034\n[1136314.203943] #PF: supervisor read access in kernel mode\n[1136314.213768] #PF: error_code(0x0000) - not-present page\n[1136314.223550] PGD 0 P4D 0\n[1136314.230684] Oops: 0000 [#1] PREEMPT SMP NOPTI\n[1136314.239621] CPU: 8 PID: 54203 Comm: xdpsock Not tainted 6.6.0+ #257\n[1136314.250469] Hardware name: Intel Corporation S2600WFT/S2600WFT,\nBIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019\n[1136314.265615] RIP: 0010:__xdp_return+0x6c/0x210\n[1136314.274653] Code: ad 00 48 8b 47 08 49 89 f8 a8 01 0f 85 9b 01 00 00 0f 1f 44 00 00 f0 41 ff 48 34 75 32 4c 89 c7 e9 79 cd 80 ff 83 fe 03 75 17 <f6> 41 34 01 0f 85 02 01 00 00 48 89 cf e9 22 cc 1e 00 e9 3d d2 86\n[1136314.302907] RSP: 0018:ffffc900089f8db0 EFLAGS: 00010246\n[1136314.312967] RAX: ffffc9003168aed0 RBX: ffff8881c3300000 RCX:\n0000000000000000\n[1136314.324953] RDX: 0000000000000000 RSI: 0000000000000003 RDI:\nffffc9003168c000\n[1136314.336929] RBP: 0000000000000ae0 R08: 0000000000000002 R09:\n0000000000010000\n[1136314.348844] R10: ffffc9000e495000 R11: 0000000000000040 R12:\n0000000000000001\n[1136314.360706] R13: 0000000000000524 R14: ffffc9003168aec0 R15:\n0000000000000001\n[1136314.373298] FS:  00007f8df8bbcb80(0000) GS:ffff8897e0e00000(0000)\nknlGS:0000000000000000\n[1136314.386105] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033\n[1136314.396532] CR2: 0000000000000034 CR3: 00000001aa912002 CR4:\n00000000007706f0\n[1136314.408377] DR0: 0000000000000000 DR1: 0000000000000000 DR2:\n0000000000000000\n[1136314.420173] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7:\n0000000000000400\n[1136314.431890] PKRU: 55555554\n[1136314.439143] Call Trace:\n[1136314.446058]  <IRQ>\n[1136314.452465]  ? __die+0x20/0x70\n[1136314.459881]  ? page_fault_oops+0x15b/0x440\n[1136314.468305]  ? exc_page_fault+0x6a/0x150\n[1136314.476491]  ? asm_exc_page_fault+0x22/0x30\n[1136314.484927]  ? __xdp_return+0x6c/0x210\n[1136314.492863]  bpf_xdp_adjust_tail+0x155/0x1d0\n[1136314.501269]  bpf_prog_ccc47ae29d3b6570_xdp_sock_prog+0x15/0x60\n[1136314.511263]  ice_clean_rx_irq_zc+0x206/0xc60 [ice]\n[1136314.520222]  ? ice_xmit_zc+0x6e/0x150 [ice]\n[1136314.528506]  ice_napi_poll+0x467/0x670 [ice]\n[1136314.536858]  ? ttwu_do_activate.constprop.0+0x8f/0x1a0\n[1136314.546010]  __napi_poll+0x29/0x1b0\n[1136314.553462]  net_rx_action+0x133/0x270\n[1136314.561619]  __do_softirq+0xbe/0x28e\n[1136314.569303]  do_softirq+0x3f/0x60\n\nThis comes from __xdp_return() call with xdp_buff argument passed as\nNULL which is supposed to be consumed by xsk_buff_free() call.\n\nTo address this properly, in ZC case, a node that represents the frag\nbeing removed has to be pulled out of xskb_list. Introduce\nappropriate xsk helpers to do such node operation and use them\naccordingly within bpf_xdp_adjust_tail().",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-49178",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nmemstick/mspro_block: fix handling of read-only devices\n\nUse set_disk_ro to propagate the read-only state to the block layer\ninstead of checking for it in ->open and leaking a reference in case\nof a read-only device.",
+    "cwe_ids": [
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-13866",
+    "description": "An issue was discovered in the HDF HDF5 1.8.20 library. There is a stack-based buffer over-read in the function H5F_addr_decode_len in H5Fint.c.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5843",
+    "description": "In the function wma_pdev_div_info_evt_handler() in all Android releases from CAF (Android for MSM, Firefox OS for MSM, QRD Android) using the Linux Kernel, there is no upper bound check on the value event->num_chains_valid received from firmware which can lead to a buffer overwrite of the fixed size chain_rssi_result structure.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-5166",
+    "description": "The download implementation in Google Chrome before 53.0.2785.89 on Windows and OS X and before 53.0.2785.92 on Linux does not properly restrict saving a file:// URL that is referenced by an http:// URL, which makes it easier for user-assisted remote attackers to discover NetNTLM hashes and conduct SMB relay attacks via a crafted web page that is accessed with the \"Save page as\" menu choice.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-8632",
+    "description": "Some analytics data was sent using HTTP rather than HTTPS. This was addressed by no longer sending this analytics data. This issue is fixed in Texture 5.11.10 for iOS, Texture 4.22.0.4 for Android. An attacker in a privileged network position may be able to intercept analytics data.",
+    "cwe_ids": [
+      "CWE-319"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2021-30569",
+    "description": "Use after free in sqlite in Google Chrome prior to 92.0.4515.107 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-18484",
+    "description": "An issue was discovered in cp-demangle.c in GNU libiberty, as distributed in GNU Binutils 2.31. Stack Exhaustion occurs in the C++ demangling functions provided by libiberty, and there is a stack consumption problem caused by recursive stack frames: cplus_demangle_type, d_bare_function_type, d_function_type.",
+    "cwe_ids": [
+      "CWE-674"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-9514",
+    "description": "In sdcardfs_open of file.c, there is a possible Use After Free due to an unusual root cause. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation. Product: Android Versions: Android kernel Android ID: A-111642636 References: N/A",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-3141",
+    "description": "A use-after-free flaw was found in r592_remove in drivers/memstick/host/r592.c in media access in the Linux Kernel. This flaw allows a local attacker to crash the system at device disconnect, possibly leading to a kernel information leak.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-32469",
+    "description": "An issue was discovered in Insyde InsydeH2O with kernel 5.0 through 5.5. DMA attacks on the PnpSmm shared buffer used by SMM and non-SMM code could cause TOCTOU race-condition issues that could lead to corruption of SMRAM and escalation of privileges. This attack can be mitigated using IOMMU protection for the ACPI runtime memory used for the command buffer. This attack can be mitigated by copying the firmware block services data to SMRAM before checking it.",
+    "cwe_ids": [
+      "CWE-367",
+      "CWE-367"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-2510",
+    "description": "An issue was discovered in certain Apple products. iOS before 10.3.2 is affected. Safari before 10.1.1 is affected. The issue involves the \"WebKit\" component. It allows remote attackers to conduct Universal XSS (UXSS) attacks via a crafted web site that improperly interacts with pageshow events.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-45241",
+    "description": "Sensitive information leak through log files. The following products are affected: Acronis Cyber Protect Cloud Agent (Linux, macOS, Windows) before build 35739, Acronis Cyber Protect 16 (Linux, macOS, Windows) before build 37391.",
+    "cwe_ids": [
+      "CWE-532",
+      "CWE-532"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-35025",
+    "description": "OTFCC commit 617837b was discovered to contain a segmentation violation via /release-x64/otfccdump+0x5266a8.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-52745",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nIB/IPoIB: Fix legacy IPoIB due to wrong number of queues\n\nThe cited commit creates child PKEY interfaces over netlink will\nmultiple tx and rx queues, but some devices doesn't support more than 1\ntx and 1 rx queues. This causes to a crash when traffic is sent over the\nPKEY interface due to the parent having a single queue but the child\nhaving multiple queues.\n\nThis patch fixes the number of queues to 1 for legacy IPoIB at the\nearliest possible point in time.\n\nBUG: kernel NULL pointer dereference, address: 000000000000036b\nPGD 0 P4D 0\nOops: 0000 [#1] SMP\nCPU: 4 PID: 209665 Comm: python3 Not tainted 6.1.0_for_upstream_min_debug_2022_12_12_17_02 #1\nHardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014\nRIP: 0010:kmem_cache_alloc+0xcb/0x450\nCode: ce 7e 49 8b 50 08 49 83 78 10 00 4d 8b 28 0f 84 cb 02 00 00 4d 85 ed 0f 84 c2 02 00 00 41 8b 44 24 28 48 8d 4a\n01 49 8b 3c 24 <49> 8b 5c 05 00 4c 89 e8 65 48 0f c7 0f 0f 94 c0 84 c0 74 b8 41 8b\nRSP: 0018:ffff88822acbbab8 EFLAGS: 00010202\nRAX: 0000000000000070 RBX: ffff8881c28e3e00 RCX: 00000000064f8dae\nRDX: 00000000064f8dad RSI: 0000000000000a20 RDI: 0000000000030d00\nRBP: 0000000000000a20 R08: ffff8882f5d30d00 R09: ffff888104032f40\nR10: ffff88810fade828 R11: 736f6d6570736575 R12: ffff88810081c000\nR13: 00000000000002fb R14: ffffffff817fc865 R15: 0000000000000000\nFS:  00007f9324ff9700(0000) GS:ffff8882f5d00000(0000) knlGS:0000000000000000\nCS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033\nCR2: 000000000000036b CR3: 00000001125af004 CR4: 0000000000370ea0\nDR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000\nDR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400\nCall Trace:\n <TASK>\n skb_clone+0x55/0xd0\n ip6_finish_output2+0x3fe/0x690\n ip6_finish_output+0xfa/0x310\n ip6_send_skb+0x1e/0x60\n udp_v6_send_skb+0x1e5/0x420\n udpv6_sendmsg+0xb3c/0xe60\n ? ip_mc_finish_output+0x180/0x180\n ? __switch_to_asm+0x3a/0x60\n ? __switch_to_asm+0x34/0x60\n sock_sendmsg+0x33/0x40\n __sys_sendto+0x103/0x160\n ? _copy_to_user+0x21/0x30\n ? kvm_clock_get_cycles+0xd/0x10\n ? ktime_get_ts64+0x49/0xe0\n __x64_sys_sendto+0x25/0x30\n do_syscall_64+0x3d/0x90\n entry_SYSCALL_64_after_hwframe+0x46/0xb0\nRIP: 0033:0x7f9374f1ed14\nCode: 42 41 f8 ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b\n7c 24 08 0f 05 <48> 3d 00 f0 ff ff 77 34 89 ef 48 89 44 24 08 e8 68 41 f8 ff 48 8b\nRSP: 002b:00007f9324ff7bd0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c\nRAX: ffffffffffffffda RBX: 00007f9324ff7cc8 RCX: 00007f9374f1ed14\nRDX: 00000000000002fb RSI: 00007f93000052f0 RDI: 0000000000000030\nRBP: 0000000000000000 R08: 00007f9324ff7d40 R09: 000000000000001c\nR10: 0000000000000000 R11: 0000000000000293 R12: 0000000000000000\nR13: 000000012a05f200 R14: 0000000000000001 R15: 00007f9374d57bdc\n </TASK>",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-26954",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nksmbd: fix slab-out-of-bounds in smb_strndup_from_utf16()\n\nIf ->NameOffset of smb2_create_req is smaller than Buffer offset of\nsmb2_create_req, slab-out-of-bounds read can happen from smb2_open.\nThis patch set the minimum value of the name offset to the buffer offset\nto validate name length of smb2_create_req().",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-16028",
+    "description": "Adobe Acrobat and Reader versions 2019.008.20081 and earlier, 2019.008.20080 and earlier, 2019.008.20081 and earlier, 2017.011.30106 and earlier version, 2017.011.30105 and earlier version, 2015.006.30457 and earlier, and 2015.006.30456 and earlier have an out-of-bounds read vulnerability. Successful exploitation could lead to information disclosure.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-5365",
+    "description": "Dell EMC Isilon versions 8.2.2 and earlier contain a remotesupport vulnerability. The pre-configured support account, remotesupport, is bundled in the Dell EMC Isilon OneFS installation. This account is used for diagnostics and other support functions. Although the default password is different for every cluster, it is predictable.",
+    "cwe_ids": [
+      "CWE-341",
+      "CWE-330"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-24859",
+    "description": "A race condition was found in the Linux kernel's net/bluetooth in sniff_{min,max}_interval_set() function. This can result in a bluetooth sniffing exception issue, possibly leading denial of service.\n\n\n\n\n\n\n\n",
+    "cwe_ids": [
+      "CWE-362",
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-1137",
+    "description": "Inappropriate implementation in Extensions in Google Chrome prior to 100.0.4896.60 allowed an attacker who convinced a user to install a malicious extension to leak potentially sensitive information via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-668"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-34000",
+    "description": "libjxl 0.6.1 has an assertion failure in LowMemoryRenderPipeline::Init() in render_pipeline/low_memory_render_pipeline.cc.",
+    "cwe_ids": [
+      "CWE-617"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-1204",
+    "description": "A use-after-free flaw was found in the Linux kernel’s Amateur Radio AX.25 protocol functionality in the way a user connects with the protocol. This flaw allows a local user to crash the system.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-4058",
+    "description": "Type confusion in ANGLE in Google Chrome prior to 124.0.6367.78 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: Critical)",
+    "cwe_ids": [
+      "CWE-843",
+      "CWE-843"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-7332",
+    "description": "In Wireshark 2.4.0 to 2.4.4 and 2.2.0 to 2.2.12, epan/dissectors/packet-reload.c had an infinite loop that was addressed by validating a length.",
+    "cwe_ids": [
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-6223",
+    "description": "The TIFFReadRawStrip1 and TIFFReadRawTile1 functions in tif_read.c in libtiff before 4.0.7 allows remote attackers to cause a denial of service (crash) or possibly obtain sensitive information via a negative index in a file-content buffer.",
+    "cwe_ids": [
+      "CWE-189"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-42805",
+    "description": "An integer overflow was addressed with improved input validation. This issue is fixed in iOS 15.6 and iPadOS 15.6, macOS Monterey 12.5. An app may be able to execute arbitrary code with kernel privileges.",
+    "cwe_ids": [
+      "CWE-190",
+      "CWE-190"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5675",
+    "description": "This vulnerability allows remote attackers to execute arbitrary code on vulnerable installations of Foxit Reader before 9.1 and PhantomPDF before 9.1. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the processing of specially crafted pdf files with embedded u3d images. Crafted data in the PDF file can trigger an out-of-bounds write on a buffer. An attacker can leverage this vulnerability to execute code under the context of the current process.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-48977",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncan: af_can: fix NULL pointer dereference in can_rcv_filter\n\nAnalogue to commit 8aa59e355949 (\"can: af_can: fix NULL pointer\ndereference in can_rx_register()\") we need to check for a missing\ninitialization of ml_priv in the receive path of CAN frames.\n\nSince commit 4e096a18867a (\"net: introduce CAN specific pointer in the\nstruct net_device\") the check for dev->type to be ARPHRD_CAN is not\nsufficient anymore since bonding or tun netdevices claim to be CAN\ndevices but do not initialize ml_priv accordingly.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-2338",
+    "description": "A vulnerability, which was classified as critical, was found in tbeu matio 1.5.28. Affected is the function strdup_vprintf of the file src/io.c. The manipulation leads to heap-based buffer overflow. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used.",
+    "cwe_ids": [
+      "CWE-119",
+      "CWE-122"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-25668",
+    "description": "A flaw was found in Linux Kernel because access to the global variable fg_console is not properly synchronized leading to a use after free in con_font_op.",
+    "cwe_ids": [
+      "CWE-362",
+      "CWE-662"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-13362",
+    "description": "Codedoc v3.2 has a stack-based buffer overflow in add_variable in codedoc.c, related to codedoc_strlcpy.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-20611",
+    "description": "Exposure of sensitive information to an unauthorized actor for some Edge Orchestrator software for Intel(R) Tiber™ Edge Platform may allow an authenticated user to potentially enable information disclosure via local access.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-41773",
+    "description": "A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives. If files outside of these directories are not protected by the usual default configuration \"require all denied\", these requests can succeed. If CGI scripts are also enabled for these aliased pathes, this could allow for remote code execution. This issue is known to be exploited in the wild. This issue only affects Apache 2.4.49 and not earlier versions. The fix in Apache HTTP Server 2.4.50 was found to be incomplete, see CVE-2021-42013.",
+    "cwe_ids": [
+      "CWE-22",
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-24011",
+    "description": "An attacker can arbitrarily craft malicious DDS Participants (or ROS 2 Nodes) with valid certificates to compromise and get full control of the attacked secure DDS databus system by exploiting vulnerable attributes in the configuration of PKCS#7 certificate’s validation. This is caused by a non-compliant implementation of permission document verification used by some DDS vendors. Specifically, an improper use of the OpenSSL PKCS7_verify function used to validate S/MIME signatures.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-0861",
+    "description": "A remote code execution vulnerability exists in the way that the Chakra scripting engine handles objects in memory in Microsoft Edge, aka 'Chakra Scripting Engine Memory Corruption Vulnerability'. This CVE ID is unique from CVE-2019-0806, CVE-2019-0810, CVE-2019-0812, CVE-2019-0829, CVE-2019-0860.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-34962",
+    "description": "Foxit PDF Editor Caret Annotation Use-After-Free Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Foxit PDF Editor. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the handling of Annotation objects. The issue results from the lack of validating the existence of an object prior to performing operations on the object. An attacker can leverage this vulnerability to execute code in the context of the current process. Was ZDI-CAN-14364.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-34709",
+    "description": "Multiple vulnerabilities in image verification checks of Cisco Network Convergence System (NCS) 540 Series Routers, only when running Cisco IOS XR NCS540L software images, and Cisco IOS XR Software for Cisco 8000 Series Routers could allow an authenticated, local attacker to execute arbitrary code on the underlying operating system. For more information about these vulnerabilities, see the Details section of this advisory.",
+    "cwe_ids": [
+      "CWE-347",
+      "CWE-347"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-43824",
+    "description": "Envoy is an open source edge and service proxy, designed for cloud-native applications. In affected versions a crafted request crashes Envoy when a CONNECT request is sent to JWT filter configured with regex match. This provides a denial of service attack vector. The only workaround is to not use regex in the JWT filter. Users are advised to upgrade.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-20870",
+    "description": "A vulnerability in the egress MPLS packet processing function of Cisco IOS XE Software for Cisco Catalyst 3650, Catalyst 3850, and Catalyst 9000 Family Switches could allow an unauthenticated, remote attacker to cause an affected device to reload unexpectedly, resulting in a denial of service (DoS) condition. This vulnerability is due to insufficient input validation of IPv4 traffic. An attacker could exploit this vulnerability by sending a malformed packet out of an affected MPLS-enabled interface. A successful exploit could allow the attacker to cause the device to reload, resulting in a DoS condition.",
+    "cwe_ids": [
+      "CWE-130"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-42255",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntpm: Use auth only after NULL check in tpm_buf_check_hmac_response()\n\nDereference auth after NULL check in tpm_buf_check_hmac_response().\nOtherwise, unless tpm2_sessions_init() was called, a call can cause NULL\ndereference, when TCG_TPM2_HMAC is enabled.\n\n[jarkko: adjusted the commit message.]",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-6348",
+    "description": "Type Confusion in Spellcheck in Google Chrome prior to 119.0.6045.199 allowed a remote attacker who had compromised the renderer process to potentially exploit heap corruption via a crafted HTML page. (Chromium security severity: High)",
+    "cwe_ids": [
+      "CWE-843"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-25333",
+    "description": "An issue in IKEA CN iOS 4.13.0 allows attackers to access sensitive user information via supplying a crafted link.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-25132",
+    "description": "Unrestricted upload of file with dangerous type vulnerability in default.cmd file in PowerPanel Business Local/Remote for Windows v4.8.6 and earlier, PowerPanel Business Management for Windows v4.8.6 and earlier, PowerPanel Business Local/Remote for Linux 32bit v4.8.6 and earlier, PowerPanel Business Local/Remote for Linux 64bit v4.8.6 and earlier, PowerPanel Business Management for Linux 32bit v4.8.6 and earlier, PowerPanel Business Management for Linux 64bit v4.8.6 and earlier, PowerPanel Business Local/Remote for MacOS v4.8.6 and earlier, and PowerPanel Business Management for MacOS v4.8.6 and earlier allows remote attackers to execute operation system commands via unspecified vectors.",
+    "cwe_ids": [
+      "CWE-434",
+      "CWE-434"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-41331",
+    "description": "A missing authentication for critical function vulnerability [CWE-306] in FortiPresence infrastructure server before version 1.2.1 allows a remote, unauthenticated attacker to access the Redis and MongoDB instances via crafted authentication requests.",
+    "cwe_ids": [
+      "CWE-306",
+      "CWE-306"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1148",
+    "description": "In Nessus before 7.1.0, Session Fixation exists due to insufficient session management within the application. An authenticated attacker could maintain system access due to session fixation after a user password change.",
+    "cwe_ids": [
+      "CWE-384"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-18356",
+    "description": "An integer overflow in path handling lead to a use after free in Skia in Google Chrome prior to 71.0.3578.80 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-190",
+      "CWE-416",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-47417",
+    "description": "Animate versions 23.0.7, 24.0.4 and earlier are affected by a Heap-based Buffer Overflow vulnerability that could result in arbitrary code execution in the context of the current user. Exploitation of this issue requires user interaction in that a victim must open a malicious file.",
+    "cwe_ids": [
+      "CWE-122",
+      "CWE-787"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-1663",
+    "description": "Coverity versions prior to 2023.3.2 are vulnerable to forced browsing, which exposes authenticated resources to unauthorized actors. The root cause of this vulnerability is an insecurely configured servlet mapping for the underlying Apache Tomcat server. As a result, the downloads directory and its contents are accessible. 5.9 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L/E:P/RL:O/RC:C)",
+    "cwe_ids": [
+      "CWE-425",
+      "CWE-425"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2021-47426",
+    "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nbpf, s390: Fix potential memory leak about jit_data\n\nMake sure to free jit_data through kfree() in the error path.",
+    "cwe_ids": [
+      "CWE-401"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-42285",
+    "description": "DGX A100 SBIOS contains a vulnerability in the Pre-EFI Initialization (PEI)phase, where a privileged user can disable SPI flash protection, which may lead to denial of service, escalation of privileges, or data tampering.",
+    "cwe_ids": [
+      "CWE-1231"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2509",
+    "description": "A command injection vulnerability has been reported to affect QTS and QuTS hero. If exploited, this vulnerability allows attackers to execute arbitrary commands in a compromised application. We have already fixed this vulnerability in the following versions: QTS 4.5.2.1566 Build 20210202 and later QTS 4.5.1.1495 Build 20201123 and later QTS 4.3.6.1620 Build 20210322 and later QTS 4.3.4.1632 Build 20210324 and later QTS 4.3.3.1624 Build 20210416 and later QTS 4.2.6 Build 20210327 and later QuTS hero h4.5.1.1491 build 20201119 and later",
+    "cwe_ids": [
+      "CWE-77",
+      "CWE-78",
+      "CWE-77"
+    ]
+  }
+]

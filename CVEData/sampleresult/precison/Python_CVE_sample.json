@@ -1,0 +1,563 @@
+[
+  {
+    "cve_id": "CVE-2019-16766",
+    "description": "When using wagtail-2fa before 1.3.0, if someone gains access to someone's Wagtail login credentials, they can log into the CMS and bypass the 2FA check by changing the URL. They can then add a new device and gain full access to the CMS. This problem has been patched in version 1.3.0.",
+    "cwe_ids": [
+      "CWE-290",
+      "CWE-304"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-24880",
+    "description": "flask-session-captcha is a package which allows users to extend Flask by adding an image based captcha stored in a server side session. In versions prior to 1.2.1, he `captcha.validate()` function would return `None` if passed no value (e.g. by submitting an having an empty form). If implementing users were checking the return value to be **False**, the captcha verification check could be bypassed. Version 1.2.1 fixes the issue. Users can workaround the issue by not explicitly checking that the value is False. Checking the return value less explicitly should still work.",
+    "cwe_ids": [
+      "CWE-253",
+      "CWE-394",
+      "CWE-754",
+      "CWE-754"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-11785",
+    "description": "Improper access control in mail module (followers) in Odoo Community 13.0 and earlier and Odoo Enterprise 13.0 and earlier, allows remote authenticated users to obtain access to messages posted on business records there were not given access to, and subscribe to receive future messages.",
+    "cwe_ids": [
+      "CWE-284",
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-7214",
+    "description": "An issue was discovered in exception_wrapper.py in OpenStack Nova 13.x through 13.1.3, 14.x through 14.0.4, and 15.x through 15.0.1. Legacy notification exception contexts appearing in ERROR level logs may include sensitive information such as account passwords and authorization tokens.",
+    "cwe_ids": [
+      "CWE-532"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-2020",
+    "description": "Insufficient permission checks in the REST API in Tribe29 Checkmk <= 2.1.0p27 and <= 2.2.0b4 (beta) allow unauthorized users to schedule downtimes for any host.",
+    "cwe_ids": [
+      "CWE-280",
+      "CWE-863"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-3709",
+    "description": "Function check_attachment_for_errors() in file data/general-hooks/ubuntu.py could be tricked into exposing private data via a constructed crash file. This issue affects: apport 2.14.1 versions prior to 2.14.1-0ubuntu3.29+esm8; 2.20.1 versions prior to 2.20.1-0ubuntu2.30+esm2; 2.20.9 versions prior to 2.20.9-0ubuntu7.26; 2.20.11 versions prior to 2.20.11-0ubuntu27.20; 2.20.11 versions prior to 2.20.11-0ubuntu65.3;",
+    "cwe_ids": [
+      "CWE-538",
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-13254",
+    "description": "An issue was discovered in Django 2.2 before 2.2.13 and 3.0 before 3.0.7. In cases where a memcached backend does not perform key validation, passing malformed cache keys could result in a key collision, and potential data leakage.",
+    "cwe_ids": [
+      "CWE-295"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-49581",
+    "description": "XWiki is a generic wiki platform. Any user with edit right on a page (could be the user's profile) can execute code (Groovy, Python, Velocity) with programming right by defining a wiki macro. This allows full access to the whole XWiki installation. The main problem is that if a wiki macro parameter allows wiki syntax, its default value is executed with the rights of the author of the document where it is used. This can be exploited by overriding a macro like the children macro that is used in a page that has programming right like the page XWiki.ChildrenMacro and thus allows arbitrary script macros. This vulnerability has been patched in XWiki 16.4.7, 16.10.3 and 17.0.0 by executing wiki parameters with the rights of the wiki macro's author when the parameter's value is the default value.",
+    "cwe_ids": [
+      "CWE-94",
+      "CWE-250",
+      "CWE-270"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2025-53640",
+    "description": "Indico is an event management system that uses Flask-Multipass, a multi-backend authentication system for Flask. Starting in version 2.2 and prior to version 3.3.7, an endpoint used to display details of users listed in certain fields (such as ACLs) could be misused to dump basic user details (such as name, affiliation and email) in bulk. Version 3.3.7 fixes the issue. Owners of instances that allow everyone to create a user account, who wish to truly restrict access to these user details, should consider restricting user search to managers. As a workaround, it is possible to restrict access to the affected endpoints (e.g. in the webserver config), but doing so would break certain form fields which could no longer show the details of the users listed in those fields, so upgrading instead is highly recommended.",
+    "cwe_ids": [
+      "CWE-200",
+      "CWE-639",
+      "CWE-862",
+      "CWE-639"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-41164",
+    "description": "In Django 3.2 before 3.2.21, 4.1 before 4.1.11, and 4.2 before 4.2.5, django.utils.encoding.uri_to_iri() is subject to a potential DoS (denial of service) attack via certain inputs with a very large number of Unicode characters.",
+    "cwe_ids": [
+      "CWE-1284"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-39330",
+    "description": "An issue was discovered in Django 5.0 before 5.0.7 and 4.2 before 4.2.14. Derived classes of the django.core.files.storage.Storage base class, when they override generate_filename() without replicating the file-path validations from the parent class, potentially allow directory traversal via certain inputs during a save() call. (Built-in Storage sub-classes are unaffected.)",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-26051",
+    "description": "Saleor is a headless, GraphQL commerce platform delivering personalized shopping experiences. Some internal Python exceptions are not handled properly and thus are returned in API as error messages. Some messages might contain sensitive information like user email address in staff-authenticated requests.\n",
+    "cwe_ids": [
+      "CWE-209",
+      "CWE-209"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-9701",
+    "description": "A Remote Code Execution (RCE) vulnerability has been identified in the Kedro ShelveStore class (version 0.19.8). This vulnerability allows an attacker to execute arbitrary Python code via deserialization of malicious payloads, potentially leading to a full system compromise. The ShelveStore class uses Python's shelve module to manage session data, which relies on pickle for serialization. Crafting a malicious payload and storing it in the shelve file can lead to RCE when the payload is deserialized.",
+    "cwe_ids": [
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-21332",
+    "description": "Synapse is a Matrix reference homeserver written in python (pypi package matrix-synapse). Matrix is an ecosystem for open federated Instant Messaging and VoIP. In Synapse before version 1.27.0, the password reset endpoint served via Synapse was vulnerable to cross-site scripting (XSS) attacks. The impact depends on the configuration of the domain that Synapse is deployed on, but may allow access to cookies and other browser data, CSRF vulnerabilities, and access to other resources served on the same domain or parent domains. This is fixed in version 1.27.0.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-52048",
+    "description": "In Frappe 15.x.x before 15.72.0 and 14.x.x before 14.96.10, in the function add_tag() at `frappe/desk/doctype/tag/tag.py` is vulnerable to SQL Injection, which allows an attacker to extract information from databases by injecting a SQL query into the `dt` parameter.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-45256",
+    "description": "An arbitrary file write issue in the exfiltration endpoint in BYOB (Build Your Own Botnet) 2.0 allows attackers to overwrite SQLite databases and bypass authentication via an unauthenticated HTTP request with a crafted parameter. This occurs in file_add in api/files/routes.py.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-38863",
+    "description": "Exposure of CSRF tokens in query parameters on specific requests in Checkmk GmbH's Checkmk versions <2.3.0p18, <2.2.0p35 and <2.1.0p48 could lead to a leak of the token to facilitate targeted phishing attacks.",
+    "cwe_ids": [
+      "CWE-598"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3205",
+    "description": "Cross site scripting in automation controller UI in Red Hat Ansible Automation Platform 1.2 and 2.0 where the project name is susceptible to XSS injection",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-6012",
+    "description": "The 'Weather Service' feature of the Green Electronics RainMachine Mini-8 (2nd generation) allows an attacker to inject arbitrary Python code via the 'Add new weather data source' upload function.",
+    "cwe_ids": [
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-19001",
+    "description": "Command Injection in Simiki v1.6.2.1 and prior allows remote attackers to execute arbitrary system commands via line 64 of the component 'simiki/blob/master/simiki/config.py'.",
+    "cwe_ids": [
+      "CWE-77"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-4985",
+    "description": "The ironic-api service in OpenStack Ironic before 4.2.5 (Liberty) and 5.x before 5.1.2 (Mitaka) allows remote attackers to obtain sensitive information about a registered node by leveraging knowledge of the MAC address of a network card belonging to that node and sending a crafted POST request to the v1/drivers/$DRIVER_NAME/vendor_passthru resource.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-9287",
+    "description": "A vulnerability has been found in the CPython `venv` module and CLI where path names provided when creating a virtual environment were not quoted properly, allowing the creator to inject commands into virtual environment \"activation\" scripts (ie \"source venv/bin/activate\"). This means that attacker-controlled virtual environments are able to run commands when the virtual environment is activated. Virtual environments which are not created by an attacker or which aren't activated before being used (ie \"./venv/bin/python\") are not affected.",
+    "cwe_ids": [
+      "CWE-428",
+      "CWE-77"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31015",
+    "description": "Waitress is a Web Server Gateway Interface server for Python 2 and 3. Waitress versions 2.1.0 and 2.1.1 may terminate early due to a thread closing a socket while the main thread is about to call select(). This will lead to the main thread raising an exception that is not handled and then causing the entire application to be killed. This issue has been fixed in Waitress 2.1.2 by no longer allowing the WSGI thread to close the socket. Instead, that is always delegated to the main thread. There is no work-around for this issue. However, users using waitress behind a reverse proxy server are less likely to have issues if the reverse proxy always reads the full response.",
+    "cwe_ids": [
+      "CWE-248",
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-27524",
+    "description": "Session Validation attacks in Apache Superset versions up to and including 2.0.1. Installations that have not altered the default configured SECRET_KEY according to installation instructions allow for an attacker to authenticate and access unauthorized resources. This does not affect Superset administrators who have changed the default value for SECRET_KEY config.\n\nAll superset installations should always set a unique secure random SECRET_KEY. Your SECRET_KEY is used to securely sign all session cookies and encrypting sensitive information on the database.\nAdd a strong SECRET_KEY to your `superset_config.py` file like:\n\nSECRET_KEY = <YOUR_OWN_RANDOM_GENERATED_SECRET_KEY>\n\nAlternatively you can set it with `SUPERSET_SECRET_KEY` environment variable.\n",
+    "cwe_ids": [
+      "CWE-1188",
+      "CWE-1188"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-50817",
+    "description": "A vulnerability in the Python-Future 1.0.0 module allows for arbitrary code execution via the unintended import of a file named test.py. When the module is loaded, it automatically imports test.py, if present in the same directory or in the sys.path. This behavior can be exploited by an attacker who has the ability to write files to the server, allowing the execution of arbitrary code. NOTE: Multiple third parties have disputed this issue and stated that it is not a security flaw in python-future and is a documented feature of Python’s import system in the handling of sys.path.",
+    "cwe_ids": [
+      "CWE-77"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31549",
+    "description": "The olmax99/helm-flask-celery repository before 2022-05-25 on GitHub allows absolute path traversal because the Flask send_file function is used unsafely.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31514",
+    "description": "The Caoyongqi912/Fan_Platform repository through 2021-04-20 on GitHub allows absolute path traversal because the Flask send_file function is used unsafely.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-29005",
+    "description": "Flask-AppBuilder versions before 4.3.0 lack rate limiting which can allow an attacker to brute-force user credentials. Version 4.3.0 includes the ability to enable rate limiting using `AUTH_RATE_LIMITED = True`, `RATELIMIT_ENABLED = True`, and setting an `AUTH_RATE_LIMIT`.",
+    "cwe_ids": [
+      "CWE-307"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-17051",
+    "description": "An issue was discovered in the default FilterScheduler in OpenStack Nova 16.0.3. By repeatedly rebuilding an instance with new images, an authenticated user may consume untracked resources on a hypervisor host leading to a denial of service, aka doubled resource allocations. This regression was introduced with the fix for OSSA-2017-005 (CVE-2017-16239); however, only Nova stable/pike or later deployments with that fix applied and relying on the default FilterScheduler are affected.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-58761",
+    "description": "Tautulli is a Python based monitoring and tracking tool for Plex Media Server. The `real_pms_image_proxy` endpoint in Tautulli v2.15.3 and prior is vulnerable to path traversal, allowing unauthenticated attackers to read arbitrary files from the application server's filesystem. The `real_pms_image_proxy` is used to fetch an image directly from the backing Plex Media Server. The image to be fetched is specified through an `img` URL parameter, which can either be a URL or a file path. There is some validation ensuring that `img` begins with the prefix `interfaces/default/images` in order to be served from the local filesystem. However this can be bypassed by passing an `img` parameter which begins with a valid prefix, and then adjoining path traversal characters in order to reach files outside of intended directories. An attacker can exfiltrate files on the application file system, including the `tautulli.db` SQLite database containing active JWT tokens, as well as the `config.ini` file which contains the hashed admin password, the JWT token secret, and the Plex Media Server token and connection details. If the password is cracked, or if a valid JWT token is present in the database, an unauthenticated attacker can escalate their privileges to obtain administrative control over the application. Version 2.16.0 contains a fix for the issue.",
+    "cwe_ids": [
+      "CWE-27"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-1734",
+    "description": "A flaw was found in the pipe lookup plugin of ansible. Arbitrary commands can be run, when the pipe lookup plugin uses subprocess.Popen() with shell=True, by overwriting ansible facts and the variable is not escaped by quote plugin. An attacker could take advantage and run arbitrary commands by overwriting the ansible facts.",
+    "cwe_ids": [
+      "CWE-78",
+      "CWE-78"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-23472",
+    "description": "Passeo is an open source python password generator. Versions prior to 1.0.5 rely on the python `random` library for random value selection. The python `random` library warns that it should not be used for security purposes due to its reliance on a non-cryptographically secure random number generator. As a result a motivated attacker may be able to guess generated passwords. This issue has been addressed in version 1.0.5. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+    "cwe_ids": [
+      "CWE-338"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-27607",
+    "description": "Python JSON Logger is a JSON Formatter for Python Logging. Between 30 December 2024 and 4 March 2025 Python JSON Logger was vulnerable to RCE through a missing dependency. This occurred because msgspec-python313-pre was deleted by the owner leaving the name open to being claimed by a third party. If the package was claimed, it would allow them RCE on any Python JSON Logger user who installed the development dependencies on Python 3.13 (e.g. pip install python-json-logger[dev]). This issue has been resolved with 3.3.0.",
+    "cwe_ids": [
+      "CWE-829"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3596",
+    "description": "An information leak was found in OpenStack's undercloud. This flaw allows unauthenticated, remote attackers to inspect sensitive data after discovering the IP address of the undercloud, possibly leading to compromising private information, including administrator access credentials.",
+    "cwe_ids": [
+      "CWE-402"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-29209",
+    "description": "XWiki Commons are technical libraries common to several other top level XWiki projects. Any user with view rights on commonly accessible documents including the legacy notification activity macro can execute arbitrary Groovy, Python or Velocity code in XWiki leading to full access to the XWiki installation. The root cause is improper escaping of the macro parameters of the legacy notification activity macro. This macro is installed by default in XWiki. The vulnerability can be exploited via every wiki page that is editable including the user's profile, but also with just view rights using the HTMLConverter that is part of the CKEditor integration which is bundled with XWiki. The vulnerability has been patched in XWiki 13.10.11, 14.4.7 and 14.10.\n\n",
+    "cwe_ids": [
+      "CWE-95",
+      "CWE-94"
+    ] "Java"
+  },
+  {
+    "cve_id": "CVE-2024-56299",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Pektsekye Notify Odoo allows Stored XSS.This issue affects Notify Odoo: from n/a through 1.0.0.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-19355",
+    "description": "An insecure modification vulnerability in the /etc/passwd file was found in the openshift/ocp-release-operator-sdk. An attacker with access to the container could use this flaw to modify /etc/passwd and escalate their privileges. This CVE is specific to the openshift/ansible-operator-container as shipped in Openshift 4.",
+    "cwe_ids": [
+      "CWE-266",
+      "CWE-269"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31137",
+    "description": "Roxy-WI is a web interface for managing Haproxy, Nginx, Apache and Keepalived servers. Versions prior to 6.1.1.0 are subject to a remote code execution vulnerability. System commands can be run remotely via the subprocess_execute function without processing the inputs received from the user in the /app/options.py file. Attackers need not be authenticated to exploit this vulnerability. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+    "cwe_ids": [
+      "CWE-78",
+      "CWE-78"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-33175",
+    "description": "ToUI is a Python package for creating user interfaces (websites and desktop apps) from HTML. ToUI is using Flask-Caching (SimpleCache) to store user variables. Websites that use `Website.user_vars` property. It affects versions 2.0.1 to 2.4.0. This issue has been patched in version 2.4.1.",
+    "cwe_ids": [
+      "CWE-914",
+      "CWE-913"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-0391",
+    "description": "A flaw was found in Python, specifically within the urllib.parse module. This module helps break Uniform Resource Locator (URL) strings into components. The issue involves how the urlparse method does not sanitize input and allows characters like '\\r' and '\\n' in the URL path. This flaw allows an attacker to input a crafted URL, leading to injection attacks. This flaw affects Python versions prior to 3.10.0b1, 3.9.5, 3.8.11, 3.7.11 and 3.6.14.",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-74"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-5773",
+    "description": "An issue was discovered in markdown2 (aka python-markdown2) through 2.3.5. The safe_mode feature, which is supposed to sanitize user input against XSS, is flawed and does not escape the input properly. With a crafted payload, XSS can be triggered, as demonstrated by omitting the final '>' character from an IMG tag.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-50265",
+    "description": "Bazarr manages and downloads subtitles. Prior to 1.3.1, the /api/swaggerui/static endpoint in bazarr/app/ui.py does not validate the user-controlled filename variable and uses it in the send_file function, which leads to an arbitrary file read on the system. This issue is fixed in version 1.3.1.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-43837",
+    "description": "vault-cli is a configurable command-line interface tool (and python library) to interact with Hashicorp Vault. In versions before 3.0.0 vault-cli features the ability for rendering templated values. When a secret starts with the prefix `!template!`, vault-cli interprets the rest of the contents of the secret as a Jinja2 template. Jinja2 is a powerful templating engine and is not designed to safely render arbitrary templates. An attacker controlling a jinja2 template rendered on a machine can trigger arbitrary code, making this a Remote Code Execution (RCE) risk. If the content of the vault can be completely trusted, then this is not a problem. Otherwise, if your threat model includes cases where an attacker can manipulate a secret value read from the vault using vault-cli, then this vulnerability may impact you. In 3.0.0, the code related to interpreting vault templated secrets has been removed entirely. Users are advised to upgrade as soon as possible. For users unable to upgrade a workaround does exist. Using the environment variable `VAULT_CLI_RENDER=false` or the flag `--no-render` (placed between `vault-cli` and the subcommand, e.g. `vault-cli --no-render get-all`) or adding `render: false` to the vault-cli configuration yaml file disables rendering and removes the vulnerability. Using the python library, you can use: `vault_cli.get_client(render=False)` when creating your client to get a client that will not render templated secrets and thus operates securely.",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-3697",
+    "description": "A flaw was found in Ansible in the amazon.aws collection when using the tower_callback parameter from the amazon.aws.ec2_instance module. This flaw allows an attacker to take advantage of this issue as the module is handling the parameter insecurely, leading to the password leaking in the logs.",
+    "cwe_ids": [
+      "CWE-233"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29461",
+    "description": "Discord Recon Server is a bot that allows one to do one's reconnaissance process from one's Discord. A vulnerability in Discord Recon Server prior to 0.0.3 could be exploited to read internal files from the system and write files into the system resulting in remote code execution. This issue has been fixed in version 0.0.3. As a workaround, one may copy the code from `assets/CommandInjection.py` in the Discord Recon Server code repository and overwrite vulnerable code from one's own Discord Recon Server implementation with code that contains the patch.",
+    "cwe_ids": [
+      "CWE-94",
+      "CWE-88"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-31478",
+    "description": "Zulip is an open-source team collaboration tool. Zulip supports a configuration where account creation is limited solely by being able to authenticate with a single-sign on authentication backend, meaning the organization places no restrictions on email address domains or invitations being required to join, but has disabled the EmailAuthBackend that is used for email/password authentication. A bug in the Zulip server means that it is possible to create an account in such organizations, without having an account with the configured SSO authentication backend. This issue is patched in version 10.2. A workaround includes requiring invitations to join the organization prevents the vulnerability from being accessed.",
+    "cwe_ids": [
+      "CWE-287"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-32962",
+    "description": "Flask-AppBuilder is an application development framework built on top of Flask. Versions prior to 4.6.2 would allow for a malicious unauthenticated actor to perform an open redirect by manipulating the Host header in HTTP requests. Flask-AppBuilder 4.6.2 introduced the `FAB_SAFE_REDIRECT_HOSTS` configuration variable, which allows administrators to explicitly define which domains are considered safe for redirection. As a workaround, use a reverse proxy to enforce trusted host headers.",
+    "cwe_ids": [
+      "CWE-601"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-5871",
+    "description": "Odoo Version <= 8.0-20160726 and Version 9 is affected by: CWE-601: Open redirection. The impact is: obtain sensitive information (remote).",
+    "cwe_ids": [
+      "CWE-601"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-23306",
+    "description": "NVIDIA Megatron-LM for all platforms contains a vulnerability in the megatron/training/\narguments.py component where an attacker could cause a code injection issue by providing a malicious input. A successful exploit of this vulnerability may lead to code execution, escalation of privileges, information disclosure, and data tampering.",
+    "cwe_ids": [
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-22153",
+    "description": "RestrictedPython is a tool that helps to define a subset of the Python language which allows to provide a program input into a trusted environment. Via a type confusion bug in versions of the CPython interpreter starting in 3.11 and prior to 3.13.2 when using `try/except*`, RestrictedPython starting in version 6.0 and prior to version 8.0 could be bypassed. The issue is patched in version 8.0 of RestrictedPython by removing support for `try/except*` clauses. No known workarounds are available.",
+    "cwe_ids": [
+      "CWE-843"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-46303",
+    "description": "Command injection in SMS notifications in Tribe29 Checkmk <= 2.1.0p10, Checkmk <= 2.0.0p27, and Checkmk <= 1.6.0p29 allows an attacker with User Management permissions, as well as LDAP administrators in certain scenarios, to perform arbitrary commands within the context of the application's local permissions.",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-78"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-41118",
+    "description": "streamlit-geospatial is a streamlit multipage app for geospatial applications. Prior to commit c4f81d9616d40c60584e36abb15300853a66e489, the `url` variable on line 47 of `pages/7_📦_Web_Map_Service.py` takes user input, which is passed to `get_layers` function, in which `url` is used with `get_wms_layer` method. `get_wms_layer` method creates a request to arbitrary destinations, leading to blind server-side request forgery. Commit c4f81d9616d40c60584e36abb15300853a66e489 fixes this issue.",
+    "cwe_ids": [
+      "CWE-918",
+      "CWE-918"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-30554",
+    "description": "Archery is an open source SQL audit platform. The Archery project contains multiple SQL injection vulnerabilities, that may allow an attacker to query the connected databases. Affected versions are subject to SQL injection in the `sql_api/api_workflow.py` endpoint `ExecuteCheck` which passes unfiltered input to the `explain_check` method in `sql/engines/oracle.py`. User input coming from the `db_name` parameter value in the `api_workflow.py` `ExecuteCheck` endpoint is passed through the `oracle.py` `execute_check` method and to the `explain_check` method for execution. Each of these issues may be mitigated by escaping user input or by using prepared statements when executing SQL queries. This issue is also indexed as `GHSL-2022-103`.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-25723",
+    "description": "ZenML Server in the ZenML machine learning package before 0.46.7 for Python allows remote privilege escalation because the /api/v1/users/{user_name_or_id}/activate REST API endpoint allows access on the basis of a valid username along with a new password in the request body. These are also patched versions: 0.44.4, 0.43.1, and 0.42.2.",
+    "cwe_ids": [
+      "CWE-284"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-31047",
+    "description": "In Django 3.2 before 3.2.19, 4.x before 4.1.9, and 4.2 before 4.2.1, it was possible to bypass validation when using one form field to upload multiple files. This multiple upload has never been supported by forms.FileField or forms.ImageField (only the last uploaded file was validated). However, Django's \"Uploading multiple files\" documentation suggested otherwise.",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-31536",
+    "description": "The jaygarza1982/ytdl-sync repository through 2021-01-02 on GitHub allows absolute path traversal because the Flask send_file function is used unsafely.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-5412",
+    "description": "A vulnerability classified as problematic has been found in Mist Community Edition up to 4.7.1. Affected is the function Login of the file src/mist/api/views.py of the component Authentication Endpoint. The manipulation of the argument return_to leads to cross site scripting. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. Upgrading to version 4.7.2 is able to address this issue. The name of the patch is db10ecb62ac832c1ed4924556d167efb9bc07fad. It is recommended to upgrade the affected component.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-44690",
+    "description": "Inadequate encryption strength in mycli 1.27.0 allows attackers to view sensitive information via /mycli/config.py",
+    "cwe_ids": [
+      "CWE-326"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-10744",
+    "description": "An incomplete fix was found for the fix of the flaw CVE-2020-1733 ansible: insecure temporary directory when running become_user from become directive. The provided fix is insufficient to prevent the race condition on systems using ACLs and FUSE filesystems. Ansible Engine 2.7.18, 2.8.12, and 2.9.9 as well as previous versions are affected and Ansible Tower 3.4.5, 3.5.6 and 3.6.4 as well as previous versions are affected.",
+    "cwe_ids": [
+      "CWE-377",
+      "CWE-362"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-15633",
+    "description": "Cross-site scripting (XSS) issue in \"document\" module in Odoo Community 11.0 and earlier and Odoo Enterprise 11.0 and earlier, allows remote attackers to inject arbitrary web script in the browser of a victim via crafted attachment filenames.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-5151",
+    "description": "A vulnerability classified as critical has been found in defog-ai introspect up to 0.1.4. This affects the function execute_analysis_code_safely of the file introspect/backend/tools/analysis_tools.py. The manipulation of the argument code leads to code injection. It is possible to launch the attack on the local host. The exploit has been disclosed to the public and may be used. The patch is named 502. It is recommended to apply a patch to fix this issue. The code maintainer explains, that \"[they] have added some workarounds to address this in #502, but will not be implementing a full fix. This is because this repo is meant to be run in a docker environment, which will significantly mitigate potential security risks. Having said that, we have added a SECURITY section in our README to make this clearer to users.\"",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-94",
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-54802",
+    "description": "pyLoad is the free and open-source Download Manager written in pure Python. In versions 0.5.0b3.dev89 and below, there is an opportunity for path traversal in pyLoad-ng CNL Blueprint via package parameter, allowing Arbitrary File Write which leads to Remote Code Execution (RCE). The addcrypted endpoint in pyload-ng suffers from an unsafe path construction vulnerability, allowing unauthenticated attackers to write arbitrary files outside the designated storage directory. This can be abused to overwrite critical system files, including cron jobs and systemd services, leading to privilege escalation and remote code execution as root. This issue is fixed in version 0.5.0b3.dev90.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-36126",
+    "description": "An issue was discovered in Inductive Automation Ignition before 7.9.20 and 8.x before 8.1.17. The ScriptInvoke function allows remote attackers to execute arbitrary code by supplying a Python script.",
+    "cwe_ids": [
+      "CWE-863"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-35139",
+    "description": "An issue was discovered in OFPBundleCtrlMsg in parser.py in Faucet SDN Ryu version 4.34, allows remote attackers to cause a denial of service (DoS) (infinite loop).",
+    "cwe_ids": [
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-47287",
+    "description": "Tornado is a Python web framework and asynchronous networking library. When Tornado's ``multipart/form-data`` parser encounters certain errors, it logs a warning but continues trying to parse the remainder of the data. This allows remote attackers to generate an extremely high volume of logs, constituting a DoS attack. This DoS is compounded by the fact that the logging subsystem is synchronous. All versions of Tornado prior to 6.5.0 are affected. The vulnerable parser is enabled by default. Upgrade to Tornado version 6.50 to receive a patch. As a workaround, risk can be mitigated by blocking `Content-Type: multipart/form-data` in a proxy.",
+    "cwe_ids": [
+      "CWE-770"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-41050",
+    "description": "AccessControl provides a general security framework for use in Zope. Python's \"format\" functionality allows someone controlling the format string to \"read\" objects accessible (recursively) via attribute access and subscription from accessible objects. Those attribute accesses and subscriptions use Python's full blown `getattr` and `getitem`, not the policy restricted `AccessControl` variants `_getattr_` and `_getitem_`. This can lead to critical information disclosure. `AccessControl` already provides a safe variant for `str.format` and denies access to `string.Formatter`. However, `str.format_map` is still unsafe. Affected are all users who allow untrusted users to create `AccessControl` controlled Python code and execute it. A fix has been introduced in versions 4.4, 5.8 and 6.2. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-27589",
+    "description": "Synopsys hub-rest-api-python (aka blackduck on PyPI) version 0.0.25 - 0.0.52 does not validate SSL certificates in certain cases.",
+    "cwe_ids": [
+      "CWE-295"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-50819",
+    "description": "Directory traversal vulnerability in beiyuouo arxiv-daily thru 2025-05-06 (commit fad168770b0e68aef3e5acfa16bb2e7a7765d687) when parsing the the topic.yml file in the generation logic in daily_arxiv.py.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-24565",
+    "description": "Checkmk <=2.0.0p19 Fixed in 2.0.0p20 and Checkmk <=1.6.0p27 Fixed in 1.6.0p28 are affected by a Cross Site Scripting (XSS) vulnerability. The Alias of a site was not properly escaped when shown as condition for notifications.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-45230",
+    "description": "An issue was discovered in Django 5.1 before 5.1.1, 5.0 before 5.0.9, and 4.2 before 4.2.16. The urlize() and urlizetrunc() template filters are subject to a potential denial-of-service attack via very large inputs with a specific sequence of characters.",
+    "cwe_ids": [
+      "CWE-120"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-7401",
+    "description": "The cookie parsing code in Django before 1.8.15 and 1.9.x before 1.9.10, when used on a site with Google Analytics, allows remote attackers to bypass an intended CSRF protection mechanism by setting arbitrary cookies.",
+    "cwe_ids": [
+      "CWE-254"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-14862",
+    "description": "Incorrect access control in the mail templating system in Odoo Community 11.0 and earlier and Odoo Enterprise 11.0 and earlier allows authenticated internal users to delete arbitrary menuitems via a crafted RPC request.",
+    "cwe_ids": [
+      "CWE-732"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-14904",
+    "description": "A flaw was found in the solaris_zone module from the Ansible Community modules. When setting the name for the zone on the Solaris host, the zone name is checked by listing the process with the 'ps' bare command on the remote machine. An attacker could take advantage of this flaw by crafting the name of the zone and executing arbitrary commands in the remote host. Ansible Engine 2.7.15, 2.8.7, and 2.9.2 as well as previous versions are affected.",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-78"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-23969",
+    "description": "In Django 3.2 before 3.2.17, 4.0 before 4.0.9, and 4.1 before 4.1.6, the parsed values of Accept-Language headers are cached in order to avoid repetitive parsing. This leads to a potential denial-of-service vector via excessive memory usage if the raw value of Accept-Language headers is very large.",
+    "cwe_ids": [
+      "CWE-770",
+      "CWE-770"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-47117",
+    "description": "Label Studio is an open source data labeling tool. In all current versions of Label Studio prior to 1.9.2post0, the application allows users to insecurely set filters for filtering tasks. An attacker can construct a filter chain to filter tasks based on sensitive fields for all user accounts on the platform by exploiting Django's Object Relational Mapper (ORM). Since the results of query can be manipulated by the ORM filter, an attacker can leak these sensitive fields character by character. In addition, Label Studio had a hard coded secret key that an attacker can use to forge a session token of any user by exploiting this ORM Leak vulnerability to leak account password hashes. This vulnerability has been addressed in commit `f931d9d129` which is included in the 1.9.2post0 release. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  }
+]

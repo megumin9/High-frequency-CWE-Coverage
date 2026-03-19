@@ -1,0 +1,717 @@
+{
+    "707": [
+        {
+            "cwe_id": "707",
+            "count": 1861,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "74",
+            "count": 1565,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "79",
+            "count": 1020,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "20",
+            "count": 276,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "943",
+            "count": 207,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "89",
+            "count": 202,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "94",
+            "count": 187,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "77",
+            "count": 114,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "78",
+            "count": 59,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "917",
+            "count": 24,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "116",
+            "count": 22,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "95",
+            "count": 20,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "1284",
+            "count": 11,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "80",
+            "count": 10,
+            "is_leaf": true
+        }
+    ],
+    "664": [
+        {
+            "cwe_id": "664",
+            "count": 2988,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "668",
+            "count": 1018,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "610",
+            "count": 555,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "913",
+            "count": 508,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "200",
+            "count": 475,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "706",
+            "count": 364,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "22",
+            "count": 339,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "502",
+            "count": 307,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "522",
+            "count": 219,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "732",
+            "count": 218,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "611",
+            "count": 206,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "441",
+            "count": 203,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "94",
+            "count": 187,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "400",
+            "count": 183,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "669",
+            "count": 175,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "434",
+            "count": 145,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "918",
+            "count": 143,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "276",
+            "count": 120,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "665",
+            "count": 116,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "118",
+            "count": 90,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "119",
+            "count": 90,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "601",
+            "count": 80,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "770",
+            "count": 80,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "922",
+            "count": 72,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "538",
+            "count": 68,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "532",
+            "count": 66,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "312",
+            "count": 61,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "203",
+            "count": 48,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "221",
+            "count": 47,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "451",
+            "count": 45,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1021",
+            "count": 44,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "787",
+            "count": 44,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "23",
+            "count": 36,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "404",
+            "count": 35,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "672",
+            "count": 34,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "666",
+            "count": 34,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "209",
+            "count": 32,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1188",
+            "count": 31,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1419",
+            "count": 31,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "125",
+            "count": 26,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "384",
+            "count": 25,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "613",
+            "count": 24,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "281",
+            "count": 23,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "405",
+            "count": 20,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "95",
+            "count": 20,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "377",
+            "count": 19,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "642",
+            "count": 18,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "256",
+            "count": 18,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "829",
+            "count": 17,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "552",
+            "count": 16,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "59",
+            "count": 14,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "201",
+            "count": 14,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "120",
+            "count": 14,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "772",
+            "count": 13,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "427",
+            "count": 13,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "788",
+            "count": 13,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "359",
+            "count": 13,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "704",
+            "count": 12,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "407",
+            "count": 12,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "401",
+            "count": 10,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "73",
+            "count": 10,
+            "is_leaf": false
+        }
+    ],
+    "284": [
+        {
+            "cwe_id": "284",
+            "count": 1849,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "285",
+            "count": 1001,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "287",
+            "count": 557,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "862",
+            "count": 504,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1390",
+            "count": 313,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "863",
+            "count": 239,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "522",
+            "count": 219,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "732",
+            "count": 218,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "269",
+            "count": 139,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "276",
+            "count": 120,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "306",
+            "count": 74,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "295",
+            "count": 72,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1391",
+            "count": 41,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "639",
+            "count": 35,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "266",
+            "count": 34,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "798",
+            "count": 33,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "281",
+            "count": 23,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "346",
+            "count": 19,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "256",
+            "count": 18,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "290",
+            "count": 17,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "552",
+            "count": 16,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "288",
+            "count": 16,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "923",
+            "count": 13,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "307",
+            "count": 12,
+            "is_leaf": true
+        }
+    ],
+    "693": [
+        {
+            "cwe_id": "693",
+            "count": 713,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "345",
+            "count": 418,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "352",
+            "count": 355,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "311",
+            "count": 159,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "312",
+            "count": 61,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "330",
+            "count": 51,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "319",
+            "count": 44,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "798",
+            "count": 33,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "344",
+            "count": 33,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "327",
+            "count": 24,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "347",
+            "count": 21,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "346",
+            "count": 19,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "326",
+            "count": 17,
+            "is_leaf": false
+        }
+    ],
+    "435": [
+        {
+            "cwe_id": "435",
+            "count": 15,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "436",
+            "count": 15,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "444",
+            "count": 11,
+            "is_leaf": true
+        }
+    ],
+    "691": [
+        {
+            "cwe_id": "691",
+            "count": 108,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "362",
+            "count": 36,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "834",
+            "count": 35,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "835",
+            "count": 17,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "799",
+            "count": 14,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "674",
+            "count": 13,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "307",
+            "count": 12,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "367",
+            "count": 12,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "670",
+            "count": 10,
+            "is_leaf": false
+        }
+    ],
+    "710": [
+        {
+            "cwe_id": "710",
+            "count": 122,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "657",
+            "count": 49,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "684",
+            "count": 47,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "451",
+            "count": 45,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "1021",
+            "count": 44,
+            "is_leaf": true
+        },
+        {
+            "cwe_id": "671",
+            "count": 33,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "798",
+            "count": 33,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "573",
+            "count": 18,
+            "is_leaf": false
+        }
+    ],
+    "703": [
+        {
+            "cwe_id": "703",
+            "count": 104,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "755",
+            "count": 68,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "209",
+            "count": 32,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "754",
+            "count": 24,
+            "is_leaf": false
+        }
+    ],
+    "682": [
+        {
+            "cwe_id": "682",
+            "count": 22,
+            "is_leaf": false
+        },
+        {
+            "cwe_id": "190",
+            "count": 13,
+            "is_leaf": false
+        }
+    ],
+    "697": [
+        {
+            "cwe_id": "697",
+            "count": 17,
+            "is_leaf": false
+        }
+    ]
+}

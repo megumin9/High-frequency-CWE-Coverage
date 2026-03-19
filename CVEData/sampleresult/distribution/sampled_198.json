@@ -1,0 +1,1448 @@
+[
+  {
+    "cve_id": "CVE-2020-17362",
+    "description": "search.php in the Nova Lite theme before 1.3.9 for WordPress allows Reflected XSS.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "other"
+  }, 
+  {
+    "cve_id": "CVE-2022-32524",
+    "description": "A CWE-120: Buffer Copy without Checking Size of Input vulnerability exists that could cause a stack-based buffer overflow, potentially leading to remote code execution when an attacker sends specially crafted time reduced data messages. Affected Products: IGSS Data Server - IGSSdataServer.exe (Versions prior to V15.0.0.22170)",
+    "cwe_ids": [
+      "CWE-120"
+    ]  "c/c++"
+  },
+  {
+    "cve_id": "CVE-2025-27714",
+    "description": "An attacker could exploit this vulnerability by uploading arbitrary \nfiles via the a specific endpoint, leading to unauthorized remote code \nexecution or system compromise.",
+    "cwe_ids": [
+      "CWE-434"
+    ]  "nojudge"
+  },
+  {
+    "cve_id": "CVE-2019-9687",
+    "description": "PoDoFo 0.9.6 has a heap-based buffer overflow in PdfString::ConvertUTF16toUTF8 in base/PdfString.cpp.",
+    "cwe_ids": [
+      "CWE-787"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2022-29008",
+    "description": "An insecure direct object reference (IDOR) vulnerability in the viewid parameter of Bus Pass Management System v1.0 allows attackers to access sensitive information.",
+    "cwe_ids": [
+      "CWE-639"
+    ] "other"
+  },
+  {
+    "cve_id": "CVE-2025-55158",
+    "description": "Vim is an open source, command line text editor. In versions from 9.1.1231 to before 9.1.1406, when processing nested tuples during Vim9 script import operations, an error during evaluation can trigger a double-free in Vim’s internal typed value (typval_T) management. Specifically, the clear_tv() function may attempt to free memory that has already been deallocated, due to improper lifetime handling in the handle_import / ex_import code paths. The vulnerability can only be triggered if a user explicitly opens and executes a specially crafted Vim script. This issue has been patched in version 9.1.1406.",
+    "cwe_ids": [
+      "CWE-415"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2021-27160",
+    "description": "An issue was discovered on FiberHome HG6245D devices through RP2613. The web daemon contains the hardcoded user / 888888 credentials for an ISP.",
+    "cwe_ids": [
+      "CWE-798"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2022-29324",
+    "description": "D-Link DIR-816 A2_v1.10CNB04 was discovered to contain a stack overflow via the proto parameter in /goform/form2IPQoSTcAdd.",
+    "cwe_ids": [
+      "CWE-787"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2024-55550",
+    "description": "Mitel MiCollab through 9.8 SP2 could allow an authenticated attacker with administrative privilege to conduct a local file read, due to insufficient input sanitization. A successful exploit could allow the authenticated admin attacker to access resources that are constrained to the admin access level, and the disclosure is limited to non-sensitive system information. This vulnerability does not allow file modification or privilege escalation.",
+    "cwe_ids": [
+      "CWE-22",
+      "CWE-22"
+    ] "java"
+  },
+  {
+    "cve_id": "CVE-2023-5035",
+    "description": "A vulnerability has been identified in PT-G503 Series firmware versions prior to v5.2, where the Secure attribute for sensitive cookies in HTTPS sessions is not set, which could cause the cookie to be transmitted in plaintext over an HTTP session. The vulnerability may lead to security risks, potentially exposing user session data to unauthorized access and manipulation.\n\n",
+    "cwe_ids": [
+      "CWE-614",
+      "CWE-319"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-34240",
+    "description": "Cloudexplorer-lite is an open source cloud software stack. Weak passwords can be easily guessed and are an easy target for brute force attacks. This can lead to an authentication system failure and compromise system security. Versions of cloudexplorer-lite prior to 1.2.0 did not enforce strong passwords. This vulnerability has been fixed in version 1.2.0. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+    "cwe_ids": [
+      "CWE-521"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2021-31811",
+    "description": "In Apache PDFBox, a carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file. This issue affects Apache PDFBox version 2.0.23 and prior 2.0.x versions.",
+    "cwe_ids": [
+      "CWE-789",
+      "CWE-770"
+    ] "java"
+  },
+  {
+    "cve_id": "CVE-2024-12482",
+    "description": "A vulnerability was found in cjbi wetech-cms 1.0/1.1/1.2. It has been rated as problematic. Affected by this issue is the function backup of the file wetech-cms-master\\wetech-basic-common\\src\\main\\java\\tech\\wetech\\basic\\util\\BackupFileUtil.java of the component Database Backup Handler. The manipulation of the argument name leads to path traversal: '../filedir'. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-23",
+      "CWE-24",
+      "CWE-22"
+    ] "java"
+  },
+  {
+    "cve_id": "CVE-2023-27425",
+    "description": "Auth. (admin+) Stored Cross-Site Scripting (XSS) vulnerability in James Irving-Swift Electric Studio Client Login plugin <= 0.8.1 versions.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "other"
+  },
+  {
+    "cve_id": "CVE-2019-0145",
+    "description": "Buffer overflow in i40e driver for Intel(R) Ethernet 700 Series Controllers versions before 7.0 may allow an authenticated user to potentially enable an escalation of privilege via local access.",
+    "cwe_ids": [
+      "CWE-120"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2016-1180",
+    "description": "Cross-site scripting (XSS) vulnerability in the Cyber-Will Social-button Premium plugin before 1.1 for EC-CUBE 2.13.x allows remote attackers to inject arbitrary web script or HTML via unspecified vectors.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "other"
+  },
+  {
+    "cve_id": "CVE-2023-28934",
+    "description": "Auth. (admin+) Stored Cross-Site Scripting (XSS) vulnerability in Mammothology WP Full Stripe Free plugin <= 1.6.1 versions.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "other"
+  },
+  {
+    "cve_id": "CVE-2024-0134",
+    "description": "NVIDIA Container Toolkit and NVIDIA GPU Operator for Linux contain a UNIX vulnerability where a specially crafted container image can lead to the creation of unauthorized files on the host. The name and location of the files cannot be controlled by an attacker. A successful exploit of this vulnerability might lead to data tampering.",
+    "cwe_ids": [
+      "CWE-61"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2020-7105",
+    "description": "async.c and dict.c in libhiredis.a in hiredis through 0.14.0 allow a NULL pointer dereference because malloc return values are unchecked.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-38901",
+    "description": "A Cross-site scripting (XSS) vulnerability in the Document and Media module - file upload functionality in Liferay Digital Experience Platform 7.3.10 SP3 allows remote attackers to inject arbitrary JS script or HTML into the description field of uploaded svg file.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2023-4384",
+    "description": "A vulnerability has been found in MaximaTech Portal Executivo 21.9.1.140 and classified as problematic. This vulnerability affects unknown code of the component Cookie Handler. The manipulation leads to missing encryption of sensitive data. The attack can be initiated remotely. The complexity of an attack is rather high. The exploitation appears to be difficult. The exploit has been disclosed to the public and may be used. The identifier of this vulnerability is VDB-237316. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-311"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2017-14431",
+    "description": "Memory leak in Xen 3.3 through 4.8.x allows guest OS users to cause a denial of service (ARM or x86 AMD host OS memory consumption) by continually rebooting, because certain cleanup is skipped if no pass-through device was ever assigned, aka XSA-207.",
+    "cwe_ids": [
+      "CWE-772"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2019-10460",
+    "description": "Jenkins Bitbucket OAuth Plugin 0.9 and earlier stored credentials unencrypted in the global config.xml configuration file on the Jenkins master where they could be viewed by users with access to the master file system.",
+    "cwe_ids": [
+      "CWE-522"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2025-53760",
+    "description": "Server-side request forgery (ssrf) in Microsoft Office SharePoint allows an authorized attacker to elevate privileges over a network.",
+    "cwe_ids": [
+      "CWE-918"
+    ] 
+  }, "other"
+  {
+    "cve_id": "CVE-2017-7507",
+    "description": "GnuTLS version 3.5.12 and earlier is vulnerable to a NULL pointer dereference while decoding a status response TLS extension with valid contents. This could lead to a crash of the GnuTLS server application.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  },  "c/c++"
+  {
+    "cve_id": "CVE-2021-30313",
+    "description": "Use after free condition can occur in wired connectivity due to a race condition while creating and deleting folders in Snapdragon Auto, Snapdragon Compute, Snapdragon Connectivity, Snapdragon Consumer IOT, Snapdragon Industrial IOT, Snapdragon Mobile, Snapdragon Voice & Music, Snapdragon Wearables, Snapdragon Wired Infrastructure and Networking",
+    "cwe_ids": [
+      "CWE-362",
+      "CWE-416"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-21944",
+    "description": "A UNIX Symbolic Link (Symlink) Following vulnerability in the systemd service file for watchman of openSUSE Backports SLE-15-SP3, Factory allows local attackers to escalate to root. This issue affects: openSUSE Backports SLE-15-SP3 watchman versions prior to 4.9.0. openSUSE Factory watchman versions prior to 4.9.0-9.1.",
+    "cwe_ids": [
+      "CWE-59",
+      "CWE-59"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-32104",
+    "description": "A SQL injection vulnerability exists (with user privileges) in interface/forms/eye_mag/save.php in OpenEMR 5.0.2.1.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2019-9422",
+    "description": "In Bluetooth, there is a possible out of bounds read due to a missing bounds check. This could lead to remote information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation. Product: AndroidVersions: Android-10Android ID: A-111214766",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-42781",
+    "description": "In wlan driver, there is a possible missing bounds check, This could lead to local denial of service in wlan services.",
+    "cwe_ids": [
+      "CWE-126",
+      "CWE-125"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-59230",
+    "description": "Improper access control in Windows Remote Access Connection Manager allows an authorized attacker to elevate privileges locally.",
+    "cwe_ids": [
+      "CWE-284"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-4559",
+    "description": "IBM Spectrum Protect 7.1 and 8.1 could allow an attacker to cause a denial of service due ti improper validation of user-supplied input. IBM X-Force ID: 183613.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2020-12309",
+    "description": "Insufficiently protected credentialsin subsystem in some Intel(R) Client SSDs and some Intel(R) Data Center SSDs may allow an unauthenticated user to potentially enable information disclosure via physical access.",
+    "cwe_ids": [
+      "CWE-522"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-1343",
+    "description": "Multiple vulnerabilities in the web-based management interface of Cisco Small Business RV016, RV042, RV042G, RV082, RV320, and RV325 Routers could allow an authenticated, remote attacker to execute arbitrary code or cause an affected device to restart unexpectedly. These vulnerabilities are due to improper validation of user-supplied input in the web-based management interface. An attacker could exploit these vulnerabilities by sending crafted HTTP requests to an affected device. A successful exploit could allow the attacker to execute arbitrary code as the root user on the underlying operating system or cause the device to reload, resulting in a denial of service (DoS) condition. To exploit these vulnerabilities, an attacker would need to have valid administrator credentials on the affected device.",
+    "cwe_ids": [
+      "CWE-121"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-45339",
+    "description": "Privilege escalation vulnerability in Avast Antivirus prior to 20.4 allows a local user to gain elevated privileges by \"hollowing\" trusted process which could lead to the bypassing of Avast self-defense.",
+    "cwe_ids": [
+      "CWE-863"
+    ] "nojudge"
+  },
+  {
+    "cve_id": "CVE-2023-41711",
+    "description": "SonicOS post-authentication Stack-Based Buffer Overflow Vulnerability in the sonicwall.exp, prefs.exp URL endpoints lead to a firewall crash.",
+    "cwe_ids": [
+      "CWE-121",
+      "CWE-787"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2025-12257",
+    "description": "A security vulnerability has been detected in SourceCodester Online Student Result System 1.0. This issue affects some unknown processing of the file /view_result.php. The manipulation of the argument ID leads to sql injection. The attack is possible to be carried out remotely. The exploit has been disclosed publicly and may be used.",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2019-9628",
+    "description": "The XMLTooling library all versions prior to V3.0.4, provided with the OpenSAML and Shibboleth Service Provider software, contains an XML parsing class. Invalid data in the XML declaration causes an exception of a type that was not handled properly in the parser class and propagates an unexpected exception type.",
+    "cwe_ids": [
+      "CWE-755"
+    ] "java"
+  },
+  {
+    "cve_id": "CVE-2022-35969",
+    "description": "TensorFlow is an open source platform for machine learning. The implementation of `Conv2DBackpropInput` requires `input_sizes` to be 4-dimensional. Otherwise, it gives a `CHECK` failure which can be used to trigger a denial of service attack. We have patched the issue in GitHub commit 50156d547b9a1da0144d7babe665cf690305b33c. The fix will be included in TensorFlow 2.10.0. We will also cherrypick this commit on TensorFlow 2.9.1, TensorFlow 2.8.1, and TensorFlow 2.7.2, as these are also affected and still in supported range. There are no known workarounds for this issue.",
+    "cwe_ids": [
+      "CWE-617",
+      "CWE-617"
+    ] "c/c++"
+  },
+  {
+    "cve_id": "CVE-2024-42499",
+    "description": "Improper limitation of a pathname to a restricted directory ('Path Traversal') issue exists in FitNesse releases prior to 20241026. If this vulnerability is exploited, an attacker may be able to know whether a file exists at a specific path, and/or obtain some part of the file contents under specific conditions.",
+    "cwe_ids": [
+      "CWE-22"
+    ] "java"
+  },
+  {
+    "cve_id": "CVE-2023-24987",
+    "description": "A vulnerability has been identified in Tecnomatix Plant Simulation (All versions < V2201.0006). The affected application contains an out of bounds write past the end of an allocated buffer while parsing a specially crafted SPP file. This could allow an attacker to execute code in the context of the current process. (ZDI-CAN-19809)",
+    "cwe_ids": [
+      "CWE-787"
+    ] "nojudge"
+  },
+  {
+    "cve_id": "CVE-2022-1131",
+    "description": "Use after free in Cast UI in Google Chrome prior to 100.0.4896.60 allowed a remote attacker to potentially exploit heap corruption via a crafted HTML page.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2018-21025",
+    "description": "In Centreon VM through 19.04.3, centreon-backup.pl allows attackers to become root via a crafted script, due to incorrect rights of sourced configuration files.",
+    "cwe_ids": [
+      "CWE-269"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-34824",
+    "description": "fdkaac before 1.0.5 was discovered to contain a heap buffer overflow in caf_info function in caf_reader.c.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-3956",
+    "description": "A vulnerability has been found in 201206030 novel-cloud 1.4.0 and classified as critical. This vulnerability affects the function RestResp of the file novel-cloud-master/novel-book/novel-book-service/src/main/resources/mapper/BookInfoMapper.xml. The manipulation leads to sql injection. The attack can be initiated remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-89",
+      "CWE-89"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2016-7957",
+    "description": "In Wireshark 2.2.0, the Bluetooth L2CAP dissector could crash, triggered by packet injection or a malformed capture file. This was addressed in epan/dissectors/packet-btl2cap.c by avoiding use of a seven-byte memcmp for potentially shorter strings.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-54386",
+    "description": "Cross-Site Request Forgery (CSRF) vulnerability in Get Push Monkey LLC Push Monkey Pro – Web Push Notifications and WooCommerce Abandoned Cart allows Cross Site Request Forgery.This issue affects Push Monkey Pro – Web Push Notifications and WooCommerce Abandoned Cart: from n/a through 3.9.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-43959",
+    "description": "Improper Neutralization of Input During Web Page Generation (XSS or 'Cross-site Scripting') vulnerability in Themepoints Testimonials allows Reflected XSS.This issue affects Testimonials: from n/a through 3.0.8.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-27413",
+    "description": "Auth. (contributor+) Stored Cross-Site Scripting (XSS) vulnerability in Shazzad Hossain Khan W4 Post List plugin <= 2.4.4 versions.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-40183",
+    "description": "DataEase is an open source data visualization and analysis tool. Prior to version 1.18.11, DataEase has a vulnerability that allows an attacker to to obtain user cookies. The program only uses the `ImageIO.read()` method to determine whether the file is an image file or not. There is no whitelisting restriction on file suffixes. This allows the attacker to synthesize the attack code into an image for uploading and change the file extension to html. The attacker may steal user cookies by accessing links. The vulnerability has been fixed in v1.18.11. There are no known workarounds.",
+    "cwe_ids": [
+      "CWE-434"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2020-19228",
+    "description": "An issue was found in bludit v3.13.0, unsafe implementation of the backup plugin allows attackers to upload arbitrary files.",
+    "cwe_ids": [
+      "CWE-434"
+    ] "other"
+  },
+  {
+    "cve_id": "CVE-2024-26191",
+    "description": "Microsoft SQL Server Native Scoring Remote Code Execution Vulnerability",
+    "cwe_ids": [
+      "CWE-122"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-48432",
+    "description": "In JetBrains IntelliJ IDEA before 2023.1 the bundled version of Chromium wasn't sandboxed.",
+    "cwe_ids": [
+      "CWE-1188",
+      "CWE-1188"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-50432",
+    "description": "simple-dhcp-server through ec976d2 allows remote attackers to cause a denial of service (daemon crash) by sending a DHCP packet without any option fields, which causes free_packet in dhcp_packet.c to dereference a NULL pointer.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-10607",
+    "description": "In Advantech WebAccess, Versions 8.4.2 and prior. A stack-based buffer overflow vulnerability caused by a lack of proper validation of the length of user-supplied data may allow remote code execution.",
+    "cwe_ids": [
+      "CWE-121",
+      "CWE-787"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2021-4118",
+    "description": "pytorch-lightning is vulnerable to Deserialization of Untrusted Data",
+    "cwe_ids": [
+      "CWE-502"
+    ]
+  }, "python"
+  {
+    "cve_id": "CVE-2018-13208",
+    "description": "The sell function of a smart contract implementation for MoneyTree (TREE), an Ethereum token, has an integer overflow in which \"amount * sellPrice\" can be zero, consequently reducing a seller's assets.",
+    "cwe_ids": [
+      "CWE-190"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2022-2355",
+    "description": "The Easy Username Updater WordPress plugin before 1.0.5 does not implement CSRF checks, which could allow attackers to make a logged in admin change any user's username includes the admin",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-6492",
+    "description": "Persistent Cross-Site Scripting, and non-persistent HTML Injection in HP Network Operations Management Ultimate, version 2017.07, 2017.11, 2018.02 and in Network Automation, version 10.00, 10.10, 10.11, 10.20, 10.30, 10.40, 10.50. This vulnerability could be remotely exploited to allow persistent cross-site scripting, and non-persistent HTML Injection.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2020-17490",
+    "description": "The TLS module within SaltStack Salt through 3002 creates certificates with weak file permissions.",
+    "cwe_ids": [
+      "CWE-732"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2025-21316",
+    "description": "Windows Kernel Memory Information Disclosure Vulnerability",
+    "cwe_ids": [
+      "CWE-532"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2022-4981",
+    "description": "A vulnerability was detected in DCMTK up to 3.6.7. The impacted element is the function DcmQueryRetrieveConfig::readPeerList of the file /dcmqrcnf.cc of the component dcmqrscp. The manipulation results in null pointer dereference. The attack needs to be approached locally. The exploit is now public and may be used. Upgrading to version 3.6.8 is sufficient to resolve this issue. The patch is identified as 957fb31e5. Upgrading the affected component is advised.",
+    "cwe_ids": [
+      "CWE-404",
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-31053",
+    "description": "Biscuit is an authentication and authorization token for microservices architectures. The Biscuit specification version 1 contains a vulnerable algorithm that allows malicious actors to forge valid Γ-signatures. Such an attack would allow an attacker to create a token with any access level. The version 2 of the specification mandates a different algorithm than gamma signatures and as such is not affected by this vulnerability. The Biscuit implementations in Rust, Haskell, Go, Java and Javascript all have published versions following the v2 specification. There are no known workarounds for this issue.",
+    "cwe_ids": [
+      "CWE-347"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2024-13257",
+    "description": "Incorrect Authorization vulnerability in Drupal Commerce View Receipt allows Forceful Browsing.This issue affects Commerce View Receipt: from 0.0.0 before 1.0.3.",
+    "cwe_ids": [
+      "CWE-863",
+      "CWE-863"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-15862",
+    "description": "Unchecked NULL pointer usage in LookupModMask in xkbcomp/expr.c in xkbcommon before 0.8.2 could be used by local attackers to crash (NULL pointer dereference) the xkbcommon parser by supplying a crafted keymap file with invalid virtual modifiers.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2016-10688",
+    "description": "Haxe 3 : The Cross-Platform Toolkit (a fork from David Mouton's damoebius/haxe-npm) haxe3 downloads resources over HTTP, which leaves it vulnerable to MITM attacks. It may be possible to cause remote code execution (RCE) by swapping out the requested resources with an attacker controlled copy if the attacker is on the network or positioned in between the user and the remote server.",
+    "cwe_ids": [
+      "CWE-311",
+      "CWE-310"
+    ]
+  },"other"
+  {
+    "cve_id": "CVE-2019-7061",
+    "description": "Adobe Acrobat and Reader versions 2019.010.20098 and earlier, 2019.010.20098 and earlier, 2017.011.30127 and earlier version, and 2015.006.30482 and earlier have an out-of-bounds read vulnerability. Successful exploitation could lead to information disclosure .",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-24802",
+    "description": "deepmerge-ts is a typescript library providing functionality to deep merging of javascript objects. deepmerge-ts is vulnerable to Prototype Pollution via file deepmerge.ts, function defaultMergeRecords(). This issue has been patched in version 4.0.2. There are no known workarounds for this issue.",
+    "cwe_ids": [
+      "CWE-915",
+      "CWE-1321"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-22668",
+    "description": "Memory Corruption in Audio while invoking IOCTLs calls from the user-space.",
+    "cwe_ids": [
+      "CWE-416",
+      "CWE-416"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-21874",
+    "description": "A specially-crafted HTTP request can lead to arbitrary command execution in DSA keypasswd parameter. An attacker can make an authenticated HTTP request to trigger this vulnerability.",
+    "cwe_ids": [
+      "CWE-78",
+      "CWE-78"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-34346",
+    "description": "A stack buffer overflow vulnerability has been reported to affect QNAP device running NVR Storage Expansion. If exploited, this vulnerability allows attackers to execute arbitrary code. We have already fixed this vulnerability in the following versions of NVR Storage Expansion: NVR Storage Expansion 1.0.6 ( 2021/08/03 ) and later",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-25159",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in robert_kolatzek WP doodlez allows Stored XSS. This issue affects WP doodlez: from n/a through 1.0.10.",
+    "cwe_ids": [
+      "CWE-79"
+    ] 
+  }, "other"
+  {
+    "cve_id": "CVE-2017-12970",
+    "description": "Cross-site request forgery (CSRF) vulnerability in Apache2Triad 1.5.4 allows remote attackers to hijack the authentication of authenticated users for requests that (1) add or (2) delete user accounts via a request to phpsftpd/users.php.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-25694",
+    "description": "A flaw was found in PostgreSQL versions before 13.1, before 12.5, before 11.10, before 10.15, before 9.6.20 and before 9.5.24. If a client application that creates additional database connections only reuses the basic connection parameters while dropping security-relevant parameters, an opportunity for a man-in-the-middle attack, or the ability to observe clear-text transmissions, could exist. The highest threat from this vulnerability is to data confidentiality and integrity as well as system availability.",
+    "cwe_ids": [
+      "CWE-327",
+      "CWE-327"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-1321",
+    "description": "The teachPress plugin for WordPress is vulnerable to SQL Injection via the 'order' parameter of the 'tpsearch' shortcode in all versions up to, and including, 9.0.7 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query.  This makes it possible for authenticated attackers, with Contributor-level access and above, to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
+    "cwe_ids": [
+      "CWE-89",
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-4284",
+    "description": "Improper Neutralization of Input During Web Page Generation (XSS or 'Cross-site Scripting') vulnerability in Rolantis Information Technologies Agentis allows Reflected XSS, DOM-Based XSS.This issue affects Agentis: before 4.32.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-4030",
+    "description": "In FreeRDP before version 2.1.2, there is an out of bounds read in TrioParse. Logging might bypass string length checks due to an integer overflow. This is fixed in version 2.1.2.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-190"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-46962",
+    "description": "Adobe Experience Manager versions 6.5.22 and earlier are affected by a stored Cross-Site Scripting (XSS) vulnerability that could be abused by a low privileged attacker to inject malicious scripts into vulnerable form fields. Malicious JavaScript may be executed in a victim’s browser when they browse to the page containing the vulnerable field.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2023-27347",
+    "description": "G DATA Total Security Link Following Local Privilege Escalation Vulnerability. This vulnerability allows local attackers to escalate privileges on affected installations of G Data Total Security. An attacker must first obtain the ability to execute low-privileged code on the target system in order to exploit this vulnerability.\n\nThe specific flaw exists within the G DATA Backup Service. By creating a symbolic link, an attacker can abuse the service to create arbitrary files. An attacker can leverage this vulnerability to escalate privileges and execute arbitrary code in the context of SYSTEM. Was ZDI-CAN-18749.",
+    "cwe_ids": [
+      "CWE-59"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2018-4125",
+    "description": "An issue was discovered in certain Apple products. iOS before 11.3 is affected. Safari before 11.1 is affected. iCloud before 7.4 on Windows is affected. iTunes before 12.7.4 on Windows is affected. tvOS before 11.3 is affected. watchOS before 4.3 is affected. The issue involves the \"WebKit\" component. It allows remote attackers to execute arbitrary code or cause a denial of service (memory corruption and application crash) via a crafted web site.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-9049",
+    "description": "A vulnerability in specified versions of American Dynamics victor Web Client and Software House C•CURE Web Client could allow an unauthenticated attacker on the network to create and sign their own JSON Web Token and use it to execute an HTTP API Method without the need for valid authentication/authorization. Under certain circumstances, this could be used by an attacker to impact system availability by conducting a Denial of Service attack.",
+    "cwe_ids": [
+      "CWE-285",
+      "CWE-287"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-14289",
+    "description": "This vulnerability allows remote attackers to disclose sensitive information on vulnerable installations of Foxit Reader 9.0.1.5096. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file. The specific flaw exists within the parsing of PDF documents. The issue results from the lack of proper validation of user-supplied data, which can result in a read past the end of an allocated object. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of the current process. Was ZDI-CAN-6221.",
+    "cwe_ids": [
+      "CWE-125",
+      "CWE-125"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-24692",
+    "description": "Missing Authorization vulnerability in Michael Revellin-Clerc Bulk Menu Edit allows Exploiting Incorrectly Configured Access Control Security Levels. This issue affects Bulk Menu Edit: from n/a through 1.3.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2016-15027",
+    "description": "A vulnerability was found in meta4creations Post Duplicator Plugin 2.18 on WordPress. It has been classified as problematic. Affected is the function mtphr_post_duplicator_notice of the file includes/notices.php. The manipulation of the argument post-duplicated leads to cross site scripting. It is possible to launch the attack remotely. Upgrading to version 2.19 is able to address this issue. The name of the patch is ca67c05e490c0cf93a1e9b2d93bfeff3dd96f594. It is recommended to upgrade the affected component. The identifier of this vulnerability is VDB-221496.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-23985",
+    "description": "Cross-Site Request Forgery (CSRF) vulnerability in Brainvireinfo Dynamic URL SEO allows Cross Site Request Forgery. This issue affects Dynamic URL SEO: from n/a through 1.0.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-6783",
+    "description": "The GoZen Forms plugin for WordPress is vulnerable to SQL Injection via the 'forms-id' parameter of the emdedSc() function in all versions up to, and including, 1.1.5 due to insufficient escaping on the user supplied parameter and lack of sufficient preparation on the existing SQL query.  This makes it possible for unauthenticated attackers to append additional SQL queries into already existing queries that can be used to extract sensitive information from the database.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2016-2813",
+    "description": "Mozilla Firefox before 46.0 on Android does not properly restrict JavaScript access to orientation and motion data, which allows remote attackers to obtain sensitive information about a device's physical environment, and possibly discover PIN values, via a crafted web site, a similar issue to CVE-2016-1780.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-50407",
+    "description": "Improper Neutralization of Input During Web Page Generation (XSS or 'Cross-site Scripting') vulnerability in Kiboko Labs Namaste! LMS allows Reflected XSS.This issue affects Namaste! LMS: from n/a through 2.6.2.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-0029",
+    "description": "In the WifiConfigManager, there is a possible storage of location history which can only be deleted by triggering a factory reset. This could lead to local information disclosure with System execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-10Android ID: A-140065828",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2017-9429",
+    "description": "SQL injection vulnerability in the Event List plugin 0.7.8 for WordPress allows an authenticated user to execute arbitrary SQL commands via the id parameter to wp-admin/admin.php.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-3521",
+    "description": "A vulnerability was found in Byzoro Smart S80 Management Platform up to 20240317. It has been rated as critical. Affected by this issue is some unknown functionality of the file /useratte/userattestation.php. The manipulation of the argument web_img leads to unrestricted upload. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. The identifier of this vulnerability is VDB-259892. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-434"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2022-38653",
+    "description": "In HCL Digital Experience, customized XSS payload can be constructed such that it is served in the application unencoded.\n",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2018-19858",
+    "description": "PrinceXML, versions 10 and below, is vulnerable to XXE due to the lack of protection against external entities. If an attacker passes HTML referencing an XML file (e.g., in an IFRAME element), PrinceXML will fetch the XML and parse it, thus giving an attacker file-read access and full-fledged SSRF.",
+    "cwe_ids": [
+      "CWE-611"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-4219",
+    "description": "Prior to 23.2, it is possible to perform arbitrary Server-Side requests via HTTP-based connectors within BeyondInsight, resulting in a server-side request forgery vulnerability.",
+    "cwe_ids": [
+      "CWE-918",
+      "CWE-918"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-19233",
+    "description": "COMPAREX Miss Marple Enterprise Edition before 2.0 allows local users to execute arbitrary code by reading the user name and encrypted password hard-coded in an Inventory Agent configuration file.",
+    "cwe_ids": [
+      "CWE-798"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2023-5404",
+    "description": "Server receiving a malformed message can cause a pointer to be overwritten which can result in a remote code execution or failure. See Honeywell Security Notification for recommendations on upgrading and versioning.",
+    "cwe_ids": [
+      "CWE-122"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-37499",
+    "description": "CRLF vulnerability in Reprise License Manager (RLM) web interface through 14.2BL4 in the password parameter in View License Result function, that allows remote attackers to inject arbitrary HTTP headers.",
+    "cwe_ids": [
+      "CWE-74"
+    ] 
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-25300",
+    "description": "smartbanner.js is a customizable smart app banner for iOS and Android. Prior to version 1.14.1, clicking on smartbanner `View` link and navigating to 3rd party page leaves `window.opener` exposed. It may allow hostile third parties to abuse `window.opener`, e.g. by redirection or injection on the original page with smartbanner. `rel=\"noopener\"` is automatically populated to links as of `v1.14.1` which is a recommended upgrade to resolve the vulnerability. Some workarounds are available for those who cannot upgrade. Ensure `View` link is only taking users to App Store or Google Play Store where security is guarded by respective app store security teams. If `View` link is going to a third party page, limit smartbanner.js to be used on iOS that decreases the scope of the vulnerability since as of Safari 12.1,  `rel=\"noopener\"` is imposed on all `target=\"_blank\"` links. Version 1.14.1 of smartbanner.js contains a fix for the issue.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-601"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2016-9585",
+    "description": "Red Hat JBoss EAP version 5 is vulnerable to a deserialization of untrusted data in the JMX endpoint when deserializes the credentials passed to it. An attacker could exploit this vulnerability resulting in a denial of service attack.",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2024-1586",
+    "description": "The Schema & Structured Data for WP & AMP plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the custom schema in all versions up to, and including, 1.26 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. By default the required authentication level is admin, but administrators have the ability to assign role based access to users as low as subscriber.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-47690",
+    "description": "Unauth. Reflected Cross-Site Scripting (XSS) vulnerability in Anton Bond Additional Order Filters for WooCommerce plugin <= 1.10 versions.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2016-3745",
+    "description": "Multiple buffer overflows in mediaserver in Android 4.x before 4.4.4, 5.0.x before 5.0.2, 5.1.x before 5.1.1, and 6.x before 2016-07-01 allow attackers to gain privileges via a crafted application that provides an AudioEffect reply, as demonstrated by obtaining Signature or SignatureOrSystem access, aka internal bug 28173666.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-45955",
+    "description": "Rocket Software Rocket Zena 4.4.1.26 is vulnerable to SQL Injection via the filter parameter.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2017-12174",
+    "description": "It was found that when Artemis and HornetQ before 2.4.0 are configured with UDP discovery and JGroups discovery a huge byte array is created when receiving an unexpected multicast message. This may result in a heap memory exhaustion, full GC, or OutOfMemoryError.",
+    "cwe_ids": [
+      "CWE-400",
+      "CWE-400"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2020-17469",
+    "description": "An issue was discovered in FNET through 4.6.4. The code for IPv6 fragment reassembly tries to access a previous fragment starting from a network incoming fragment that still doesn't have a reference to the previous one (which supposedly resides in the reassembly list). When faced with an incoming fragment that belongs to a non-empty fragment list, IPv6 reassembly must check that there are no empty holes between the fragments: this leads to an uninitialized pointer dereference in _fnet_ip6_reassembly in fnet_ip6.c, and causes Denial-of-Service.",
+    "cwe_ids": [
+      "CWE-824"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-2937",
+    "description": "The Image Hover Effects Ultimate plugin for WordPress is vulnerable to Stored Cross-Site Scripting via the Title & Description values that can be added to an Image Hover in versions up to, and including, 9.7.3 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page. By default, the plugin only allows administrators access to edit Image Hovers, however, if a site admin makes the plugin's features available to lower privileged users through the 'Who Can Edit?' setting then this can be exploited by those users.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-25521",
+    "description": "Insecure caller check in sharevia deeplink logic prior to Samsung Internet 16.0.2 allows unstrusted applications to get current tab URL in Samsung Internet.",
+    "cwe_ids": [
+      "CWE-285",
+      "CWE-552"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2025-31405",
+    "description": "Improper Control of Filename for Include/Require Statement in PHP Program ('PHP Remote File Inclusion') vulnerability in zankover Fami WooCommerce Compare allows PHP Local File Inclusion.This issue affects Fami WooCommerce Compare: from n/a through 1.0.5.",
+    "cwe_ids": [
+      "CWE-98"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-14699",
+    "description": "Vulnerability in the Oracle VM VirtualBox product of Oracle Virtualization (component: Core). Supported versions that are affected are Prior to 5.2.44, prior to 6.0.24 and prior to 6.1.12. Difficult to exploit vulnerability allows high privileged attacker with logon to the infrastructure where Oracle VM VirtualBox executes to compromise Oracle VM VirtualBox. While the vulnerability is in Oracle VM VirtualBox, attacks may significantly impact additional products. Successful attacks of this vulnerability can result in takeover of Oracle VM VirtualBox. CVSS 3.1 Base Score 7.5 (Confidentiality, Integrity and Availability impacts). CVSS Vector: (CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H).",
+    "cwe_ids": [
+      "CWE-191"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2016-1000147",
+    "description": "Reflected XSS in wordpress plugin recipes-writer v1.0.4",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2022-41537",
+    "description": "Online Tours & Travels Management System v1.0 was discovered to contain an arbitrary file upload vulnerability via the component /user_operations/profile.php. This vulnerability allows attackers to execute arbitrary code via a crafted PHP file.",
+    "cwe_ids": [
+      "CWE-434",
+      "CWE-434"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-11520",
+    "description": "The SDDisk2k.sys driver of WinMagic SecureDoc v8.5 and earlier allows local users to write to arbitrary kernel memory addresses because the IOCTL dispatcher lacks pointer validation. Exploiting this vulnerability results in privileged code execution.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-30015",
+    "description": "Due to incorrect memory address handling in ABAP SQL of SAP NetWeaver and ABAP Platform (Application Server ABAP), an authenticated attacker with high privileges could execute certain forms of SQL queries leading to manipulation of content in the output variable. This vulnerability has a low impact on the confidentiality, integrity and the availability of the application.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-14510",
+    "description": "GateManager versions prior to 9.2c, The affected product contains a hard-coded credential for telnet, allowing an unprivileged attacker to execute commands as root.",
+    "cwe_ids": [
+      "CWE-193",
+      "CWE-798"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-38520",
+    "description": "External Control of Assumed-Immutable Web Parameter vulnerability in PINPOINT.WORLD Pinpoint Booking System allows Functionality Misuse.This issue affects Pinpoint Booking System: from n/a through 2.9.9.3.4.",
+    "cwe_ids": [
+      "CWE-472"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-1341",
+    "description": "Multiple vulnerabilities in the web-based management interface of Cisco Small Business RV016, RV042, RV042G, RV082, RV320, and RV325 Routers could allow an authenticated, remote attacker to execute arbitrary code or cause an affected device to restart unexpectedly. These vulnerabilities are due to improper validation of user-supplied input in the web-based management interface. An attacker could exploit these vulnerabilities by sending crafted HTTP requests to an affected device. A successful exploit could allow the attacker to execute arbitrary code as the root user on the underlying operating system or cause the device to reload, resulting in a denial of service (DoS) condition. To exploit these vulnerabilities, an attacker would need to have valid administrator credentials on the affected device.",
+    "cwe_ids": [
+      "CWE-121"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-21092",
+    "description": "In retrieveServiceLocked of ActiveServices.java, there is a possible way to dynamically register a BroadcastReceiver using permissions of System App due to improper input validation. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-11 Android-12 Android-12L Android-13Android ID: A-242040055",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2023-5318",
+    "description": "Use of Hard-coded Credentials in GitHub repository microweber/microweber prior to 2.0.",
+    "cwe_ids": [
+      "CWE-798",
+      "CWE-798"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2017-12668",
+    "description": "ImageMagick 7.0.6-2 has a memory leak vulnerability in WritePCXImage in coders/pcx.c.",
+    "cwe_ids": [
+      "CWE-772"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-27229",
+    "description": "TOTOlink A7100RU V7.4cu.2313_B20191024 was discovered to contain a command injection vulnerability via the upBw parameter at /setting/setWanIeCfg.",
+    "cwe_ids": [
+      "CWE-77",
+      "CWE-77"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-24958",
+    "description": "A vulnerability in the IBM TS7700 Management Interface 8.51.2.12, 8.52.200.111, 8.52.102.13, and 8.53.0.63 could allow an authenticated user to submit a specially crafted URL leading to privilege escalation and remote code execution.  IBM X-Force ID:  246320.",
+    "cwe_ids": [
+      "CWE-78",
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2017-1625",
+    "description": "IBM Pulse for QRadar 1.0.0 - 1.0.3 discloses sensitive information to unauthorized users. The information can be used to mount further attacks on the system. IBM X-Force ID: 133123.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2017-14054",
+    "description": "In libavformat/rmdec.c in FFmpeg 3.3.3, a DoS in ivr_read_header() due to lack of an EOF (End of File) check might cause huge CPU consumption. When a crafted IVR file, which claims a large \"len\" field in the header but does not contain sufficient backing data, is provided, the first type==4 loop would consume huge CPU resources, since there is no EOF check inside the loop.",
+    "cwe_ids": [
+      "CWE-834"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2018-11254",
+    "description": "An issue was discovered in PoDoFo 0.9.5. There is an Excessive Recursion in the PdfPagesTree::GetPageNode() function of PdfPagesTree.cpp. Remote attackers could leverage this vulnerability to cause a denial of service through a crafted pdf file, a related issue to CVE-2017-8054.",
+    "cwe_ids": [
+      "CWE-674"
+    ]
+  },"c/c++"
+  {
+    "cve_id": "CVE-2022-21172",
+    "description": "Out of bounds write for some Intel(R) PROSet/Wireless WiFi products may allow a privileged user to potentially enable escalation of privilege via local access.",
+    "cwe_ids": [
+      "CWE-787",
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-39556",
+    "description": "Exposure of Sensitive System Information to an Unauthorized Control Sphere vulnerability in mediavine Mediavine Control Panel allows Retrieve Embedded Sensitive Data. This issue affects Mediavine Control Panel: from n/a through 2.10.6.",
+    "cwe_ids": [
+      "CWE-497"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2016-6939",
+    "description": "Heap-based buffer overflow in Adobe Reader and Acrobat before 11.0.18, Acrobat and Acrobat Reader DC Classic before 15.006.30243, and Acrobat and Acrobat Reader DC Continuous before 15.020.20039 on Windows and OS X allows attackers to execute arbitrary code via unspecified vectors, a different vulnerability than CVE-2016-6994.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-29014",
+    "description": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in ZoomIt FoodMenu allows Reflected XSS. This issue affects FoodMenu: from n/a through 1.20.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-10331",
+    "description": "A vulnerability, which was classified as critical, has been found in PHPGurukul Vehicle Record System 1.0. This issue affects some unknown processing of the file /admin/search-vehicle.php. The manipulation of the argument searchinputdata leads to sql injection. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-12493",
+    "description": "The ShopLentor – WooCommerce Builder for Elementor & Gutenberg +21 Modules – All in One Solution (formerly WooLentor) plugin for WordPress is vulnerable to Local File Inclusion in all versions up to, and including, 3.2.5 via the 'load_template' function. This makes it possible for unauthenticated attackers to include and execute arbitrary .php files on the server, allowing the execution of any PHP code in those files. This can be used to bypass access controls, obtain sensitive data, or achieve code execution in cases where .php file types can be uploaded and included.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-21662",
+    "description": "Memory corruption in Core Platform while printing the response buffer in log.",
+    "cwe_ids": [
+      "CWE-120",
+      "CWE-120"
+    ] 
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2017-7892",
+    "description": "Sandstorm Cap'n Proto before 0.5.3.1 allows remote crashes related to a compiler optimization. A remote attacker can trigger a segfault in a 32-bit libcapnp application because Cap'n Proto relies on pointer arithmetic calculations that overflow. An example compiler with optimization that elides a bounds check in such calculations is Apple LLVM version 8.1.0 (clang-802.0.41). The attack vector is a crafted far pointer within a message.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-11671",
+    "description": "Uniweb/SoliPACS WebServer developed by EBM Technologies has a Missing Authentication vulnerability, allowing unauthenticated remote attackers to access a specific page to obtain information such as account names and IP addresses.",
+    "cwe_ids": [
+      "CWE-306"
+    ] "nojudge"
+  },
+  {
+    "cve_id": "CVE-2025-47151",
+    "description": "A type confusion vulnerability exists in the lasso_node_impl_init_from_xml functionality of Entr&#39;ouvert Lasso 2.5.1 and 2.8.2. A specially crafted SAML response can lead to an arbitrary code execution. An attacker can send a malformed SAML response to trigger this vulnerability.",
+    "cwe_ids": [
+      "CWE-843"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-25266",
+    "description": "An insecure data storage vulnerability allows a physical attacker with root privileges to retrieve TOTP secret keys from unlocked phones in Sophos Authenticator for Android version 3.4 and older, and Intercept X for Mobile (Android) before version 9.7.3495.",
+    "cwe_ids": [
+      "CWE-922"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2017-3321",
+    "description": "Vulnerability in the MySQL Cluster component of Oracle MySQL (subcomponent: Cluster: General). Supported versions that are affected are 7.2.19 and earlier, 7.3.8 and earlier and 7.4.5 and earlier. Difficult to exploit vulnerability allows unauthenticated attacker with network access via multiple protocols to compromise MySQL Cluster. Successful attacks of this vulnerability can result in unauthorized ability to cause a partial denial of service (partial DOS) of MySQL Cluster. CVSS v3.0 Base Score 3.7 (Availability impacts).",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-0698",
+    "description": "A vulnerability was found in JoeyBling bootplus up to 247d5f6c209be1a5cf10cd0fa18e1d8cc63cf55d. It has been classified as critical. Affected is an unknown function of the file /admin/sys/menu/list. The manipulation of the argument sort/order leads to sql injection. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. Continious delivery with rolling releases is used by this product. Therefore, no version details of affected nor updated releases are available.",
+    "cwe_ids": [
+      "CWE-74",
+      "CWE-89"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2024-1340",
+    "description": "The Login Lockdown – Protect Login Form plugin for WordPress is vulnerable to unauthorized access of data due to a missing capability check on the generate_export_file function in all versions up to, and including, 2.08. This makes it possible for authenticated attackers, with subscriber access and higher, to export this plugin's settings that include whitelisted IP addresses as well as a global unlock key. With the global unlock key an attacker can add their IP address to the whitelist.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-18475",
+    "description": "Zoho ManageEngine OpManager before 12.3 build 123214 allows Unrestricted Arbitrary File Upload.",
+    "cwe_ids": [
+      "CWE-434"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2024-31695",
+    "description": "A misconfiguration in the fingerprint authentication mechanism of Binance: BTC, Crypto and NFTS v2.85.4, allows attackers to bypass authentication when adding a new fingerprint.",
+    "cwe_ids": [
+      "CWE-863"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2025-58852",
+    "description": "Cross-Site Request Forgery (CSRF) vulnerability in Mark O'Donnell MSTW League Manager allows Stored XSS. This issue affects MSTW League Manager: from n/a through 2.10.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-54078",
+    "description": "WeGIA is an open source web manager with a focus on the Portuguese language and charitable institutions. A Reflected Cross-Site Scripting (XSS) vulnerability was identified in versions prior to 3.4.6 in the `personalizacao_imagem.php` endpoint of the WeGIA application. This vulnerability allows attackers to inject malicious scripts in the `err` parameter. Version 3.4.6 fixes the issue.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2022-32924",
+    "description": "The issue was addressed with improved memory handling. This issue is fixed in tvOS 16.1, macOS Big Sur 11.7, macOS Ventura 13, watchOS 9.1, iOS 16.1 and iPadOS 16, macOS Monterey 12.6. An app may be able to execute arbitrary code with kernel privileges.",
+    "cwe_ids": [
+      "CWE-94"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-25872",
+    "description": "An issue in Open Panel v.0.3.4 allows a remote attacker to escalate privileges via the Fix Permissions function",
+    "cwe_ids": [
+      "CWE-269"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-51427",
+    "description": "\nSome Honor products are affected by type confusion vulnerability, successful exploitation could cause information leak.\n\n\n",
+    "cwe_ids": [
+      "CWE-843",
+      "CWE-843"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2017-1000402",
+    "description": "Jenkins Swarm Plugin Client 3.4 and earlier bundled a version of the commons-httpclient library with the vulnerability CVE-2012-6153 that incorrectly verified SSL certificates, making it susceptible to man-in-the-middle attacks.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2020-19216",
+    "description": "SQL Injection vulnerability in admin/user_perm.php in piwigo v2.9.5, via the cat_false parameter to admin.php?page=group_perm.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-0614",
+    "description": "In asf extractor, there is a possible out of bounds read due to an incorrect bounds check. This could lead to local information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS05495528; Issue ID: ALPS05495528.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  },"c/c++"
+  {
+    "cve_id": "CVE-2025-7380",
+    "description": "A stored Cross-Site Scripting (XSS) vulnerability exists in the Access Control of ADM, the issue allows an attacker to inject malicious scripts into the folder name field while creating a new shared folder. These scripts are not properly sanitized and will be executed when the folder name is subsequently displayed in the user interface. This allows attackers to execute arbitrary JavaScript in the context of another user's session, potentially accessing session cookies or other sensitive data.\nAffected products and versions include: from ADM 4.1.0 to ADM 4.3.3.RH61 as well as ADM 5.0.0.RIN1 and earlier.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-39085",
+    "description": "IBM Sterling B2B Integrator Standard Edition 6.0.0.0 through 6.0.3.5, 6.1.0.0 through 6.1.0.4, and 6.1.1.0 through 6.1.1.1 is vulnerable to SQL injection. A remote attacker could send specially crafted SQL statements, which could allow the attacker to view, add, modify or delete information in the back-end database. IBM X-Force ID: 215888.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2023-20775",
+    "description": "In display, there is a possible out of bounds write due to a missing bounds check. This could lead to local escalation of privilege with System execution privileges needed. User interaction is not needed for exploitation. Patch ID: ALPS07978760; Issue ID: ALPS07363410.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-19318",
+    "description": "Buffer Overflow vulnerability in D-Link DIR-605L, hardware version AX, firmware version 1.17beta and below, allows authorized attackers execute arbitrary code via sending crafted data to the webserver service program.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2023-39853",
+    "description": "SQL Injection vulnerability in Dzzoffice version 2.01, allows remote attackers to obtain sensitive information via the doobj and doevent parameters in the Network Disk backend module.",
+    "cwe_ids": [
+      "CWE-89",
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-28735",
+    "description": "Unit4 Financials by Coda versions prior to 2023Q4 suffer from an incorrect access control authorization bypass vulnerability which allows an authenticated user to modify the password of any user of the application via a crafted request.",
+    "cwe_ids": [
+      "CWE-287"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2024-8332",
+    "description": "A vulnerability was found in master-nan Sweet-CMS up to 5f441e022b8876f07cde709c77b5be6d2f262e3f. It has been declared as critical. This vulnerability affects unknown code of the file /table/index. The manipulation leads to sql injection. The attack can be initiated remotely. This product is using a rolling release to provide continious delivery. Therefore, no version details for affected nor updated releases are available. The name of the patch is 146359646a5a90cb09156dbd0013b7df77f2aa6c. It is recommended to apply a patch to fix this issue.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-27921",
+    "description": "Grav is an open-source, flat-file content management system. A file upload path traversal vulnerability has been identified in the application prior to version 1.7.45, enabling attackers to replace or create files with extensions like .json, .zip, .css, .gif, etc. This critical security flaw poses severe risks, that can allow attackers to inject arbitrary code on the server, undermine integrity of backup files by overwriting existing files or creating new ones, and exfiltrate sensitive data using CSS exfiltration techniques. Upgrading to patched version 1.7.45 can mitigate the issue.",
+    "cwe_ids": [
+      "CWE-22",
+      "CWE-22"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-47819",
+    "description": "Umbraco, a free and open source .NET content management system, has a cross-site scripting vulnerability starting in version 14.0.0 and prior to versions 14.3.1 and 15.0.0. This can be leveraged to gain access to higher-privilege endpoints, e.g. if you get a user with admin privileges to run the code, you can potentially elevate all users and grant them admin privileges or access protected content. Versions 14.3.1 and 15.0.0 contain a patch. As a workaround, ensure that access to the Dictionary section is only granted to trusted users.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-33270",
+    "description": "An issue was discovered in DTS Monitoring 3.57.0. The parameter url within the Curl check function is vulnerable to OS command injection (blind).",
+    "cwe_ids": [
+      "CWE-78"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2023-41121",
+    "description": "Array AG OS before 9.4.0.499 allows denial of service: remote attackers can cause system service processes to crash through abnormal HTTP operations.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-43260",
+    "description": "Missing Authorization vulnerability in Creative Motion Clearfy Cache allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects Clearfy Cache: from n/a through 2.2.4.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-34550",
+    "description": "An issue was discovered in Tor before 0.4.6.5, aka TROVE-2021-006. The v3 onion service descriptor parsing allows out-of-bounds memory access, and a client crash, via a crafted onion service descriptor",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-26211",
+    "description": "Gibbon before 29.0.00 allows CSRF.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-40989",
+    "description": "Stored Cross Site Scripting vulnerability in Ekushey CRM v5.0 by Creativeitem, due to lack of proper validation of user inputs via the \"/ekushey/index.php/client/project_message/add/xxx\", affecting to \"message\" parameter via POST. This vulnerability could allow a remote attacker to send a specially crafted query to an authenticated user and steal his/her cookie session details.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-7545",
+    "description": "A vulnerability classified as problematic was found in GNU Binutils 2.45. Affected by this vulnerability is the function copy_section of the file binutils/objcopy.c. The manipulation leads to heap-based buffer overflow. Attacking locally is a requirement. The exploit has been disclosed to the public and may be used. The patch is named 08c3cbe5926e4d355b5cb70bbec2b1eeb40c2944. It is recommended to apply a patch to fix this issue.",
+    "cwe_ids": [
+      "CWE-119",
+      "CWE-122"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-1744",
+    "description": "A flaw was found in keycloak before version 9.0.1. When configuring an Conditional OTP Authentication Flow as a post login flow of an IDP, the failure login events for OTP are not being sent to the brute force protection event queue. So BruteForceProtector does not handle this events.",
+    "cwe_ids": [
+      "CWE-755",
+      "CWE-755"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2017-14804",
+    "description": "The build package before 20171128 did not check directory names during extraction of build results that allowed untrusted builds to write outside of the target system,allowing escape out of buildroots.",
+    "cwe_ids": [
+      "CWE-22",
+      "CWE-20"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2022-28762",
+    "description": "Zoom Client for Meetings for macOS (Standard and for IT Admin) starting with 5.10.6 and prior to 5.12.0 contains a debugging port misconfiguration. When camera mode rendering context is enabled as part of the Zoom App Layers API by running certain Zoom Apps, a local debugging port is opened by the Zoom client. A local malicious user could use this debugging port to connect to and control the Zoom Apps running in the Zoom client.",
+    "cwe_ids": [
+      "CWE-16"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2017-20034",
+    "description": "A vulnerability classified as problematic was found in PHPList 3.2.6. This vulnerability affects unknown code of the file /lists/admin/ of the component List Name. The manipulation leads to cross site scripting (Persistent). The attack can be initiated remotely. Upgrading to version 3.3.1 is able to address this issue. It is recommended to upgrade the affected component.",
+    "cwe_ids": [
+      "CWE-80",
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-20946",
+    "description": "Qibosoft v7 contains a stored cross-site scripting (XSS) vulnerability in the component /admin/index.php?lfj=friendlink&action=add.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-40802",
+    "description": "The issue was addressed with improved checks. This issue is fixed in macOS Sonoma 14.6, macOS Monterey 12.7.6, macOS Ventura 13.6.8. A local attacker may be able to elevate their privileges.",
+    "cwe_ids": [
+      "CWE-269"
+    ]
+  },  "c/c++"
+  {
+    "cve_id": "CVE-2024-42780",
+    "description": "An Unrestricted file upload vulnerability was found in \"/music/ajax.php?action=save_genre\" in Kashipara Music Management System v1.0. This allows attackers to execute arbitrary code via uploading a crafted PHP file.",
+    "cwe_ids": [
+      "CWE-434",
+      "CWE-434"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-8006",
+    "description": "The server in Circontrol Raption through 5.11.2 has a pre-authentication stack-based buffer overflow that can be exploited to gain run-time control of the device as root. The ocpp1.5 and pwrstudio binaries on the charging station do not use a number of common exploitation mitigations. In particular, there are no stack canaries and they do not use the Position Independent Executable (PIE) format.",
+    "cwe_ids": [
+      "CWE-121"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2016-8696",
+    "description": "The bm_readbody_bmp function in bitmap_io.c in potrace before 1.13 allows remote attackers to cause a denial of service (NULL pointer dereference and crash) via a crafted BMP image, a different vulnerability than CVE-2016-8694 and CVE-2016-8695.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2018-17334",
+    "description": "An issue was discovered in libsvg2 through 2012-10-19. A stack-based buffer overflow in the svgGetNextPathField function in svg_string.c allows remote attackers to cause a denial of service (application crash) or possibly have unspecified other impact because a strncpy copy limit is miscalculated.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2016-6030",
+    "description": "IBM Jazz Foundation is vulnerable to cross-site scripting. This vulnerability allows users to embed arbitrary JavaScript code in the Web UI thus altering the intended functionality potentially leading to credentials disclosure within a trusted session.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-35728",
+    "description": "FasterXML jackson-databind 2.x before 2.9.10.8 mishandles the interaction between serialization gadgets and typing, related to com.oracle.wls.shaded.org.apache.xalan.lib.sql.JNDIConnectionPool (aka embedded Xalan in org.glassfish.web/javax.servlet.jsp.jstl).",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  }, "java"
+  {
+    "cve_id": "CVE-2025-5529",
+    "description": "The Educenter theme for WordPress is vulnerable to Stored Cross-Site Scripting via the Circle Counter Block in all versions up to, and including, 1.6.2 due to insufficient input sanitization and output escaping. This makes it possible for authenticated attackers, with Contributor-level access and above, to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-8026",
+    "description": "A Incorrect Default Permissions vulnerability in the packaging of inn in openSUSE Leap 15.2, openSUSE Tumbleweed, openSUSE Leap 15.1 allows local attackers with control of the new user to escalate their privileges to root. This issue affects: openSUSE Leap 15.2 inn version 2.6.2-lp152.1.26 and prior versions. openSUSE Tumbleweed inn version 2.6.2-4.2 and prior versions. openSUSE Leap 15.1 inn version 2.5.4-lp151.3.3.1 and prior versions.",
+    "cwe_ids": [
+      "CWE-276"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2024-47828",
+    "description": "ampache is a web based audio/video streaming application and file manager. A CSRF attack can be performed in order to delete objects (Playlist, smartlist etc.). Cross-Site Request Forgery (CSRF) is an attack that forces authenticated users to submit a request to a Web application against which they are currently authenticated. This vulnerability can be exploited by creating a malicious script with an arbitrary playlist ID belonging to another user. When the user submits the request, their playlist will be deleted. Any User with active sessions who are tricked into submitting a malicious request are impacted, as their playlists or other objects could be deleted without their consent.",
+    "cwe_ids": [
+      "CWE-352",
+      "CWE-352"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2025-29971",
+    "description": "Out-of-bounds read in Web Threat Defense (WTD.sys) allows an unauthorized attacker to deny service over a network.",
+    "cwe_ids": [
+      "CWE-125"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2021-1501",
+    "description": "A vulnerability in the SIP inspection engine of Cisco Adaptive Security Appliance (ASA) Software and Cisco Firepower Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to cause a crash and reload of an affected device, resulting in a denial of service (DoS) condition.The vulnerability is due to a crash that occurs during a hash lookup for a SIP pinhole connection. An attacker could exploit this vulnerability by sending crafted SIP traffic through an affected device. A successful exploit could allow the attacker to cause a crash and reload of the affected device.",
+    "cwe_ids": [
+      "CWE-613"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-27790",
+    "description": "A floating point exception issue was discovered in UPX in PackLinuxElf64::invert_pt_dynamic() function of p_lx_elf.cpp file. An attacker with a crafted input file could trigger this issue that could cause a crash leading to a denial of service. The highest impact is to Availability.",
+    "cwe_ids": [
+      "CWE-369",
+      "CWE-369"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2022-29774",
+    "description": "iSpy v7.2.2.0 is vulnerable to remote command execution via path traversal.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2021-29565",
+    "description": "TensorFlow is an end-to-end open source platform for machine learning. An attacker can trigger a null pointer dereference in the implementation of `tf.raw_ops.SparseFillEmptyRows`. This is because of missing validation(https://github.com/tensorflow/tensorflow/blob/fdc82089d206e281c628a93771336bf87863d5e8/tensorflow/core/kernels/sparse_fill_empty_rows_op.cc#L230-L231) that was covered under a `TODO`. If the `dense_shape` tensor is empty, then `dense_shape_t.vec<>()` would cause a null pointer dereference in the implementation of the op. The fix will be included in TensorFlow 2.5.0. We will also cherrypick this commit on TensorFlow 2.4.2, TensorFlow 2.3.3, TensorFlow 2.2.3 and TensorFlow 2.1.4, as these are also affected and still in supported range.",
+    "cwe_ids": [
+      "CWE-476"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-48970",
+    "description": "The ventilator's microcontroller lacks memory protection. An attacker could connect to the internal JTAG interface and read or write to flash memory using an off-the-shelf debugging tool, which could disrupt the function of the device and/or cause unauthorized information disclosure.",
+    "cwe_ids": [
+      "CWE-1191"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-10751",
+    "description": "A flaw was found in the Linux kernels SELinux LSM hook implementation before version 5.7, where it incorrectly assumed that an skb would only contain a single netlink message. The hook would incorrectly only validate the first netlink message in the skb and allow or deny the rest of the messages within the skb with the granted permission without further processing.",
+    "cwe_ids": [
+      "CWE-349",
+      "CWE-345"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2024-38888",
+    "description": "An issue in Horizon Business Services Inc. Caterease 16.0.1.1663 through 24.0.1.2405 and possibly later versions, allows a local attacker to perform a Password Brute Forcing attack due to improper restriction of excessive authentication attempts.",
+    "cwe_ids": [
+      "CWE-307"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2018-11988",
+    "description": "In all android releases(Android for MSM, Firefox OS for MSM, QRD Android) from CAF using the linux kernel, Un-trusted pointer de-reference issue by accessing a variable which is already freed.",
+    "cwe_ids": [
+      "CWE-416"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2020-25784",
+    "description": "An issue was discovered on Accfly Wireless Security IR Camera System 720P with software versions v3.10.73 through v4.15.77. There is an unauthenticated stack-based buffer overflow in the function CNetClientGuard::SubOprMsg during incoming message handling.",
+    "cwe_ids": [
+      "CWE-787"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2019-12695",
+    "description": "A vulnerability in the Clientless SSL VPN (WebVPN) portal of Cisco Adaptive Security Appliance (ASA) and Cisco Firepower Threat Defense (FTD) Software could allow an unauthenticated, remote attacker to conduct a cross-site scripting (XSS) attack against a user of the web-based management interface of an affected device. The vulnerability is due to insufficient validation of user-supplied input by the web-based management interface of an affected device. An attacker could exploit this vulnerability by persuading a user of the interface to click a crafted link. A successful exploit could allow the attacker to execute arbitrary script code in the context of the interface or allow the attacker to access sensitive browser-based information.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2018-19229",
+    "description": "An issue was discovered in LAOBANCMS 2.0. It allows XSS via the admin/art.php?typeid=1 biaoti parameter.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2020-25701",
+    "description": "If the upload course tool in Moodle was used to delete an enrollment method which did not exist or was not already enabled, the tool would erroneously enable that enrollment method. This could lead to unintended users gaining access to the course. Versions affected: 3.9 to 3.9.2, 3.8 to 3.8.5, 3.7 to 3.7.8, 3.5 to 3.5.14 and earlier unsupported versions. This is fixed in moodle 3.9.3, 3.8.6, 3.7.9, 3.5.15, and 3.10.",
+    "cwe_ids": [
+      "CWE-284",
+      "CWE-863"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2024-1647",
+    "description": "Pyhtml2pdf version 0.0.6 allows an external attacker to remotely obtain\n\narbitrary local files. This is possible because the application does not\n\nvalidate the HTML content entered by the user.\n\n\n\n",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  }, "python"
+  {
+    "cve_id": "CVE-2024-40620",
+    "description": "CVE-2024-40620 IMPACT\n\nA vulnerability exists in the affected product due to lack of encryption of sensitive information. The vulnerability results in data being sent between the Console and the Dashboard without encryption, which can be seen in the logs of proxy servers, potentially impacting the data's confidentiality.",
+    "cwe_ids": [
+      "CWE-311",
+      "CWE-311"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2022-47662",
+    "description": "GPAC MP4Box 2.1-DEV-rev649-ga8f438d20 has a segment fault (/stack overflow) due to infinite recursion in Media_GetSample isomedia/media.c:662",
+    "cwe_ids": [
+      "CWE-674",
+      "CWE-674"
+    ]
+  }, "c/c++"
+  {
+    "cve_id": "CVE-2025-43468",
+    "description": "A downgrade issue affecting Intel-based Mac computers was addressed with additional code-signing restrictions. This issue is fixed in macOS Sonoma 14.8.2, macOS Sequoia 15.7.2. An app may be able to access sensitive user data.",
+    "cwe_ids": [
+      "CWE-347"
+    ]
+  }, "nojudge"
+  {
+    "cve_id": "CVE-2024-24560",
+    "description": "Vyper is a Pythonic Smart Contract Language for the Ethereum Virtual Machine. When calls to external contracts are made, we write the input buffer starting at byte 28, and allocate the return buffer to start at byte 0 (overlapping with the input buffer). When checking RETURNDATASIZE for dynamic types, the size is compared only to the minimum allowed size for that type, and not to the returned value's length. As a result, malformed return data can cause the contract to mistake data from the input buffer for returndata.  When the called contract returns invalid ABIv2 encoded data, the calling contract can read different invalid data (from the dirty buffer) than the called contract returned.",
+    "cwe_ids": [
+      "CWE-119"
+    ]
+  }, "other"
+  {
+    "cve_id": "CVE-2017-10422",
+    "description": "Vulnerability in the PeopleSoft Enterprise PeopleTools component of Oracle PeopleSoft Products (subcomponent: Updates Change Assistant). The supported version that is affected is 8.54. Difficult to exploit vulnerability allows unauthenticated attacker with network access via HTTP to compromise PeopleSoft Enterprise PeopleTools. Successful attacks of this vulnerability can result in unauthorized access to critical data or complete access to all PeopleSoft Enterprise PeopleTools accessible data. CVSS 3.0 Base Score 5.9 (Confidentiality impacts). CVSS Vector: (CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  } "nojudge"
+]

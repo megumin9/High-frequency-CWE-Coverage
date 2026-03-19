@@ -1,0 +1,548 @@
+[
+  {
+    "cve_id": "CVE-2025-1833",
+    "description": "A vulnerability, which was classified as critical, has been found in zj1983 zz up to 2024-8. Affected by this issue is the function sendNotice of the file src/main/java/com/futvan/z/erp/customer_notice/Customer_noticeAction.java of the component HTTP Request Handler. The manipulation of the argument url leads to server-side request forgery. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-918"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2155",
+    "description": "Jenkins OpenShift Deployer Plugin 1.2.0 and earlier transmits configured credentials in plain text as part of its global Jenkins configuration form, potentially resulting in their exposure.",
+    "cwe_ids": [
+      "CWE-319"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-15381",
+    "description": "A Java deserialization vulnerability in Cisco Unity Express (CUE) could allow an unauthenticated, remote attacker to execute arbitrary shell commands with the privileges of the root user. The vulnerability is due to insecure deserialization of user-supplied content by the affected software. An attacker could exploit this vulnerability by sending a malicious serialized Java object to the listening Java Remote Method Invocation (RMI) service. A successful exploit could allow the attacker to execute arbitrary commands on the device with root privileges.",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-9092",
+    "description": "Uncontrolled Resource Consumption vulnerability in Legion of the Bouncy Castle Inc. Bouncy Castle for Java - BC-FJA 2.1.0 bc-fips (API modules) allows Excessive Allocation. This vulnerability is associated with program files org.Bouncycastle.Crypto.Fips.NativeLoader.\n\nThis issue affects Bouncy Castle for Java - BC-FJA 2.1.0: from BC-FJA 2.1.0 through 2.1.0.",
+    "cwe_ids": [
+      "CWE-400"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-37819",
+    "description": "PDF Labs pdftk-java v3.2.3 was discovered to contain an infinite loop via the component /text/pdf/PdfReader.java.",
+    "cwe_ids": [
+      "CWE-835"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-43856",
+    "description": "Dreamer CMS v4.1.3 was discovered to contain an arbitrary file read vulnerability via the component /admin/TemplateController.java.",
+    "cwe_ids": [
+      "CWE-552"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0593",
+    "description": "In sendDevicePickedIntent of DevicePickerFragment.java, there is a possible way to invoke a privileged broadcast receiver due to a confused deputy. This could lead to local escalation of privilege with User execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-10 Android-11 Android-8.1 Android-9Android ID: A-179386068",
+    "cwe_ids": [
+      "CWE-610"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-45447",
+    "description": "\nHitachi Vantara Pentaho Business Analytics Server versions before 9.3.0.0, 9.2.0.2 and \n8.3.0.25 with the Data Lineage feature enabled transmits database passwords in clear text.  \n\nThe transmission of sensitive data in clear text allows unauthorized actors with access to the \nnetwork to sniff and obtain sensitive information that can be later used to gain unauthorized \naccess.\n\n\n",
+    "cwe_ids": [
+      "CWE-319",
+      "CWE-319"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-39156",
+    "description": "A cross-site request forgery (CSRF) vulnerability in Jenkins Bazaar Plugin 1.22 and earlier allows attackers to delete previously created Bazaar SCM tags.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-4178",
+    "description": "A vulnerability was found in xiaowei1118 java_server up to 11a5bac8f4ba1c17e4bc1b27cad6d24868500e3a on Windows and classified as critical. This issue affects some unknown processing of the file /src/main/java/com/changyu/foryou/controller/FoodController.java of the component File Upload API. The manipulation leads to path traversal. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used. This product takes the approach of rolling releases to provide continious delivery. Therefore, version details for affected and updated releases are not available.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-25517",
+    "description": "MyBatis plus v3.4.3 was discovered to contain a SQL injection vulnerability via the Column parameter in /core/conditions/AbstractWrapper.java. NOTE: the vendor's position is that the reported execution of a SQL statement was intended behavior.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-21097",
+    "description": "In toUriInner of Intent.java, there is a possible way to launch an arbitrary activity due to a confused deputy. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-11 Android-12 Android-12L Android-13Android ID: A-261858325",
+    "cwe_ids": [
+      "CWE-610",
+      "CWE-610"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-21642",
+    "description": "Directory Traversal vulnerability ZDBQAREFSUBDIR parameter in /zropusermgmt API in Zoho ManageEngine Analytics Plus before 4350 allows remote attackers to run arbitrary code.",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-46548",
+    "description": "If you enable Basic Authentication in Pekko Management using the Java DSL, the authenticator may not be properly applied.\n\n\nUsers that rely on authentication instead of making sure the Management API ports are only available to trusted users are recommended to upgrade to version 1.1.1, which fixes this issue.\n\n\n\n\nAkka was affected by the same issue and has released the fix in version 1.6.1.",
+    "cwe_ids": [
+      "CWE-287"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-5676",
+    "description": "In Eclipse OpenJ9 before version 0.41.0, the JVM can be forced into an infinite busy hang on a spinlock or a segmentation fault if a shutdown signal (SIGTERM, SIGINT or SIGHUP) is received before the JVM has finished initializing.\n",
+    "cwe_ids": [
+      "CWE-364",
+      "CWE-362"
+    ] "CCPP"
+  },
+  {
+    "cve_id": "CVE-2017-8046",
+    "description": "Malicious PATCH requests submitted to servers using Spring Data REST versions prior to 2.6.9 (Ingalls SR9), versions prior to 3.0.1 (Kay SR1) and Spring Boot versions prior to 1.5.9, 2.0 M6 can use specially crafted JSON data to run arbitrary Java code.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-22233",
+    "description": "CVE-2024-38820 ensured Locale-independent, lowercase conversion for both the configured disallowedFields patterns and for request parameter names. However, there are still cases where it is possible to bypass the disallowedFields checks.\n\nAffected Spring Products and Versions\n\nSpring Framework:\n  *  6.2.0 - 6.2.6\n\n  *  6.1.0 - 6.1.19\n\n  *  6.0.0 - 6.0.27\n\n  *  5.3.0 - 5.3.42\n  *  Older, unsupported versions are also affected\n\n\n\nMitigation\n\nUsers of affected versions should upgrade to the corresponding fixed version.\n\nAffected version(s)Fix Version Availability 6.2.x\n 6.2.7\nOSS6.1.x\n 6.1.20\nOSS6.0.x\n 6.0.28\n Commercial https://enterprise.spring.io/ 5.3.x\n 5.3.43\n Commercial https://enterprise.spring.io/ \nNo further mitigation steps are necessary.\n\n\nGenerally, we recommend using a dedicated model object with properties only for data binding, or using constructor binding since constructor arguments explicitly declare what to bind together with turning off setter binding through the declarativeBinding flag. See the Model Design section in the reference documentation.\n\nFor setting binding, prefer the use of allowedFields (an explicit list) over disallowedFields.\n\nCredit\n\nThis issue was responsibly reported by the TERASOLUNA Framework Development Team from NTT DATA Group Corporation.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-0551",
+    "description": "Cross-site scripting vulnerability in Cybozu Garoon 3.0.0 to 4.6.1 allows remote authenticated attackers to inject arbitrary web script or HTML via unspecified vectors.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-1477",
+    "description": "Improper Authentication vulnerability in HYPR Keycloak Authenticator Extension allows Authentication Abuse.This issue affects HYPR Keycloak Authenticator Extension: before 7.10.2, before 8.0.3.\n\n",
+    "cwe_ids": [
+      "CWE-287",
+      "CWE-287"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-33940",
+    "description": "Cross-site scripting (XSS) vulnerability in IFrame type Remote Apps in Liferay Portal 7.4.0 through 7.4.3.30, and Liferay DXP 7.4 before update 31 allows remote attackers to inject arbitrary web script or HTML via the Remote App's IFrame URL.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-24329",
+    "description": "In JetBrains Kotlin before 1.6.0, it was not possible to lock dependencies for Multiplatform Gradle Projects.",
+    "cwe_ids": [
+      "CWE-829"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-43099",
+    "description": "An Archive Extraction (AKA \"Zip Slip) vulnerability exists in bbs 5.3 in the UpgradeNow function in UpgradeManageAction.java, which unzips the arbitrary upladed zip file without checking filenames. The vulnerability is exploited using a specially crafted archive that holds directory traversal filenames (e.g. ../../evil.exe).",
+    "cwe_ids": [
+      "CWE-22"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-25055",
+    "description": "A vulnerability was found in FarCry Solr Pro Plugin up to 1.5.x. It has been declared as problematic. Affected by this vulnerability is an unknown functionality of the file packages/forms/solrProSearch.cfc of the component Search Handler. The manipulation of the argument suggestion leads to cross site scripting. The attack can be launched remotely. Upgrading to version 1.6.0 is able to address this issue. The name of the patch is b8f3d61511c9b02b781ec442bfb803cbff8e08d5. It is recommended to upgrade the affected component. The identifier VDB-216961 was assigned to this vulnerability.",
+    "cwe_ids": [
+      "CWE-79"
+    ] "Other"
+  },
+  {
+    "cve_id": "CVE-2022-34812",
+    "description": "A cross-site request forgery (CSRF) vulnerability in Jenkins XPath Configuration Viewer Plugin 1.1.1 and earlier allows attackers to create and delete XPath expressions.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-32274",
+    "description": "The Transition Scheduler add-on 6.5.0 for Atlassian Jira is prone to stored XSS via the project name to the creation function.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29505",
+    "description": "XStream is software for serializing Java objects to XML and back again. A vulnerability in XStream versions prior to 1.4.17 may allow a remote attacker has sufficient rights to execute commands of the host only by manipulating the processed input stream. No user who followed the recommendation to setup XStream's security framework with a whitelist limited to the minimal required types is affected. The vulnerability is patched in version 1.4.17.",
+    "cwe_ids": [
+      "CWE-94",
+      "CWE-502",
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-15703",
+    "description": "Any authenticated user (valid client certificate but without ACL permissions) could upload a template which contained malicious code and caused a denial of service via Java deserialization attack. The fix to properly handle Java deserialization was applied on the Apache NiFi 1.4.0 release. Users running a prior 1.x release should upgrade to the appropriate release.",
+    "cwe_ids": [
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-33937",
+    "description": "Stored cross-site scripting (XSS) vulnerability in Form widget configuration in Liferay Portal 7.1.0 through 7.3.0, and Liferay DXP 7.1 before fix pack 18, and 7.2 before fix pack 5 allows remote attackers to inject arbitrary web script or HTML via a crafted payload injected into a form's `name` field.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-3199",
+    "description": "The Java implementation of GraniteDS, version 3.1.1.GA, AMF3 deserializers derives class instances from java.io.Externalizable rather than the AMF3 specification's recommendation of flash.utils.IExternalizable. A remote attacker with the ability to spoof or control an RMI server connection may be able to send serialized Java objects that execute arbitrary code when deserialized.",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2194",
+    "description": "Jenkins ECharts API Plugin 4.7.0-3 and earlier does not escape the display name of the builds in the trend chart, resulting in a stored cross-site scripting vulnerability.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-39311",
+    "description": "GoCD is a continuous delivery server. GoCD helps you automate and streamline the build-test-release cycle for continuous delivery of your product. GoCD versions prior to 21.1.0 are vulnerable to remote code execution on the server from a malicious or compromised agent. The Spring RemoteInvocation endpoint exposed agent communication and allowed deserialization of arbitrary java objects, as well as subsequent remote code execution. Exploitation requires agent-level authentication, thus an attacker would need to either compromise an existing agent, its network communication or register a new agent to practically exploit this vulnerability. This issue is fixed in GoCD version 21.1.0. There are currently no known workarounds.",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-25603",
+    "description": "Stored cross-site scripting (XSS) vulnerability in the Dynamic Data Mapping module's DDMForm in Liferay Portal 7.2.0 through 7.4.3.4, and older unsupported versions, and Liferay DXP 7.4.13, 7.3 before update 4, 7.2 before fix pack 17, and older unsupported versions allows remote authenticated users to inject arbitrary web script or HTML via the instanceId parameter.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1000614",
+    "description": "ONOS ONOS Controller version 1.13.1 and earlier contains a XML External Entity (XXE) vulnerability in providers/netconf/alarm/src/main/java/org/onosproject/provider/netconf/alarm/NetconfAlarmTranslator.java that can result in An adversary can remotely launch advanced XXE attacks on ONOS controller without authentication.. This attack appear to be exploitable via crafted protocol message.",
+    "cwe_ids": [
+      "CWE-611"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1000865",
+    "description": "A sandbox bypass vulnerability exists in Script Security Plugin 1.47 and earlier in groovy-sandbox/src/main/java/org/kohsuke/groovy/sandbox/SandboxTransformer.java that allows attackers with Job/Configure permission to execute arbitrary code on the Jenkins master JVM, if plugins using the Groovy sandbox are installed.",
+    "cwe_ids": [
+      "CWE-269"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-42963",
+    "description": "A critical vulnerability in SAP NetWeaver Application server for Java Log Viewer enables authenticated administrator users to exploit unsafe Java object deserialization. Successful exploitation can lead to full operating system compromise, granting attackers complete control over the affected system. This results in a severe impact on the confidentiality, integrity, and availability of the application and host environment.",
+    "cwe_ids": [
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-1722",
+    "description": "A flaw was found in Keycloak. In certain conditions, this issue may allow a remote unauthenticated attacker to block other accounts from logging in.",
+    "cwe_ids": [
+      "CWE-645"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-27029",
+    "description": "In TextView of TextView.java, there is a possible app hang due to improper input validation. This could lead to remote denial of service with no additional execution privileges needed. User interaction is needed for exploitation.Product: AndroidVersions: Android-11Android ID: A-140218875",
+    "cwe_ids": [
+      "CWE-20",
+      "CWE-770"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-27899",
+    "description": "Self-Registration and Modify your own profile in User Admin Application of NetWeaver AS Java does not enforce proper security requirements for the content of the newly defined security answer. This can be leveraged by an attacker to cause profound impact on confidentiality and low impact on both integrity and availability.\n\n",
+    "cwe_ids": [
+      "CWE-640"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-8526",
+    "description": "A vulnerability in Automated Logic WebCTRL 7.0 could allow an attacker to send a maliciously\ncrafted URL, which when visited by an authenticated WebCTRL user, could result in the redirection\nof the user to a malicious webpage via \"index.jsp\"",
+    "cwe_ids": [
+      "CWE-601"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-1003",
+    "description": "In adjustStreamVolume of AudioService.java, there is a possible way for unprivileged app to change audio stream volume due to a confused deputy. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-12Android ID: A-189857506",
+    "cwe_ids": [
+      "CWE-610"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-1157",
+    "description": "IBM Jazz Reporting Service (JRS) 5.0 and 6.0 could allow an authenticated attacker to access report data that should be restricted to authorized users. IBM X-Force ID: 122788.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-2633",
+    "description": "A Cross-Site Scripting Vulnerability has been found on Meta4 HR affecting version 819.001.022 and earlier. The endpoint '/sitetest/english/dumpenv.jsp' is vulnerable to XSS attack by 'lang' query, i.e. '/sitetest/english/dumpenv.jsp?snoop=yes&lang=%27%3Cimg%20src/onerror=alert(1)%3E&params'.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-10597",
+    "description": "A vulnerability classified as critical has been found in ESAFENET CDG 5. This affects the function delPolicyAction of the file /com/esafenet/servlet/system/PolicyActionService.java. The manipulation of the argument id leads to sql injection. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-89"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-50599",
+    "description": "A reflected Cross-Site Scripting (XSS) vulnerability has been identified in Zimbra Collaboration Suite (ZCS) 8.8.15, affecting one of the webmail calendar endpoints. This arises from improper handling of user-supplied input, allowing an attacker to inject malicious code that is reflected back in the HTML response.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-15767",
+    "description": "An issue was discovered in Gradle Enterprise before 2020.2.5. The cookie used to convey the CSRF prevention token is not annotated with the “secure” attribute, which allows an attacker with the ability to MITM plain HTTP requests to obtain it, if the user mistakenly uses a HTTP instead of HTTPS address to access the server. This cookie value could then be used to perform CSRF.",
+    "cwe_ids": [
+      "CWE-311"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2111",
+    "description": "Jenkins Subversion Plugin 2.13.0 and earlier does not escape the error message for the Project Repository Base URL field form validation, resulting in a stored cross-site scripting vulnerability.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2102",
+    "description": "Jenkins 2.218 and earlier, LTS 2.204.1 and earlier used a non-constant time comparison function when validating an HMAC.",
+    "cwe_ids": [
+      "CWE-203"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-37023",
+    "description": "Apache Geode versions prior to 1.15.0 are vulnerable to a deserialization of untrusted data flaw when using REST API on Java 8 or Java 11. Any user wishing to protect against deserialization attacks involving REST APIs should upgrade to Apache Geode 1.15 and follow the documentation for details on enabling \"validate-serializable-objects=true\" and specifying any user classes that may be serialized/deserialized with \"serializable-object-filter\". Enabling \"validate-serializable-objects\" may impact performance.",
+    "cwe_ids": [
+      "CWE-502",
+      "CWE-502"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-10391",
+    "description": "Jenkins IBM Application Security on Cloud Plugin 1.2.4 and earlier transmitted configured passwords in plain text as part of job configuration forms, potentially resulting in their exposure.",
+    "cwe_ids": [
+      "CWE-319"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-0099",
+    "description": "In addWindow of WindowManagerService.java, there is a possible window overlay attack due to an insecure default value. This could lead to local escalation of privilege via tapjacking with no additional execution privileges needed. User interaction is needed for exploitation.Product: AndroidVersions: Android-8.0 Android-8.1 Android-9 Android-10Android ID: A-141745510",
+    "cwe_ids": [
+      "CWE-1188"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-26266",
+    "description": "Multiple stored cross-site scripting (XSS) vulnerabilities in Liferay Portal 7.2.0 through 7.4.3.13, and older unsupported versions, and Liferay DXP 7.4 before update 10, 7.3 before update 4, 7.2 before fix pack 17, and older unsupported versions allow remote authenticated users to inject arbitrary web script or HTML via a crafted payload injected into the first/middle/last name text field of the user who creates an entry in the (1) Announcement widget, or (2) Alerts widget.",
+    "cwe_ids": [
+      "CWE-79",
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-24554",
+    "description": "The redirect module in Liferay Portal before 7.3.3 does not limit the number of URLs resulting in a 404 error that is recorded, which allows remote attackers to perform a denial of service attack by making repeated requests for pages that do not exist.",
+    "cwe_ids": [
+      "CWE-601"
+    ]
+  },
+  {
+    "cve_id": "CVE-2024-2064",
+    "description": "A vulnerability has been found in rahman SelectCours 1.0 and classified as problematic. Affected by this vulnerability is the function getCacheNames of the file CacheController.java of the component Template Handler. The manipulation of the argument fragment leads to injection. The attack can be launched remotely. The exploit has been disclosed to the public and may be used. The associated identifier of this vulnerability is VDB-255379.",
+    "cwe_ids": [
+      "CWE-74"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-1284",
+    "description": "IBM WebSphere MQ 9.0.1 and 9.0.2 could allow a local user with ability to run or enable trace, to obtain sensitive information from WebSphere Application Server traces including user credentials. IBM X-Force ID: 125145.",
+    "cwe_ids": [
+      "CWE-200"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-36915",
+    "description": "Jenkins Android Signing Plugin 2.2.5 and earlier does not perform a permission check in a method implementing form validation, allowing attackers with Item/Read permission but without Item/Workspace or Item/Configure permission to check whether attacker-specified file patterns match workspace contents.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-2162",
+    "description": "Jenkins 2.227 and earlier, LTS 2.204.5 and earlier does not set Content-Security-Policy headers for files uploaded as file parameters to a build, resulting in a stored XSS vulnerability.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-20915",
+    "description": "In addOrReplacePhoneAccount of PhoneAccountRegistrar.java, there is a possible way to enable a phone account without user interaction due to a logic error in the code. This could lead to local escalation of privilege with no additional execution privileges needed. User interaction is not needed for exploitation.Product: AndroidVersions: Android-10 Android-11 Android-12 Android-12L Android-13Android ID: A-246930197",
+    "cwe_ids": [
+      "CWE-670",
+      "CWE-670"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-1003017",
+    "description": "A data modification vulnerability exists in Jenkins Job Import Plugin 3.0 and earlier in JobImportAction.java that allows attackers to copy jobs from a preconfigured other Jenkins instance, potentially installing additional plugins necessary to load the imported job's configuration.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-30958",
+    "description": "A cross-site request forgery (CSRF) vulnerability in Jenkins SSH Plugin 2.6.1 and earlier allows attackers to connect to an attacker-specified SSH server using attacker-specified credentials IDs obtained through another method, capturing credentials stored in Jenkins.",
+    "cwe_ids": [
+      "CWE-352"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-28683",
+    "description": "Jenkins Phabricator Differential Plugin 2.1.5 and earlier does not configure its XML parser to prevent XML external entity (XXE) attacks.",
+    "cwe_ids": [
+      "CWE-611",
+      "CWE-611"
+    ]
+  },
+  {
+    "cve_id": "CVE-2023-3517",
+    "description": "\nHitachi Vantara Pentaho Data Integration & Analytics versions before 9.5.0.1 and 9.3.0.5, including \n8.3.x does not restrict JNDI identifiers during the creation of XActions, allowing control of system level data sources.\n\n",
+    "cwe_ids": [
+      "CWE-99"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-29049",
+    "description": "Cross-site scripting (XSS) vulnerability in the Portal Workflow module's edit process page in Liferay DXP 7.0 before fix pack 99, 7.1 before fix pack 23, 7.2 before fix pack 12 and 7.3 before fix pack 1, allows remote attackers to inject arbitrary web script or HTML via the currentURL parameter.",
+    "cwe_ids": [
+      "CWE-79"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-4036",
+    "description": "A vulnerability was found in 201206030 Novel 3.5.0 and classified as critical. This issue affects the function updateBookChapter of the file src/main/java/io/github/xxyopen/novel/controller/author/AuthorController.java of the component Chapter Handler. The manipulation leads to improper access controls. The attack may be initiated remotely. The exploit has been disclosed to the public and may be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-266",
+      "CWE-284"
+    ]
+  },
+  {
+    "cve_id": "CVE-2018-1890",
+    "description": "IBM SDK, Java Technology Edition Version 8 on the AIX platform uses absolute RPATHs which may facilitate code injection and privilege elevation by local users. IBM X-Force ID: 152081.",
+    "cwe_ids": [
+      "CWE-427"
+    ]
+  },
+  {
+    "cve_id": "CVE-2025-12547",
+    "description": "A vulnerability was identified in LogicalDOC Community Edition up to 9.2.1. This vulnerability affects unknown code of the file /login.jsp of the component Admin Login Page. Such manipulation leads to improper restriction of excessive authentication attempts. The attack can be executed remotely. This attack is characterized by high complexity. It is stated that the exploitability is difficult. The exploit is publicly available and might be used. The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cwe_ids": [
+      "CWE-307",
+      "CWE-799",
+      "CWE-307"
+    ]
+  },
+  {
+    "cve_id": "CVE-2017-16599",
+    "description": "This vulnerability allows remote attackers to delete arbitrary files on vulnerable installations of NetGain Systems Enterprise Manager 7.2.730 build 1034. Although authentication is required to exploit this vulnerability, the existing authentication mechanism can be bypassed. The specific flaw exists within the org.apache.jsp.u.jsp.reports.templates.misc.sample_jsp servlet, which listens on TCP port 8081 by default. When parsing the type parameter, the process does not properly validate a user-supplied path prior to using it in file operations. An attacker can leverage this in conjunction with other vulnerabilities to execute code in the context of Administrator. Was ZDI-CAN-5190.",
+    "cwe_ids": [
+      "CWE-22",
+      "CWE-668"
+    ]
+  },
+  {
+    "cve_id": "CVE-2016-7046",
+    "description": "Red Hat JBoss Enterprise Application Platform (EAP) 7, when operating as a reverse-proxy with default buffer sizes, allows remote attackers to cause a denial of service (CPU and disk consumption) via a long URL.",
+    "cwe_ids": [
+      "CWE-399"
+    ]
+  },
+  {
+    "cve_id": "CVE-2022-23714",
+    "description": "A local privilege escalation (LPE) issue was discovered in the ransomware canaries features of Elastic Endpoint Security for Windows, which could allow unprivileged users to elevate their privileges to those of the LocalSystem account.",
+    "cwe_ids": [
+      "CWE-264"
+    ] "CCPP"
+  },
+  {
+    "cve_id": "CVE-2016-1998",
+    "description": "HPE Service Manager (SM) 9.3x before 9.35 P4 and 9.4x before 9.41.P2 allows remote attackers to execute arbitrary commands via a crafted serialized Java object, related to the Apache Commons Collections library.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-15839",
+    "description": "Liferay Portal before 7.3.3, and Liferay DXP 7.1 before fix pack 18 and 7.2 before fix pack 6, does not restrict the size of a multipart/form-data POST action, which allows remote authenticated users to conduct denial-of-service attacks by uploading large files.",
+    "cwe_ids": [
+      "CWE-434"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-33493",
+    "description": "The middleware component in OX App Suite through 7.10.5 allows Code Injection via Java classes in a YAML format.",
+    "cwe_ids": [
+      "CWE-94"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-4781",
+    "description": "An improper input validation before calling java readLine() method may impact IBM Curam Social Program Management 7.0.9 and 7.0.10, which could result in a denial of service. IBM X-Force ID: 189159.",
+    "cwe_ids": [
+      "CWE-20"
+    ]
+  },
+  {
+    "cve_id": "CVE-2021-0304",
+    "description": "In several functions of GlobalScreenshot.java, there is a possible permission bypass due to an unsafe PendingIntent. This could lead to local information disclosure of the user's contacts with User execution privileges needed. User interaction is not needed for exploitation. Product: Android; Versions: Android-10, Android-8.0, Android-8.1, Android-9; Android ID: A-162738636.",
+    "cwe_ids": [
+      "CWE-732"
+    ]
+  },
+  {
+    "cve_id": "CVE-2019-10438",
+    "description": "A missing permission check in Jenkins CRX Content Package Deployer Plugin 1.8.1 and earlier allowed attackers with Overall/Read permission to connect to an attacker-specified URL using attacker-specified credentials IDs obtained through another method, capturing credentials stored in Jenkins.",
+    "cwe_ids": [
+      "CWE-862"
+    ]
+  },
+  {
+    "cve_id": "CVE-2020-26824",
+    "description": "SAP Solution Manager (JAVA stack), version - 7.20, allows an unauthenticated attacker to compromise the system because of missing authorization checks in the Upgrade Legacy Ports Service, this has an impact to the integrity and availability of the service.",
+    "cwe_ids": [
+      "CWE-306"
+    ]
+  }
+]
