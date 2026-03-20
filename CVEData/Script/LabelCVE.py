@@ -2,7 +2,7 @@ import json
 import re
 import sys
 
-base_path = "/home/lizhilin/CWEtochecker/nist_CVE/CWEdescriptionresult/"
+base_path = "./CWEdescriptionresult/"
 cve_file = base_path + "CWE_CVE_2016_2025.json"
 
 
